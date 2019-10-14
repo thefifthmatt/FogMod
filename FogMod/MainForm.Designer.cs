@@ -283,9 +283,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label1.Location = new System.Drawing.Point(24, 156);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(320, 13);
+            this.label1.Size = new System.Drawing.Size(331, 13);
             this.label1.TabIndex = 19;
-            this.label1.Text = "Check if you may need LUB skip, Duke\'s skip, ToTG fog gate skip";
+            this.label1.Text = "Check for Lower Burg skip, Duke\'s skip, TotG/Gaping fog gate skips";
             // 
             // scale
             // 
@@ -459,8 +459,8 @@
             // statusL
             // 
             this.statusL.Name = "statusL";
-            this.statusL.Size = new System.Drawing.Size(39, 17);
-            this.statusL.Text = "Ready";
+            this.statusL.Size = new System.Drawing.Size(131, 17);
+            this.statusL.Text = "Created by thefifthmatt";
             // 
             // randomizeL
             // 

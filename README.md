@@ -18,7 +18,7 @@ It is configurable which types of entrances are randomized and which behave like
 - Major PvP fog gates (between areas)
 - Minor PvP fog gates
 
-No new fog gates are added. PvP fog gates are ones you normally only see when you are invaded. Adding them makes randomizations a bit more interesting, different from the base game.
+No new fog gates are added. PvP fog gates are ones you normally only see when you are invaded. Adding them makes randomizations a bit more different from the base game, while still being interestingly nonlinear.
 
 There are a few differences from the base game:
 
@@ -30,7 +30,9 @@ There are a few differences from the base game:
 - NPC invasions removed for now, they are messy to clean up after
 
 ### How to win
-By defeating Gwyn. Warps to the kiln are not randomized, mainly because they are tied to serpent loyalty. If the Require Lord Souls option is enabled, then opening the Kiln door is the only way to get to Gwyn.
+By defeating Gwyn. Warps to the kiln are not randomized, mainly because they are tied to serpent loyalty. If the "Require Lord Souls" option is enabled then opening the Kiln door is the only way to get to Gwyn.
+
+Taking notes can be helpful to remember how to get to different places. Alternatively, have a good memory, or rely on chat to have good memory.
 
 Starting with or using the master key is never required. If you have it, it can be used to access areas early, but there may be significant scaling differences on the other side of those doors.
 
@@ -40,7 +42,9 @@ This is an optional feature of the mod to scale up or down enemy health and dama
 The randomizer checks what is the shortest path for you to access a blacksmith (Andre, Giant Blacksmith, or Vamos), and ensures that bosses on that path are scaled within reason for a +0 weapon. On the other hand, early game areas, such as before Undead Parish, are never scaled down.
 
 ## Installation
-To install the mod, run the included program, select your options, and click "Randomize!" to randomize. This automatically creates backups. You must select the game exe manually if you have a non-standard DS1R install location. You can also enter a seed (any 32-bit integer).
+To install the mod, run the included program, select your options, and click "Randomize!" to randomize. This automatically creates backups. You must select the game exe manually if you have a non-standard DS1R install location. You can also enter a seed (any 32-bit integer). For all changes to take effect, restart the game, and start a new save file.
+
+When randomizing with scaling enabled, try not to access existing save files that have been used with different scaling (different seed or options) or no scaling. If you quit out of a save file with enemies loaded into the area, and the scaling changes too much on reload, the game will crash to desktop. The save file is not corrupted, but can't be opened anymore unless you return to the previous enemy scaling.
 
 To uninstall, click "Restore backups". This replaces the game files with whatever they were before the first randomization. To be completely sure all mods are gone, select Properties → Local Files → Verify Integrity Of Game Files in Steam.
 

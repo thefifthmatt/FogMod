@@ -557,7 +557,10 @@ namespace FogMod
                 {
                     // Nudge the outside fog gate region to be inside & detect boss battle mode
                     MSB1.Region r = msb.Regions.Regions.Find(c => c.EntityID == 1312998);
-                    r.Position = new Vector3(-113.289f, -249.21f, -32.996f);
+                    r.Position = new Vector3(-118.186f, -250.591f, -31.893f);
+                    if (!(r.Shape is MSB1.Shape.Box box)) throw new Exception("Unexpected region");
+                    box.Width = 10;
+                    box.Height = 5;
                 }
                 if (map == "asylum")
                 {

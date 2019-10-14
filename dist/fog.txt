@@ -12,6 +12,9 @@ Options:
 - TrueOpt: world
 Areas:
 - Name: depths
+  To:
+  - Area: depths_gaping
+    Tags: drop hard
 - Name: depths_gaping
   Tags: boss
 - Name: burg_start
@@ -130,7 +133,7 @@ Areas:
 - Name: totg_lower
 - Name: totg_lordvessel
   ScalingBase: dukes_caves
-- Name: totg_prenito
+- Name: totg_coffin
 - Name: totg_nito
   Tags: boss
 - Name: greathollow
@@ -348,6 +351,25 @@ Warps:
     WarpFlag: 5303
   BSide:
     Area: dlc_start
+- ID: 1312110
+  Area: catacombs
+  Text: Getting into coffin to Nito
+  ASide:
+    Area: catacombs
+    Cutscene: 130020
+    WarpFlag: 5309
+  BSide:
+    Area: totg_coffin
+    BeforeWarpFlag: 11310050
+- ID: 1302010
+  Area: totg
+  Text: Getting back in coffin at Nito
+  ASide:
+    Area: totg_coffin
+    Cutscene: 130121
+    WarpFlag: 5310
+  BSide:
+    Area: catacombs
 - ID: 1510998  # Actual region of 1502501 is in Sen's map, not in Anor Londo
   Area: sens
   Text: From Sen's to Anor Londo
@@ -409,24 +431,6 @@ Warps:
     Cutscene: 180060  # 100240 with frampt
   BSide:
     Area: kiln_start
-- ID: 1312110
-  Area: catacombs
-  Text: Getting into coffin to Nito  # This is only temporary...
-  Tags: norandom temp
-  ASide:
-    Area: catacombs
-    Cutscene: 130020
-  BSide:
-    Area: totg_prenito
-- ID: 1302010
-  Area: totg
-  Text: Getting back in coffin at Nito
-  Tags: norandom temp
-  ASide:
-    Area: totg_prenito
-    Cutscene: 130121
-  BSide:
-    Area: catacombs
 - ID: 160040
   Area: newlondo
   Text: Kaathe transport from abyss to kiln
@@ -492,7 +496,7 @@ Entrances:
 - Name: o1402_0000
   ID: 1001996
   Area: depths
-  Text: Exit to Blighttown
+  Text: Depths exit to Blighttown
   Tags: pvp door
   DoorCond: depths_gaping
   ASide:
@@ -1350,7 +1354,7 @@ Entrances:
 - Name: o5870_0000
   ID: 1511750
   Area: anorlondo
-  Text: From the main cathedral to the area with bedrooms and paintings
+  Text: Between the main cathedral to the area with bedrooms and paintings
   Tags: pvp
   ASide:
     Area: anorlondo_cathedral
@@ -1448,7 +1452,7 @@ Entrances:
 - Name: o7901_0000
   ID: 1701890
   Area: dukes
-  Text: To Seath in Archives, disabled in mod
+  Text: To Seath in Archives
   Comment: Just disable him
   Tags: boss
   ASide:
@@ -1597,7 +1601,7 @@ DefaultCost:
   catacombs: 0.4528302  # SL 37
   newlondo_stairs: 0.4528302  # SL 37
   sens_upper: 0.4716981  # SL 38
-  totg_prenito: 0.4716981  # SL 38
+  totg_coffin: 0.4716981  # SL 38
   catacombs_prepinwheel: 0.4716981  # SL 38
   catacombs_pinwheel: 0.4716981  # SL 38
   sens_irongolem: 0.490566  # SL 39
