@@ -1,0 +1,4118 @@
+Options:
+- Opt: bboc
+- TrueOpt: scale
+- Opt: hard
+- Opt: lords
+- Opt: pacifist
+- TrueOpt: minor
+- TrueOpt: major
+- Opt: lordvessel
+- TrueOpt: warp
+- TrueOpt: boss
+- TrueOpt: world
+Areas:
+- Name: depths
+- Name: depths_gaping
+  Tags: boss
+- Name: burg_start
+  Tags: trivial
+  To:
+  - Area: burg_lower
+    Tags: drop hard
+- Name: burg_upper
+  To:
+  - Area: burg_start
+    Tags: drop
+  - Area: burg_lower
+    Tags: drop hard
+- Name: burg_bonfire
+  Tags: trivial
+- Name: burg_ladder
+  Tags: trivial
+- Name: burg_lower
+- Name: burg_taurus
+  Tags: boss
+- Name: burg_posttaurus
+  Tags: trivial
+- Name: burg_capra
+  Tags: boss
+- Name: parish_hellkite
+  To:
+  - Area: parish_church
+    Tags: temp
+- Name: parish_church
+  To:
+  - Area: parish_hellkite
+    Tags: drop
+- Name: parish_andre
+- Name: parish_gargoyles
+  Tags: boss
+- Name: parish_bell
+  Tags: trivial
+- Name: firelink
+- Name: firelink_crow
+  To:
+  - Area: firelink
+    Tags: drop
+- Name: firelink_elevator
+  Tags: trivial
+  To:
+  - Area: firelink
+    Tags: shortcut
+  - Area: firelink_crow
+    Tags: drop
+- Name: firelink_gate
+  Tags: trivial
+  To:
+  - Area: firelink
+    Tags: shortcut
+- Name: paintedworld
+- Name: paintedworld_priscilla
+  Tags: boss
+- Name: darkroot
+- Name: darkroot_stone
+  To:
+  - Area: darkroot
+    Tags: drop
+- Name: darkroot_butterfly
+  Tags: boss
+- Name: darkroot_postbutterfly
+- Name: darkroot_forest
+  ScalingBase: sens
+  To:
+  - Area: darkroot
+    Tags: drop
+- Name: darkroot_sif
+  Tags: boss
+- Name: dlc_start
+  Tags: trivial
+- Name: dlc_guardian
+  Tags: boss
+- Name: dlc_sanctuary
+- Name: dlc_forest
+- Name: dlc_artorias
+  Tags: boss
+- Name: dlc_gough
+- Name: dlc_kalameet
+  Tags: boss
+- Name: dlc_township
+- Name: dlc_manus
+  Tags: boss
+- Name: dlc_top
+  Tags: optional trivial
+- Name: dlc_bottom
+  Tags: optional trivial
+  To:
+  - Area: dlc_top
+    Tags: shortcut
+- Name: dlc_postartorias
+  Tags: optional trivial
+- Name: catacombs_start
+  ScalingBase: sens
+  To:
+  - Area: catacombs
+    Tags: shortcut
+- Name: catacombs
+- Name: catacombs_prepinwheel
+  Tags: trivial
+  To:
+  - Area: catacombs_pinwheel
+    Tags: drop
+- Name: catacombs_pinwheel
+  Tags: boss
+  To:
+  - Area: catacombs
+    Tags: drop
+- Name: totg
+  To:
+  - Area: totg_lower
+    Tags: drop hard
+- Name: totg_lower
+- Name: totg_lordvessel
+  ScalingBase: dukes_caves
+- Name: totg_prenito
+- Name: totg_nito
+  Tags: boss
+- Name: greathollow
+- Name: greathollow_ashlake
+- Name: greathollow_start
+  Tags: optional trivial
+- Name: blighttown
+- Name: blighttown_upper
+  To:
+  - Area: blighttown
+    Tags: drop
+- Name: blighttown_quelaag
+  Tags: boss
+- Name: blighttown_bell
+  Tags: trivial
+- Name: demonruins
+- Name: demonruins_ceaseless
+  Tags: boss
+- Name: demonruins_lower
+- Name: demonruins_lordvessel
+  Tags: trivial
+- Name: demonruins_firesage
+  Tags: boss
+- Name: demonruins_stairs
+- Name: demonruins_elevator
+  To:
+  - Area: demonruins_firesage
+    Tags: drop
+  - Area: blighttown_bell
+    Tags: shortcut
+    Cond: demonruins_firesage
+- Name: demonruins_centipede
+  Tags: boss
+- Name: demonruins_izalith
+- Name: demonruins_bedofchaos
+  Tags: boss
+- Name: sens
+- Name: sens_mid
+  To:
+  - Area: sens
+    Tags: drop
+- Name: sens_upper
+  To:
+  - Area: sens_mid
+    Tags: drop
+- Name: sens_irongolem
+  Tags: boss
+- Name: anorlondo_start
+- Name: anorlondo_os
+  Tags: boss
+- Name: anorlondo_prerafters
+  To:
+  - Area: anorlondo_rafters
+    Tags: drop
+- Name: anorlondo_rafters
+- Name: anorlondo_main
+- Name: anorlondo_darkmoon
+- Name: anorlondo_postrafters
+  To:
+  - Area: anorlondo_prerafters
+    Tags: shortcut
+  - Area: anorlondo_main
+    Tags: shortcut
+  - Area: anorlondo_darkmoon
+    Tags: shortcut
+  - Area: anorlondo_painting
+    Tags: shortcut
+- Name: anorlondo_painting
+- Name: anorlondo_building
+- Name: anorlondo_cathedral
+  To:
+  - Area: anorlondo_main
+    Tags: shortcut
+- Name: anorlondo_front
+  Tags: optional trivial
+  To:
+  - Area: anorlondo_blacksmith
+    Tags: drop
+  To:
+  - Area: anorlondo_main
+    Tags: drop
+- Name: anorlondo_blacksmith
+  To:
+  - Area: anorlondo_main
+    Tags: shortcut
+- Name: anorlondo_elevator1
+  Tags: trivial
+  To:
+  - Area: anorlondo_gwynevere
+    Cond: anorlondo_os
+- Name: anorlondo_elevator2
+  Tags: trivial
+  To:
+  - Area: anorlondo_gwynevere
+    Cond: anorlondo_os
+- Name: anorlondo_gwynevere
+  To:
+  - Area: anorlondo_elevator1
+    Cond: anorlondo_os
+  - Area: anorlondo_elevator2
+    Cond: anorlondo_os
+  - Area: firelink  # Default warp
+- Name: anorlondo_gwyndolin
+  Tags: boss
+- Name: newlondo  # Also door, which is fog gate
+  To:
+  - Area: newlondo_lower
+    Tags: shortcut drop
+    Cond: newlondo_building
+- Name: newlondo_building
+  ScalingBase: sens
+  To:
+  - Area: newlondo_lower
+    Tags: shortcut drop # Check this - can you activate elevator from below? If so, no drop required
+  - Area: newlondo
+    Tags: shortcut drop
+- Name: newlondo_lower  # Also to drakes. Write condition below TODO
+  ScalingBase: anorlondo_gwynevere
+- Name: newlondo_stairs
+  To:
+  - Area: newlondo_fourkings
+    Tags: drop
+    Cond: darkroot_sif
+- Name: newlondo_fourkings
+  Tags: boss
+- Name: newlondo_drakes
+  # ScalingBase: depths_gaping
+- Name: dukes_start
+- Name: dukes_library
+  To:
+  - Area: dukes_prison
+    Tags: drop hard
+- Name: dukes_hallway
+- Name: dukes_prison
+  To:
+  - Area: dukes_library
+    Tags: drop shortcut
+- Name: dukes_caves
+- Name: dukes_seath1 # should be post-seath
+- Name: dukes_seath2
+  Tags: boss
+- Name: kiln
+- Name: kiln_start
+  To:
+  - Area: kiln_stairs
+    Tags: shortcut
+    Cond: AND dukes_seath2 demonruins_bedofchaos newlondo_fourkings totg_nito anorlondo_gwynevere
+- Name: kiln_stairs
+- Name: kiln_gwyn
+  Tags: boss
+- Name: asylum # TODO: door to fight should always open? Or does that screw balcony logic. Probably shouldn't actually.
+  To:
+  - Area: asylum_outside
+    Tags: shortcut
+    Cond: AND asylum_balcony asylum_oscar
+  - Area: asylum_outside
+    Tags: temp
+    Cond: asylum_oscar
+  - Area: asylum_stray
+    Tags: drop
+    # Condition for this is changed from base game, just do this and reload
+    Cond: AND asylum_balcony asylum_oscar
+- Name: asylum_outside
+- Name: asylum_oscar
+  To:
+  - Area: asylum
+    Tags: shortcut
+  To:
+  - Area: asylum_prebalcony
+- Name: asylum_prebalcony
+  To:
+  - Area: asylum_oscar
+    Cond: OR asylum_oscar firelink_crow
+- Name: asylum_balcony
+  To:
+  - Area: asylum
+    Tags: drop
+- Name: asylum_stray
+  ScalingBase: sens
+- Name: asylum_loop
+  Tags: optional trivial
+  To:
+  - Area: asylum
+    Tags: drop
+Warps:
+- ID: 1812110
+  Area: firelink
+  Text: Crow transport from Firelink to Asylum
+  ASide:
+    Area: firelink_crow
+    Cutscene: 100230
+    WarpFlag: 5301
+  BSide:
+    Area: asylum_outside
+    Cutscene: 180130
+- ID: 1512500
+  Area: paintedworld
+  Text: Leaving Painted World back to Anor Londo
+  Tags: unique
+  ASide:
+    Area: paintedworld_priscilla
+    Cutscene: 110035
+    WarpFlag: 5302
+  BSide:
+    Area: anorlondo_painting
+    BeforeWarpFlag: 6909
+- ID: 1212510
+  Area: darkroot
+  Text: Warp to DLC
+  Tags: unique
+  ASide:
+    Area: darkroot
+    Cond: dukes_library
+    Cutscene: 120002
+    WarpFlag: 5303
+  BSide:
+    Area: dlc_start
+- ID: 1510998  # Actual region of 1502501 is in Sen's map, not in Anor Londo
+  Area: sens
+  Text: From Sen's to Anor Londo
+  ASide:
+    Area: sens_irongolem
+    Cutscene: 150000 # or 150002
+    WarpFlag: 5304
+  BSide:
+    Area: anorlondo_start
+    Tags: player
+- ID: 1102510
+  Area: anorlondo
+  Text: Using Peculiar Doll to access Painted World
+  Tags: unique
+  ASide:
+    Area: anorlondo_painting
+    Cond: AND asylum_balcony asylum_oscar
+    Cutscene: 150135
+    WarpFlag: 5305
+  BSide:
+    Area: paintedworld
+- ID: 1502500
+  Area: anorlondo
+  Text: From Anor Londo back to Sen's
+  ASide:
+    Area: anorlondo_start
+    Cutscene: 150130 # or 150132
+    WarpFlag: 5306
+  BSide:
+    Area: sens_irongolem
+- ID: 1022121
+  Area: asylum
+  Text: Warp to Firelink crow's nest
+  ASide:
+    Area: asylum_outside
+    Cutscene: 180126
+    WarpFlag: 5307
+  BSide:
+    Area: firelink_crow
+    Cutscene: 100226
+- ID: 1702901
+  Area: dukes
+  Text: To Duke's Archives prison
+  Tags: unique
+  ASide:
+    Area: dukes_seath1
+    WarpFlag: 5308
+  BSide:
+    Area: dukes_prison
+
+# Unused/norandom
+- ID: 1802110
+  Area: firelink
+  Text: Frampt transport or falling from firelink to kiln
+  Tags: norandom
+  ASide:
+    Area: firelink
+    Cond: AND blighttown_bell parish_bell
+    Cutscene: 180060  # 100240 with frampt
+  BSide:
+    Area: kiln_start
+- ID: 1312110
+  Area: catacombs
+  Text: Getting into coffin to Nito  # This is only temporary...
+  Tags: norandom temp
+  ASide:
+    Area: catacombs
+    Cutscene: 130020
+  BSide:
+    Area: totg_prenito
+- ID: 1302010
+  Area: totg
+  Text: Getting back in coffin at Nito
+  Tags: norandom temp
+  ASide:
+    Area: totg_prenito
+    Cutscene: 130121
+  BSide:
+    Area: catacombs
+- ID: 160040
+  Area: newlondo
+  Text: Kaathe transport from abyss to kiln
+  Tags: norandom
+  ASide:
+    Area: newlondo_fourkings
+    Cutscene: 160040
+    Cond: AND blighttown_bell parish_bell
+  BSide:
+    Area: kiln_start
+- ID: 1022110
+  Area: kiln
+  Text: Frampt transport from kiln to firelink
+  Tags: norandom
+  ASide:
+    Area: kiln_start
+    Tags: temp
+    Cutscene: 180050
+  BSide:
+    Area: firelink
+- ID: 1602110
+  Area: kiln
+  Text: Kaathe transport from kiln to abyss
+  Tags: norandom
+  ASide:
+    Area: kiln_start
+    Tags: temp
+    Cutscene: 180051
+  BSide:
+    Area: newlondo_fourkings
+- ID: 1022100
+  Area: asylum
+  Text: First warp to Firelink Shrine
+  Tags: unused  # Just warp to the bird's nest
+  ASide:
+    Area: asylum_outside
+    Cutscene: 100225
+  BSide:
+    Area: firelink
+
+
+Entrances:
+- Name: o1400_0000
+  ID: 1001990
+  Area: depths
+  Text: To Gaping Dragon
+  Tags: boss
+  ASide:
+    Area: depths
+  BSide:
+    Area: depths_gaping
+    Flag: 2
+- Name: o1401_0000
+  ID: 1001994
+  Area: depths
+  Text: Entrance to Depths
+  Tags: pvp door
+  DoorCond: burg_capra
+  ASide:
+    Area: burg_lower
+  BSide:
+    Area: depths
+- Name: o1402_0000
+  ID: 1001996
+  Area: depths
+  Text: Exit to Blighttown
+  Tags: pvp door
+  DoorCond: depths_gaping
+  ASide:
+    Area: blighttown_upper
+  BSide:
+    Area: depths
+- Name: o1420_0000
+  ID: 1001700
+  Area: depths
+  Text: Near the area with the Channeler
+  Tags: world
+  ASide:
+    Area: depths
+  BSide:
+    Area: depths
+- Name: o1403_0000
+  ID: 1011990
+  Area: parish
+  Text: To Gargoyles
+  Tags: boss
+  ASide:
+    Area: parish_gargoyles
+    Flag: 3
+    # TrapFlag: 11010000
+  BSide:
+    Area: parish_church
+- Name: o1404_0000
+  ID: 1011992
+  Area: parish
+  Text: After Gargoyles
+  Tags: boss
+  ASide:
+    Area: parish_bell
+    Tags: higher
+  BSide:
+    Area: parish_gargoyles
+    Flag: 3
+- Name: o1405_0000
+  ID: 1011890
+  Area: parish
+  Text: To Taurus Demon
+  Tags: boss
+  ASide:
+    Area: burg_taurus
+    Flag: 11010901
+  BSide:
+    Area: burg_upper
+- Name: o1406_0000
+  ID: 1011892
+  Area: parish
+  Text: After Taurus Demon
+  Tags: boss
+  ASide:
+    Area: burg_posttaurus
+  BSide:
+    Area: burg_taurus
+    Flag: 11010901
+- Name: o1407_0000
+  ID: 1011994
+  Area: parish
+  Text: Between Firelink Shrine and Upper Burg
+  Tags: pvp major
+  ASide:
+    Area: firelink
+  BSide:
+    Area: burg_start
+- Name: o1408_0000
+  ID: 1011996
+  Area: parish
+  Text: Between Undead Parish and Andre
+  Tags: pvp major
+  ASide:
+    Area: parish_andre
+  BSide:
+    Area: parish_church
+- Name: o1409_0000
+  ID: 1011998
+  Area: parish
+  Text: Between Taurus Demon and Hellkite bridge
+  Tags: pvp
+  ASide:
+    Area: parish_hellkite
+  BSide:
+    Area: burg_posttaurus
+- Name: o1410_0000
+  ID: 1011988
+  Area: parish
+  Text: In front of Firelink Shrine dual elevator
+  Tags: pvp major
+  ASide:
+    Area: firelink_elevator
+    BeforeWarpFlag: -11020302
+    # For bottom of elevator: firelink -14.054 -44.581 108.093 -90
+    CustomWarp: firelink -5.132 28.46 109.28 90
+    CustomActionWidth: 4
+  BSide:
+    Area: parish_church
+    CustomActionWidth: 4
+- Name: o1411_0000
+  ID: 1011986
+  Area: parish
+  Text: To Darkroot Basin in Havel's tower
+  Tags: pvp door
+  DoorCond: darkroot_postbutterfly
+  ASide:
+    Area: burg_upper
+  BSide:
+    Area: darkroot
+- Name: o1412_0000
+  ID: 1011984
+  Area: parish
+  Text: Between Hellkite Bridge and Lower Burg
+  Tags: pvp door
+  DoorCond: parish_church
+  ASide:
+    Area: parish_hellkite
+  BSide:
+    Area: burg_ladder
+- Name: o1413_0000
+  ID: 1011790
+  Area: parish
+  Text: To Capra Demon
+  Tags: boss
+  ASide:
+    Area: burg_lower
+  BSide:
+    Area: burg_capra
+    Flag: 11010902
+- Name: o1414_0000
+  ID: 1011976
+  Area: parish
+  Text: Between female Undead Merchant and Lower Burg
+  Tags: pvp major
+  ASide:
+    Area: burg_lower
+  BSide:
+    Area: firelink_gate
+- Name: o1415_0000
+  ID: 1011982
+  Area: parish
+  Text: Between very long ladder and Lower Burg
+  Tags: pvp major
+  ASide:
+    Area: burg_lower
+  BSide:
+    Area: burg_ladder
+- Name: o1416_0000
+  ID: 1011702
+  Area: parish
+  Text: Near bridge crossing over the boar in Undead Parish
+  Tags: world
+  ASide:
+    Area: parish_hellkite
+  BSide:
+    Area: parish_church
+- Name: o1417_0000
+  ID: 1011980
+  Area: parish
+  Text: On shortcut door between Upper Burg and Lower Burg, in room with hollows
+  Tags: pvp door
+  ASide:
+    Area: burg_upper
+    Tags: dnofts
+  BSide:
+    Area: burg_lower
+- Name: o1418_0000
+  ID: 1011978
+  Area: parish
+  Text: Lower doorway of room with burg bonfire
+  Tags: pvp
+  ASide:
+    Area: burg_bonfire
+  BSide:
+    Area: burg_upper
+- Name: o1419_0000
+  ID: 1011700
+  Area: parish
+  Text: Near the drake encounter in Upper Burg
+  Tags: world
+  ASide:
+    Area: burg_start
+    ActionRegion: 1012600
+  BSide:
+    Area: burg_upper
+- Name: o1421_0000
+  ID: 1011974
+  Area: parish
+  Text: Upper doorway of room with burg bonfire
+  Tags: pvp major
+  ASide:
+    Area: parish_hellkite
+  BSide:
+    Area: burg_bonfire
+    Cond: parish_hellkite
+- Name: o1421_0001
+  ID: 1011972
+  Area: parish
+  Text: unused
+  Tags: unused
+- Name: o1600_0000
+  ID: 1101990
+  Area: paintedworld
+  Text: To Priscilla
+  Tags: boss
+  ASide:
+    Area: paintedworld
+  BSide:
+    Area: paintedworld_priscilla
+    Flag: 4
+- Name: o1601_0000
+  ID: 1101992
+  Area: paintedworld
+  Text: After Priscilla, but player is free to escape
+  Tags: unused
+- Name: o1603_0000
+  ID: 1101702
+  Area: paintedworld
+  Text: Between tower with statue and courtyard with phalanx
+  Tags: world unique
+  ASide:
+    Area: paintedworld
+  BSide:
+    Area: paintedworld
+- Name: o1604_0000
+  ID: 1101750
+  Area: paintedworld
+  Text: Between courtyard with phalanx and building with hollows and ladder to bonewheels, but based on event flag. Can this be ignored? XX
+  Tags: unused
+- Name: o2900_0000
+  ID: 1201990
+  Area: darkroot
+  Text: To Sif
+  Tags: boss
+  ASide:
+    Area: darkroot_sif
+    Flag: 5
+    TrapFlag: 11200000
+  BSide:
+    Area: darkroot_forest
+- Name: o2901_0000
+  ID: 1201994
+  Area: darkroot
+  Text: Between Darkroot and Andre
+  Tags: pvp major
+  ASide:
+    Area: parish_andre
+  BSide:
+    Area: darkroot
+- Name: o2902_0000
+  ID: 1201996
+  Area: darkroot
+  Text: Between Darkroot and Havel's Tower
+  Tags: pvp door
+  DoorCond: darkroot_postbutterfly
+  ASide:
+    Area: darkroot
+  BSide:
+    Area: burg_upper
+- Name: o2903_0000
+  ID: 1201998
+  Area: darkroot
+  Text: Between Darkroot and tunnel leading to Valley of the Drakes
+  Tags: pvp major
+  ASide:
+    Area: darkroot
+  BSide:
+    Area: newlondo_drakes
+- Name: o2904_0000
+  ID: 1201890
+  Area: darkroot
+  Text: To Moonlight Butterfly
+  Tags: boss
+  ASide:
+    Area: darkroot_stone
+  BSide:
+    Area: darkroot_butterfly
+    Flag: 11200900
+    BossTrigger: 1202896
+- Name: o2905_0000
+  ID: 1201892
+  Area: darkroot
+  Text: After Moonlight Butterfly
+  Tags: boss
+  ASide:
+    Area: darkroot_butterfly
+    Flag: 11200900
+  BSide:
+    Area: darkroot_postbutterfly
+- Name: o2906_0000
+  ID: 1201700
+  Area: darkroot
+  Text: Between Darkroot bonfire and the area with the stone knights
+  Tags: world
+  ASide:
+    Area: darkroot
+  BSide:
+    Area: darkroot_stone
+- Name: o2907_0000
+  ID: 1201988
+  Area: darkroot
+  Text: At one end of the bridge at the top of the waterfall with the hydra below
+  Tags: pvp unique
+  ASide:
+    Area: darkroot
+    Tags: higher
+  BSide:
+    Area: darkroot_forest
+    Tags: higher
+- Name: o2908_0000
+  ID: 1201986
+  Area: darkroot
+  Text: In the spot of the Crest of Artorias door
+  Comment: Can be opened from inside? XX That is where it seemingly leads
+  Tags: pvp door unique
+  DoorCond: parish_andre
+  ASide:
+    Area: darkroot_forest
+    Tags: dnofts
+  BSide:
+    Area: darkroot
+- Name: o2909_0001
+  ID: 1211790
+  Area: dlc
+  Text: To Sanctuary Guardian
+  Tags: boss
+  ASide:
+    Area: dlc_start
+  BSide:
+    Area: dlc_guardian
+    Flag: 11210000
+    BossTrigger: 1212886
+- Name: o2910_0001
+  ID: 1211792
+  Area: dlc
+  Text: After Sanctuary Guardian
+  Tags: boss
+  ASide:
+    Area: dlc_guardian
+    Flag: 11210000
+  BSide:
+    Area: dlc_sanctuary
+- Name: o2911_0001
+  ID: 1211990
+  Area: dlc
+  Text: To Manus
+  Tags: boss
+  ASide:
+    Area: dlc_township
+  BSide:
+    Area: dlc_manus
+    Flag: 11210002  # XX how does this work - does it matter if insta-grab?
+- Name: o2912_0001
+  ID: 1211988
+  Area: dlc
+  Text: At the bottom of the elevator from before Artorias to before Manus
+  Tags: pvp
+  ASide:
+    Area: dlc_township
+  BSide:
+    Area: dlc_bottom
+    ExcludeIfRandomized: o2914
+- Name: o2913
+  ID: 1211994
+  Area: dlc
+  Text: Between Sanctuary Garden and Royal Forest
+  Tags: pvp
+  ASide:
+    Area: dlc_forest
+  BSide:
+    Area: dlc_sanctuary
+- Name: o2914
+  ID: 1211996
+  Area: dlc
+  Text: At the top of the elevator from before Artorias to before Manus
+  Tags: pvp
+  ASide:
+    Area: dlc_forest
+  BSide:
+    Area: dlc_top
+    ExcludeIfRandomized: o2912_0001
+- Name: o2915_0000
+  ID: 1211890
+  Area: dlc
+  Text: To Artorias
+  Tags: boss
+  ASide:
+    Area: dlc_forest
+    Tags: higher
+  BSide:
+    Area: dlc_artorias
+    Tags: higher
+    Flag: 11210001
+    BossTrigger: 1212896
+- Name: o2916_0000
+  ID: 1211892
+  Area: dlc
+  Text: After Artorias
+  Tags: boss
+  ASide:
+    Area: dlc_artorias
+    Tags: higher
+    Flag: 11210001
+  BSide:
+    Area: dlc_postartorias
+    Tags: higher
+    ExcludeIfRandomized: o2920_0000
+- Name: o2917_0000
+  ID: 1211998
+  Area: dlc
+  Text: Between Gough's stairway and Oolacile Township
+  Tags: pvp
+  ASide:
+    Area: dlc_gough
+  BSide:
+    Area: dlc_township
+- Name: o2919_0000
+  ID: 1211690
+  Area: dlc
+  Text: To Kalameet
+  Tags: boss
+  ASide:
+    Area: dlc_forest
+  BSide:
+    Area: dlc_kalameet
+    Flag: 11210010  # Custom flag
+- Name: o2920_0000
+  ID: 1211986
+  Area: dlc
+  Text: Between Gough's stairway and Artorias
+  Tags: pvp
+  ASide:
+    Area: dlc_postartorias
+    ExcludeIfRandomized: o2916_0000
+  BSide:
+    Area: dlc_gough
+    Tags: main
+- Name: o2920_0001
+  ID: 1211900
+  Area: dlc
+  Text: Battle of Stoicism. Just cut it off probably.
+  Tags: unused
+- Name: o3951_0000
+  ID: 1301994
+  Area: catacombs
+  Text: Between Firelink Shrine and Catacombs
+  Tags: pvp major
+  ASide:
+    Area: firelink
+    Tags: higher
+  BSide:
+    Area: catacombs_start
+- Name: o3952_0000
+  ID: 1301700
+  Area: catacombs
+  Text: Between the bridge Patches flips over and the room with two skeletons
+  Tags: world unique
+  ASide:
+    Area: catacombs
+  BSide:
+    Area: catacombs
+- Name: o3954_0000
+  ID: 1301990
+  Area: catacombs
+  Text: To Pinwheel
+  Tags: boss
+  ASide:
+    Area: catacombs
+  BSide:
+    Area: catacombs_prepinwheel
+    Flag: 6
+- Name: o3961_0000
+  ID: 1311994
+  Area: totg
+  Text: Between TotG and Catacombs
+  Tags: pvp major
+  ASide:
+    Area: totg
+  BSide:
+    Area: catacombs_pinwheel
+- Name: o3962_0000
+  ID: 1311700
+  Area: totg
+  Text: Before the Halberd Black Knight in TotG
+  Tags: world
+  ASide:
+    Area: totg
+  BSide:
+    Area: totg_lower
+- Name: o3963_0000
+  ID: 1311710
+  Area: totg
+  Text: TotG gold fog gate
+  Tags: lordvessel
+  ASide:
+    Area: totg_lower
+  BSide:
+    Area: totg_lordvessel
+- Name: o3964_0000
+  ID: 1311990
+  Area: totg
+  Text: To Nito
+  Tags: boss
+  ASide:
+    Area: totg_lordvessel
+  BSide:
+    Area: totg_nito
+    Flag: 7
+- Name: o3970_0000
+  ID: 1321994
+  Area: greathollow
+  Text: Between Blighttown and the Great Hollow
+  Tags: pvp
+  ASide:
+    Area: greathollow
+  BSide:
+    Area: greathollow_start
+    ExcludeIfRandomized: o4954_0000
+    Tags: higher
+- Name: o3971_0000
+  ID: 1321700
+  Area: greathollow
+  Text: Between Great Hollow and Ash Lake
+  Tags: world
+  ASide:
+    Area: greathollow
+  BSide:
+    Area: greathollow_ashlake
+- Name: o4950_0000
+  ID: 1401990
+  Area: blighttown
+  Text: To Quelaag
+  Tags: boss
+  ASide:
+    Area: blighttown_quelaag
+    Flag: 9
+    BossTrigger: 1402996
+  BSide:
+    Area: blighttown
+- Name: o4951_0000
+  ID: 1401992
+  Area: blighttown
+  Text: After Quelaag
+  Tags: boss
+  ASide:
+    Area: blighttown_bell
+    Tags: higher
+  BSide:
+    Area: blighttown_quelaag
+    Flag: 9
+- Name: o4952_0000
+  ID: 1401994
+  Area: blighttown
+  Text: Between Blighttown and the Depths
+  Tags: pvp door
+  DoorCond: depths_gaping
+  ASide:
+    Area: blighttown_upper
+  BSide:
+    Area: depths
+- Name: o4953_0000
+  ID: 1401996
+  Area: blighttown
+  Text: Between Blighttown and Valley of the Drakes
+  Tags: pvp major
+  ASide:
+    Area: newlondo_drakes
+    Col: h0061B0
+  BSide:
+    Area: blighttown
+    Col: h0060B0
+- Name: o4954_0000
+  ID: 1401998
+  Area: blighttown
+  Text: Between Blighttown and Great Hollow
+  Tags: pvp major
+  ASide:
+    Area: greathollow_start
+    ExcludeIfRandomized: o3970_0000
+    Tags: higher  # Is this needed?????
+  BSide:
+    Area: blighttown
+- Name: o4956_0000
+  ID: 1401702
+  Area: blighttown
+  Text: In between the main pit and wood planks while climbing up/down Blighttown
+  Tags: world
+  ASide:
+    Area: blighttown_upper
+  BSide:
+    Area: blighttown
+- Name: o4960_0000
+  ID: 1411710
+  Area: demonruins
+  Text: Gold fog gate in Demon Ruins
+  Tags: lordvessel
+  ASide:
+    Area: demonruins_lower
+  BSide:
+    Area: demonruins_lordvessel
+- Name: o4961_0000
+  ID: 1411790
+  Area: demonruins
+  Text: To Ceaseless Discharge
+  Tags: boss
+  ASide:
+    Area: demonruins
+  BSide:
+    Area: demonruins_ceaseless
+    Flag: 11410900
+- Name: o4962_0000
+  ID: 1411410
+  Area: demonruins
+  Text: To Demon Firesage
+  Tags: boss
+  ASide:
+    Area: demonruins_lordvessel
+  BSide:
+    Area: demonruins_firesage
+    Flag: 11410410
+    BossTrigger: 1412416
+    BossTriggerArea: 129.962 -341.5 117.105 -40 10 8 45
+- Name: o4963_0000
+  ID: 1411412
+  Area: demonruins
+  Text: After Demon Firesage
+  Tags: boss
+  ASide:
+    Area: demonruins_firesage
+    Flag: 11410410
+  BSide:
+    Area: demonruins_stairs
+- Name: o4964_0000
+  ID: 1411890
+  Area: demonruins
+  Text: To Centipede Demon
+  Tags: boss
+  ASide:
+    Area: demonruins_stairs
+  BSide:
+    Area: demonruins_centipede
+    Flag: 11410901
+    BossTrigger: 1412896
+- Name: o4965_0000
+  ID: 1411892
+  Area: demonruins
+  Text: After Centipede Demon boss
+  Tags: boss
+  ASide:
+    Area: demonruins_centipede
+    Flag: 11410901
+  BSide:
+    Area: demonruins_izalith
+    Cond: demonruins_centipede
+- Name: o4966_0000
+  ID: 1411994
+  Area: demonruins
+  Text: Between Quelaag's Domain and the Demon Ruins bonfire
+  Tags: pvp major
+  ASide:
+    Area: blighttown_bell
+  BSide:
+    Area: demonruins
+- Name: o4967_0000
+  ID: 1411996
+  Area: demonruins
+  Text: Between stairways behind Firesage and elevator to Quelaag's Domain
+  Tags: pvp
+  ASide:
+    Area: demonruins_elevator
+  BSide:
+    Area: demonruins_stairs
+- Name: o4968_0000
+  ID: 1411998
+  Area: demonruins
+  Text: Between the Demon Ruins lava area (drained by Ceaseless) and the cliffside path where Kirk invades
+  Tags: pvp
+  ASide:
+    Area: demonruins_lower
+    # TODO: Is this not accessible for any reason from fog gate?
+  BSide:
+    Area: demonruins
+    Cond: OR demonruins_ceaseless demonruins_centipede
+- Name: o4969_0000
+  ID: 1411988
+  Area: demonruins
+  Text: Between Firesage and the stairways behind the arena
+  Tags: unused
+- Name: o4970_0000
+  ID: 1411986
+  Area: demonruins
+  Text: After Centipede Demon region
+  Tags: unused
+- Name: o4971_0000
+  ID: 1411984
+  Area: demonruins
+  Text: The magic door which can be opened from Izalith or with covenent rank
+  Tags: pvp door
+  ASide:
+    Area: demonruins_lordvessel
+    Tags: dnofts
+  BSide:
+    Area: demonruins_izalith
+- Name: o4972_0000
+  ID: 1411990
+  Area: demonruins
+  Text: To Bed of Chaos
+  Tags: boss
+  ASide:
+    Area: demonruins_bedofchaos
+    Flag: 10
+  BSide:
+    Area: demonruins_izalith
+    Tags: higher
+- Name: o4973_0000
+  ID: 1411982
+  Area: demonruins
+  Text: In gateway shortly after Demon Ruins bonfire
+  Comment: Can be circumvented easily from bonfire. Is just a one way drop so not really needed here.
+  Tags: pvp unused
+- Name: o5150_0000
+  ID: 1501990
+  Area: sens
+  Text: To Iron Golem
+  Tags: boss
+  ASide:
+    Area: sens_upper
+  BSide:
+    Area: sens_irongolem
+    Flag: 11
+    BossTrigger: 1502996
+    BossTriggerArea: 113.2 82.8 255 90.00001 10 3 10
+- Name: o5151_0000
+  ID: 1501994
+  Area: sens
+  Text: Between Sen's Fortress gate and Andre
+  Tags: pvp
+  ASide:
+    Area: parish_andre
+  BSide:
+    Area: sens
+    Cond: AND blighttown_bell parish_bell
+- Name: o5152_0000
+  ID: 1501700
+  Area: sens
+  Text: Near outside boulder stairway and Siegmeyer
+  Tags: world
+  ASide:
+    Area: sens
+  BSide:
+    Area: sens_mid
+- Name: o5153_0000
+  ID: 1501702
+  Area: sens
+  Text: Between final swinging axes aand Sen's Fortress roof
+  Tags: world
+  ASide:
+    Area: sens_upper
+  BSide:
+    Area: sens_mid
+- Name: o5860_0000
+  ID: 1511990
+  Area: anorlondo
+  Text: To O&S
+  Tags: boss
+  ASide:
+    Area: anorlondo_os
+    Flag: 12
+    BossTrigger: 1512996
+    Col: h0022B1_0000
+  BSide:
+    Area: anorlondo_cathedral
+- Name: o5861_0000
+  ID: 1511992
+  Area: anorlondo
+  Text: After O&S on left side
+  Tags: boss
+  ASide:
+    Area: anorlondo_elevator1
+    # Col: h0022B1_0000
+  BSide:
+    Area: anorlondo_os
+    Flag: 12
+    Col: h0022B1_0000
+- Name: o5862_0000
+  ID: 1511988
+  Area: anorlondo
+  Text: After O&S on right side
+  Tags: boss
+  ASide:
+    Area: anorlondo_elevator2
+    # Col: h0022B1_0000
+  BSide:
+    Area: anorlondo_os
+    Flag: 12
+    Col: h0022B1_0000
+- Name: o5863_0000
+  ID: 1511994
+  Area: anorlondo
+  Text: At the doorway connecting the elevator building and the first gargoyle bridge
+  Tags: pvp
+  ASide:
+    Area: anorlondo_prerafters
+  BSide:
+    Area: anorlondo_start
+    Cond: anorlondo_start
+- Name: o5864_0000
+  ID: 1511700
+  Area: anorlondo
+  Text: Between the Painting Guardian rafters and the elevator contraption
+  Tags: world
+  ASide:
+    Area: anorlondo_rafters
+  BSide:
+    Area: anorlondo_postrafters
+- Name: o5865_0000
+  ID: 1511702
+  Area: anorlondo
+  Text: Between the first two Silver Knights and the main building
+  Tags: world
+  ASide:
+    Area: anorlondo_main
+    Cond: anorlondo_main
+    Tags: droptoXX # Make this count for warp routing but not logic
+  BSide:
+    Area: anorlondo_building
+- Name: o5867_0000
+  ID: 1511890
+  Area: anorlondo
+  Text: To Gwyndolin
+  Tags: boss
+  ASide:
+    Area: anorlondo_gwyndolin
+  BSide:
+    Area: anorlondo_darkmoon
+    Cond: OR anorlondo_gwynevere catacombs
+- Name: o5868_0000
+  ID: 1511892
+  Area: anorlondo
+  Text: At the start of Gwyndolin 'infinite' hallway
+  Tags: boss unused
+  ASide:
+    Area: anorlondo_gwyndolin
+    Flag: 11510900
+- Name: o5869_0000
+  ID: 1511754
+  Area: anorlondo
+  Text: From the main cathedral out of a broken window in front
+  Comment: Move the treasure object XX. Also figure out how to enable this...
+  Tags: pvp
+  ASide:
+    Area: anorlondo_cathedral
+  BSide:
+    Area: anorlondo_front
+    ExcludeIfRandomized: o5869_0000
+- Name: o5870_0000
+  ID: 1511750
+  Area: anorlondo
+  Text: From the main cathedral to the area with bedrooms and paintings
+  Tags: pvp
+  ASide:
+    Area: anorlondo_cathedral
+  BSide:
+    Area: anorlondo_building
+- Name: o5871_0000
+  ID: 1511752
+  Area: anorlondo
+  Text: From the main cathedral to the Giant Blacksmith stairway
+  Tags: pvp
+  ASide:
+    Area: anorlondo_blacksmith
+  BSide:
+    Area: anorlondo_cathedral
+- Name: o6601_0000
+  ID: 1601994
+  Area: newlondo
+  Text: Between the Firelink Shrine elevator and New Londo Ruins
+  Comment: Set elevator position XX
+  Tags: pvp major
+  ASide:
+    Area: newlondo
+  BSide:
+    Area: firelink
+    BeforeWarpFlag: -11600201
+    CustomWarp: firelink -52.759 -74.018 50.86 -110
+- Name: o6602_0000
+  ID: 1601996
+  Area: newlondo
+  Text: On door between start of New Londo Ruins and Valley of Drakes near Blighttown
+  Tags: pvp door
+  DoorCond: blighttown
+  ASide:
+    Area: newlondo
+  BSide:
+    Area: newlondo_drakes
+- Name: o6603_0000
+  ID: 1601998
+  Area: newlondo
+  Text: On door between lower New Londo Ruins and Valley of Drakes near RTSR
+  Tags: pvp door
+  DoorCond: newlondo_building
+  ASide:
+    Area: newlondo_drakes
+  BSide:
+    Area: newlondo_lower
+    # EntryFlag: 11600100
+    # Cond: newlondo_building
+- Name: o6604_0000
+  ID: 1601700
+  Area: newlondo
+  Text: Near the New Londo Ruins shortcut ladder
+  Tags: world
+  ASide:
+    Area: newlondo
+  BSide:
+    Area: newlondo_building
+- Name: o6605_0000
+  ID: 1601702
+  Area: newlondo
+  Text: On an entrance to the building with the Very Large Ember in lower ruins
+  Tags: world
+  ASide:
+    Area: newlondo_lower
+    EntryFlag: 11600100
+    Cond: newlondo_building
+  BSide:
+    Area: newlondo_lower
+    EntryFlag: 11600100
+    Cond: newlondo_building
+- Name: o6606_0000
+  ID: 1601990
+  Area: newlondo
+  Text: To Four Kings
+  Comment: Be nice and don't have boss flag, since fight cannot be escaped and s&q won't do anything
+  Tags: boss
+  ASide:
+    Area: newlondo_lower
+    EntryFlag: 11600100
+    Cond: newlondo_building
+  BSide:
+    Area: newlondo_stairs
+    EntryFlag: 11600100
+    Cond: newlondo_building
+- Name: o7900_0000
+  ID: 1701990
+  Area: dukes
+  Text: To Seath in Crystal Caves
+  Tags: boss
+  ASide:
+    Area: dukes_caves
+  BSide:
+    Area: dukes_seath2
+    Flag: 14
+- Name: o7901_0000
+  ID: 1701890
+  Area: dukes
+  Text: To Seath in Archives, disabled in mod
+  Comment: Just disable him
+  Tags: boss
+  ASide:
+    Area: dukes_hallway
+  BSide:
+    Area: dukes_seath1
+- Name: o7902_0000
+  ID: 1701994
+  Area: dukes
+  Text: At the first elevator in Duke's Archives
+  Tags: pvp
+  ASide:
+    Area: dukes_library
+  BSide:
+    Area: dukes_start
+- Name: o7906_0000
+  ID: 1701706
+  Area: dukes
+  Text: Between Duke's Archives and the field before Crystal Caves
+  Comment: Is ASide correct XX
+  Tags: world
+  ASide:
+    Area: dukes_prison
+    Cond: dukes_prison
+  BSide:
+    Area: dukes_caves
+- Name: o7907_0000
+  ID: 1701710
+  Area: dukes
+  Text: Golden fog gate leading to Duke's Archives
+  Tags: lordvessel
+  ASide:
+    Area: anorlondo_start
+  BSide:
+    Area: dukes_start
+- Name: o7908_0000
+  ID: 1701996
+  Area: dukes
+  Text: Near the hallway with the crystal warrior
+  Tags: pvp
+  ASide:
+    Area: dukes_library
+  BSide:
+    Area: dukes_hallway
+- Name: o8050_0000
+  ID: 1801990
+  Area: kiln
+  Text: To Gwyn
+  Tags: boss kiln
+  ASide:
+    Area: kiln
+  BSide:
+    Area: kiln_gwyn
+    Flag: 15
+- Name: o8051_0000
+  ID: 1801994
+  Area: kiln
+  Text: At the Kiln start
+  Tags: pvp kiln
+  ASide:
+    Area: kiln_stairs
+    Tags: higher
+  BSide:
+    Area: kiln
+- Name: o8950_0000
+  ID: 1811990
+  Area: asylum
+  Text: To Asylum Demon from balcony
+  Tags: boss
+  ASide:
+    Area: asylum_balcony
+    Tags: higher
+  BSide:
+    Area: asylum_prebalcony
+- Name: o8952_0000
+  ID: 1811700
+  Area: asylum
+  Text: Between hallway with initial weapons and Oscar's cell
+  Tags: world
+  ASide:
+    Area: asylum
+    Col: h0010B1
+  BSide:
+    Area: asylum_oscar
+- Name: o8953_0000
+  ID: 1811890
+  Area: asylum
+  Text: In Stray Demon arena
+  Comment: Codify the conditions of how this can be accessed XX
+  Tags: boss
+  ASide:
+    Area: asylum_stray
+    Flag: 11810900
+    TrapFlag: 11810000
+  BSide:
+    Area: asylum_loop
+    ExcludeIfRandomized: o8953_0000
+DefaultCost:
+  asylum: 0  # SL 10
+  asylum_oscar: 0.01886792  # SL 11
+  asylum_prebalcony: 0.03773585  # SL 12
+  asylum_balcony: 0.05660377  # SL 13
+  asylum_outside: 0.0754717  # SL 14
+  firelink_crow: 0.09433962  # SL 15
+  firelink: 0.1132075  # SL 16
+  burg_start: 0.1320755  # SL 17
+  newlondo: 0.1320755  # SL 17
+  burg_upper: 0.1320755  # SL 17
+  burg_taurus: 0.1509434  # SL 19
+  burg_bonfire: 0.1509434  # SL 19
+  burg_posttaurus: 0.2075472  # SL 22
+  parish_hellkite: 0.2075472  # SL 22
+  parish_church: 0.2264151  # SL 23
+  burg_ladder: 0.245283  # SL 24
+  parish_gargoyles: 0.245283  # SL 24
+  parish_andre: 0.245283  # SL 24
+  firelink_elevator: 0.245283  # SL 24
+  burg_lower: 0.245283  # SL 24
+  darkroot: 0.2641509  # SL 25
+  burg_capra: 0.2641509  # SL 25
+  firelink_gate: 0.2641509  # SL 25
+  newlondo_drakes: 0.2830189  # SL 26
+  darkroot_stone: 0.2830189  # SL 26
+  parish_bell: 0.3018868  # SL 28
+  blighttown: 0.3018868  # SL 28
+  darkroot_butterfly: 0.3018868  # SL 28
+  depths: 0.3207547  # SL 29
+  blighttown_quelaag: 0.3207547  # SL 29
+  blighttown_upper: 0.3207547  # SL 29
+  greathollow: 0.3207547  # SL 29
+  depths_gaping: 0.3396226  # SL 30
+  greathollow_ashlake: 0.3396226  # SL 30
+  darkroot_postbutterfly: 0.3584906  # SL 31
+  blighttown_bell: 0.3773585  # SL 32
+  demonruins: 0.3773585  # SL 32
+  demonruins_ceaseless: 0.3962264  # SL 33
+  kiln_start: 0.4339623  # SL 36
+  sens: 0.4339623  # SL 36
+  darkroot_forest: 0.4339623  # SL 36
+  asylum_stray: 0.4339623  # SL 36
+  catacombs_start: 0.4339623  # SL 36
+  newlondo_building: 0.4339623  # SL 36
+  demonruins_lower: 0.4528302  # SL 37
+  sens_mid: 0.4528302  # SL 37
+  darkroot_sif: 0.4528302  # SL 37
+  catacombs: 0.4528302  # SL 37
+  newlondo_stairs: 0.4528302  # SL 37
+  sens_upper: 0.4716981  # SL 38
+  totg_prenito: 0.4716981  # SL 38
+  catacombs_prepinwheel: 0.4716981  # SL 38
+  catacombs_pinwheel: 0.4716981  # SL 38
+  sens_irongolem: 0.490566  # SL 39
+  totg: 0.5283019  # SL 41
+  anorlondo_start: 0.5471698  # SL 42
+  totg_lower: 0.5471698  # SL 42
+  anorlondo_prerafters: 0.5660377  # SL 43
+  anorlondo_rafters: 0.5849057  # SL 45
+  anorlondo_postrafters: 0.6037736  # SL 46
+  anorlondo_main: 0.6226415  # SL 47
+  anorlondo_darkmoon: 0.6226415  # SL 47
+  anorlondo_painting: 0.6226415  # SL 47
+  paintedworld: 0.6226415  # SL 47
+  anorlondo_building: 0.6415094  # SL 48
+  paintedworld_priscilla: 0.6415094  # SL 48
+  anorlondo_cathedral: 0.6603774  # SL 49
+  anorlondo_os: 0.6792453  # SL 50
+  anorlondo_blacksmith: 0.6792453  # SL 50
+  anorlondo_elevator1: 0.7358491  # SL 54
+  anorlondo_elevator2: 0.7358491  # SL 54
+  anorlondo_gwynevere: 0.7358491  # SL 54
+  newlondo_lower: 0.7358491  # SL 54
+  dukes_start: 0.7735849  # SL 56
+  dukes_library: 0.7924528  # SL 57
+  dlc_start: 0.8113208  # SL 58
+  dukes_hallway: 0.8113208  # SL 58
+  dlc_guardian: 0.8113208  # SL 58
+  newlondo_fourkings: 0.8301887  # SL 59
+  dukes_seath1: 0.8301887  # SL 59
+  demonruins_lordvessel: 0.8490566  # SL 60
+  demonruins_firesage: 0.8490566  # SL 60
+  dukes_prison: 0.8490566  # SL 60
+  dlc_sanctuary: 0.8679245  # SL 62
+  dukes_caves: 0.8679245  # SL 62
+  totg_lordvessel: 0.8679245  # SL 62
+  dlc_forest: 0.8867925  # SL 63
+  dukes_seath2: 0.8867925  # SL 63
+  totg_nito: 0.8867925  # SL 63
+  demonruins_stairs: 0.9056604  # SL 64
+  dlc_artorias: 0.9056604  # SL 64
+  dlc_kalameet: 0.9056604  # SL 64
+  demonruins_centipede: 0.9245283  # SL 65
+  demonruins_elevator: 0.9245283  # SL 65
+  anorlondo_gwyndolin: 0.9622642  # SL 67
+  dlc_gough: 0.9622642  # SL 67
+  demonruins_izalith: 0.9811321  # SL 68
+  dlc_township: 0.9811321  # SL 68
+  demonruins_bedofchaos: 1  # SL 70
+  dlc_manus: 1  # SL 70
+  kiln_stairs: 1  # SL 70
+  kiln: 1  # SL 70
+  kiln_gwyn: 1  # SL 70
+Enemies:
+- Col: depths
+  Area: depths
+- Col: depths h0074B0
+  Area: depths_gaping
+  Includes:
+  - c5260_0000 (Gaping Dragon). NPC 526000 @1000800
+  - c5261_0000 (Gaping Dragon's Tail). NPC 526100 @1000801
+- Col: parish h1114B1
+  Area: parish_hellkite
+  Includes:
+  - c0000_0002 (Human). NPC 6000 Solaire @6001
+- Col: parish h1083B1
+  Area: burg_lower
+  Includes:
+  - c0000_0003 (Human). NPC 6040 Griggs of Vinheim @6040
+- Col: parish h1032B1
+  Area: parish_church
+  Includes:
+  - c0000_0004 (Human). NPC 6540 Solaire @6540
+  - c0000_0011 (Human). NPC 6590 Lautrec of Carim @6590
+- Col: parish h1022B1
+  Area: parish_church
+  Includes:
+  - c0000_0005 (Human). NPC 6070 Rhea of Thorolund @6072
+  - c2570_0000 (Heavy Knight). NPC 257001 @1010320
+  - c3491_0004 (Evil Vagrant). NPC 349102 @1013941
+  - c3491_0009 (Evil Vagrant). NPC 349202 @1013942
+- Col: parish h1035B1
+  Area: parish_church
+  Includes:
+  - c0000_0006 (Human). NPC 6300 Lautrec of Carim @6300
+- Col: parish h1121B1
+  Area: parish_church
+  Includes:
+  - c0000_0010 (Human). NPC 6580 Havel @6580
+- Col: parish h1036B1
+  Area: parish_bell
+  Includes:
+  - c0000_0012 (Human). NPC 6370 Oswald of Carim @6370
+- Col: parish h1061B1
+  Area: parish_hellkite
+  Includes:
+  - c1201_0000 (Small Rat). NPC 120101
+  - c1201_0001 (Small Rat). NPC 120101
+  - c1201_0002 (Small Rat). NPC 120101
+- Col: parish h1122B1
+  Area: burg_capra
+  Includes:
+  - c2240_0000 (Capra Demon). NPC 224000 @1010750
+  - c3340_0003 (Undead Attack Dog). NPC 334003 @1010500
+  - c3340_0004 (Undead Attack Dog). NPC 334003 @1010501
+- Col: parish h1122B1
+  Area: burg_lower
+  Includes:
+  - c3340_0007 (Undead Attack Dog). NPC 334000 @1010510
+  - c3340_0008 (Undead Attack Dog). NPC 334000 @1010511
+- Col: parish h1117B1
+  Area: burg_taurus
+  Includes:
+  - c2250_0000 (Taurus Demon). NPC 225000 @1010700
+- Col: parish h1049B1
+  Area: parish_andre
+  Includes:
+  - c2300_0000 (Titanite Demon). NPC 230001 @1010340
+- Col: parish h1026B1
+  Area: parish_church
+  Includes:
+  - c2370_0001 (Channeler). NPC 237000 @1010370
+  - c2500_0041 (Hollow). NPC 250050
+  - c2500_0042 (Hollow). NPC 250050
+  - c2500_0044 (Hollow). NPC 250050
+  - c2500_0045 (Hollow). NPC 250050
+  - c2500_0048 (Hollow). NPC 250050
+  - c2500_0050 (Hollow). NPC 250050
+- Col: parish h1095B1
+  Area: burg_start
+  Includes:
+  - c2500_0000 (Hollow). NPC 250000
+  - c2500_0001 (Hollow). NPC 250000 @1010250
+  - c2500_0008 (Hollow). NPC 250000 @1010251
+  - c2540_0015 (Armored Hollow). NPC 254011
+  - c2540_0034 (Armored Hollow). NPC 254010
+- Col: parish h1071B1
+  Area: parish_hellkite
+  Includes:
+  - c2500_0002 (Hollow). NPC 250050
+  - c2500_0003 (Hollow). NPC 250050
+  - c2500_0004 (Hollow). NPC 250050
+  - c2500_0005 (Hollow). NPC 250050
+  - c2500_0007 (Hollow). NPC 250050
+  - c2500_0028 (Hollow). NPC 250050
+  - c2500_0029 (Hollow). NPC 250050
+  - c2500_0035 (Hollow). NPC 250053 @1010901
+  - c2500_0036 (Hollow). NPC 250053 @1010902
+  - c2500_0037 (Hollow). NPC 250053 @1010903
+- Col: parish h1007B1
+  Area: parish_hellkite
+  Includes:
+  - c2500_0006 (Hollow). NPC 250050 @1010111
+- Col: parish h1099B1
+  Area: burg_upper
+  Includes:
+  - c2500_0020 (Hollow). NPC 250000
+  - c2500_0022 (Hollow). NPC 250000
+  - c2500_0023 (Hollow). NPC 250000
+  - c2500_0046 (Hollow). NPC 250000
+  - c3430_0001 (Hellkite Drake). NPC 343000 @1010302
+- Col: parish h1094B1
+  Area: burg_start
+  Includes:
+  - c2500_0021 (Hollow). NPC 250000 @1010263
+  - c2500_0025 (Hollow). NPC 250000 @1010260
+  - c2500_0026 (Hollow). NPC 250000 @1010261
+  - c2500_0027 (Hollow). NPC 250000 @1010262
+- Col: parish h1112B1
+  Area: parish_hellkite
+  Includes:
+  - c2500_0034 (Hollow). NPC 250000
+  - c2500_0038 (Hollow). NPC 250000
+  - c2500_0039 (Hollow). NPC 250000
+  - c3491_0003 (Evil Vagrant). NPC 349102 @1013931
+  - c3491_0008 (Evil Vagrant). NPC 349202 @1013932
+- Col: parish h1031B1
+  Area: parish_church
+  Includes:
+  - c2500_0040 (Hollow). NPC 250050
+  - c2500_0043 (Hollow). NPC 250050
+  - c2500_0047 (Hollow). NPC 250050
+  - c2500_0049 (Hollow). NPC 250050
+- Col: parish h1127B1
+  Area: burg_lower
+  Includes:
+  - c2500_0051 (Hollow). NPC 250052
+- Col: parish h1086B1
+  Area: burg_lower
+  Includes:
+  - c2500_0052 (Hollow). NPC 250001
+  - c2500_0053 (Hollow). NPC 250001
+  - c2500_0054 (Hollow). NPC 250001
+  - c2500_0055 (Hollow). NPC 250001
+  - c2500_0056 (Hollow). NPC 250001
+  - c2500_0057 (Hollow). NPC 250001
+  - c2500_0058 (Hollow). NPC 250001
+- Col: parish h1100B1
+  Area: burg_upper
+  Includes:
+  - c2510_0000 (Undead Merchant). NPC 251001 @6230
+  - c2550_0001 (Undead Soldier). NPC 255000
+  - c2550_0003 (Undead Soldier). NPC 255000
+- Col: parish h1091B1
+  Area: burg_lower
+  Includes:
+  - c2520_0004 (Undead Assassin). NPC 252000 @1010150
+- Col: parish h1089B1
+  Area: burg_lower
+  Includes:
+  - c2520_0005 (Undead Assassin). NPC 252000 @1010151
+  - c3491_0002 (Evil Vagrant). NPC 349102 @1013921
+  - c3491_0007 (Evil Vagrant). NPC 349202 @1013922
+- Col: parish h1090B1
+  Area: burg_lower
+  Includes:
+  - c2520_0006 (Undead Assassin). NPC 252000 @1010152
+- Col: parish h1087B1
+  Area: burg_lower
+  Includes:
+  - c2520_0007 (Undead Assassin). NPC 252000 @1010153
+  - c3490_0002 (Good Vagrant). NPC 349002 @1013920
+- Col: parish h1088B1
+  Area: burg_lower
+  Includes:
+  - c2520_0008 (Undead Assassin). NPC 252000 @1010154
+  - c2520_0009 (Undead Assassin). NPC 252000 @1010155
+- Col: parish h1193B1
+  Area: burg_lower
+  Includes:
+  - c2520_0010 (Undead Assassin). NPC 252000
+  - c2520_0011 (Undead Assassin). NPC 252000
+  - c3340_0005 (Undead Attack Dog). NPC 334000
+  - c3340_0006 (Undead Attack Dog). NPC 334000
+- Col: parish h1085B1
+  Area: burg_lower
+  Includes:
+  - c2520_0012 (Undead Assassin). NPC 252001 @1010911
+  - c2520_0013 (Undead Assassin). NPC 252001 @1010912
+- Col: parish h1097B1
+  Area: burg_start
+  Includes:
+  - c2540_0000 (Armored Hollow). NPC 254012
+- Col: parish h1101B1
+  Area: burg_upper
+  Includes:
+  - c2540_0001 (Armored Hollow). NPC 254010
+  - c2540_0002 (Armored Hollow). NPC 254010
+  - c2540_0010 (Armored Hollow). NPC 254010
+  - c2540_0014 (Armored Hollow). NPC 254014 @1010906
+- Col: parish h1057B1
+  Area: burg_upper
+  Includes:
+  - c2540_0003 (Armored Hollow). NPC 254010
+  - c2540_0025 (Armored Hollow). NPC 254010
+- Col: parish h1109B1
+  Area: burg_upper
+  Includes:
+  - c2540_0004 (Armored Hollow). NPC 254010
+  - c2540_0008 (Armored Hollow). NPC 254011
+  - c2540_0013 (Armored Hollow). NPC 254012
+  - c2540_0017 (Armored Hollow). NPC 254014 @1010908
+  - c2550_0002 (Undead Soldier). NPC 255001
+  - c2550_0006 (Undead Soldier). NPC 255001
+  - c2550_0024 (Undead Soldier). NPC 255044 @1010909
+  - c2550_0042 (Undead Soldier). NPC 255002 @1010200
+  - c3490_0001 (Good Vagrant). NPC 349001 @1013910
+- Col: parish h1055B1
+  Area: burg_upper
+  Includes:
+  - c2540_0005 (Armored Hollow). NPC 254011
+  - c2540_0006 (Armored Hollow). NPC 254011
+- Col: parish h1050B1
+  Area: burg_upper
+  Includes:
+  - c2540_0007 (Armored Hollow). NPC 254011 @1010102
+- Col: parish h1107B1
+  Area: burg_upper
+  Includes:
+  - c2540_0011 (Armored Hollow). NPC 254012
+  - c2540_0023 (Armored Hollow). NPC 254012
+  - c2540_0024 (Armored Hollow). NPC 254012
+  - c2550_0010 (Undead Soldier). NPC 255001 @1010130
+- Col: parish h1046B1
+  Area: burg_start
+  Includes:
+  - c2540_0012 (Armored Hollow). NPC 254010
+  - c3491_0000 (Evil Vagrant). NPC 349101 @1013901
+  - c3491_0005 (Evil Vagrant). NPC 349201 @1013902
+- Col: parish h1103B1
+  Area: burg_upper
+  Includes:
+  - c2540_0016 (Armored Hollow). NPC 254013 @1010907
+  - c2550_0040 (Undead Soldier). NPC 255002
+- Col: parish h1119B1
+  Area: burg_taurus
+  Includes:
+  - c2550_0008 (Undead Soldier). NPC 255002
+  - c2550_0009 (Undead Soldier). NPC 255002
+  - c3491_0001 (Evil Vagrant). NPC 349101 @1013911
+  - c3491_0006 (Evil Vagrant). NPC 349201 @1013912
+- Col: parish h1113B1
+  Area: parish_hellkite
+  Includes:
+  - c2550_0011 (Undead Soldier). NPC 255040
+  - c2550_0012 (Undead Soldier). NPC 255040
+  - c2550_0013 (Undead Soldier). NPC 255040
+  - c2550_0014 (Undead Soldier). NPC 255042
+  - c2550_0015 (Undead Soldier). NPC 255042
+  - c2550_0043 (Undead Soldier). NPC 255040
+  - c2550_0044 (Undead Soldier). NPC 255041
+- Col: parish h1004B1
+  Area: parish_hellkite
+  Includes:
+  - c2550_0016 (Undead Soldier). NPC 255041 @6010
+  - c2550_0033 (Undead Soldier). NPC 255041
+  - c2550_0034 (Undead Soldier). NPC 255040
+  - c2550_0035 (Undead Soldier). NPC 255041
+  - c3460_0000 (Armored Tusk). NPC 346000 @1010310
+- Col: parish h1111B1
+  Area: burg_upper
+  Includes:
+  - c2550_0020 (Undead Soldier). NPC 255001 @1010103
+- Col: parish h1110B1
+  Area: burg_upper
+  Includes:
+  - c2550_0025 (Undead Soldier). NPC 255043 @1010910
+  - c2550_0041 (Undead Soldier). NPC 255000
+- Col: parish h1005B1
+  Area: parish_hellkite
+  Includes:
+  - c2550_0030 (Undead Soldier). NPC 255042
+  - c2550_0032 (Undead Soldier). NPC 255042
+  - c2550_0037 (Undead Soldier). NPC 255040
+- Col: parish h1015B1
+  Area: parish_church
+  Includes:
+  - c2550_0031 (Undead Soldier). NPC 255040
+- Col: parish h1006B1
+  Area: parish_hellkite
+  Includes:
+  - c2550_0036 (Undead Soldier). NPC 255041
+- Col: parish h1040B1
+  Area: parish_church
+  Includes:
+  - c2550_0045 (Undead Soldier). NPC 255042
+  - c2550_0046 (Undead Soldier). NPC 255041
+  - c2550_0047 (Undead Soldier). NPC 255041
+  - c3490_0004 (Good Vagrant). NPC 349002 @1013940
+- Col: parish h1012B1
+  Area: parish_church
+  Includes:
+  - c2550_0048 (Undead Soldier). NPC 255040
+- Col: parish h1020B1
+  Area: parish_church
+  Includes:
+  - c2560_0000 (Balder Knight). NPC 256004 @1010900
+  - c2560_0006 (Balder Knight). NPC 256000
+  - c2560_0007 (Balder Knight). NPC 256000
+  - c2560_0008 (Balder Knight). NPC 256002
+- Col: parish h1011B1
+  Area: parish_church
+  Includes:
+  - c2560_0001 (Balder Knight). NPC 256002
+- Col: parish h1016B1
+  Area: parish_church
+  Includes:
+  - c2560_0003 (Balder Knight). NPC 256000
+- Col: parish h1028B1
+  Area: parish_church
+  Includes:
+  - c2560_0004 (Balder Knight). NPC 256002
+- Col: parish h1025B1
+  Area: parish_church
+  Includes:
+  - c2560_0005 (Balder Knight). NPC 256002
+- Col: parish h1024B1
+  Area: parish_church
+  Includes:
+  - c2570_0003 (Heavy Knight). NPC 257002 @1010905
+- Col: parish h1043B1
+  Area: parish_andre
+  Includes:
+  - c2640_0000 (Andre of Astora). NPC 264000 @6190
+- Col: parish h1106B1
+  Area: burg_upper
+  Includes:
+  - c2792_0000 (Black Knight (Sword)). NPC 279000 @1010350
+- Col: parish h1003B1
+  Area: parish_hellkite
+  Includes:
+  - c2793_0000 (Black Knight (Greatsword)). NPC 279001 @1010351
+- Col: parish h1118B1
+  Area: burg_upper
+  Includes:
+  - c3300_0000 (Crystal Lizard). NPC 330060 @1010400
+- Col: parish h1084B1
+  Area: burg_lower
+  Includes:
+  - c3340_0000 (Undead Attack Dog). NPC 334000
+  - c3340_0002 (Undead Attack Dog). NPC 334000
+- Col: parish h1092B1
+  Area: burg_lower
+  Includes:
+  - c3340_0001 (Undead Attack Dog). NPC 334000
+- Col: parish h1115B1
+  Area: parish_hellkite
+  Includes:
+  - c3430_0000 (Hellkite Drake). NPC 343000 @1010300
+  - c3431_0000 (Hellkite Drake's Tail). NPC 343100 @1010301
+- Col: parish h1045B1
+  Area: burg_start
+  Includes:
+  - c3490_0000 (Good Vagrant). NPC 349001 @1013900
+- Col: parish h1008B1
+  Area: parish_hellkite
+  Includes:
+  - c3490_0003 (Good Vagrant). NPC 349002 @1013930
+- Col: parish h1034B1
+  Area: parish_gargoyles
+  Includes:
+  - c5350_0000 (Bell Gargoyles). NPC 535000 @1010800
+  - c5350_0001 (Bell Gargoyles). NPC 535001 @1010801
+  - c5350_0002 (Bell Gargoyles). NPC 535000 @1010802
+  - c5352_0000 (Gargoyle Tail). NPC 535200 @1010810
+  - c5352_0001 (Gargoyle Tail). NPC 535200 @1010811
+- Col: firelink
+  Area: firelink
+- Col: paintedworld
+  Area: paintedworld
+- Col: paintedworld h0041B0
+  Area: paintedworld_priscilla
+  Includes:
+  - c2730_0000 (Crossbreed Priscilla). NPC 273000 @1100160
+  - c2731_0000 (Priscilla's Tail). NPC 273100 @1100161
+- Col: darkroot h0042B0
+  Area: darkroot_forest
+  Includes:
+  - c0000_0002 (Human). NPC 6310 Shiva of the East @6310
+  - c0000_0003 (Human). NPC 6801 @1200300
+  - c0000_0005 (Human). NPC 6805 @1200302
+  - c0000_0007 (Human). NPC 6803 @1200304
+  - c0000_0008 (Human). NPC 6806 @1200305
+  - c0000_0009 (Human). NPC 6802 @1200306
+  - c0000_0013 (Human). NPC 6420 Shiva's Bodyguard @6420
+  - c5361_0000 (Alvina). NPC 536100 @6380
+- Col: darkroot h0040B0
+  Area: darkroot_forest
+  Includes:
+  - c0000_0004 (Human). NPC 6802 @1200301
+  - c0000_0006 (Human). NPC 6804 @1200303
+- Col: darkroot h0017B0
+  Area: darkroot
+  Includes:
+  - c0000_0012 (Human). NPC 6050 Dusk of Oolacile @6050
+  - c2711_0000 (Golden Crystal Golem). NPC 271100 @1200200
+- Col: darkroot h0071B0
+  Area: darkroot_stone
+  Includes:
+  - c0000_0014 (Human). NPC 6520 Witch Beatrice @6521
+- Col: darkroot h0018B0
+  Area: darkroot
+  Includes:
+  - c0000_0015 (Human). NPC 6050 Dusk of Oolacile @6051
+  - c3491_0000 (Evil Vagrant). NPC 349104 @1203901
+  - c3491_0003 (Evil Vagrant). NPC 349204 @1203902
+  - c3530_0000 (Hydra). NPC 353001 @1200010
+  - c3531_0000 (Hydra Head). NPC 353101 @1200011
+  - c3531_0001 (Hydra Head). NPC 353101 @1200012
+  - c3531_0002 (Hydra Head). NPC 353101 @1200013
+  - c3531_0003 (Hydra Head). NPC 353101 @1200014
+  - c3531_0004 (Hydra Head). NPC 353101 @1200015
+  - c3531_0005 (Hydra Head). NPC 353101 @1200016
+  - c3531_0006 (Hydra Head). NPC 353101 @1200017
+- Col: darkroot h0045B0
+  Area: darkroot_forest
+  Includes:
+  - c2270_0000 (Mushroom Parent). NPC 227000 @1200703
+  - c2270_0003 (Mushroom Parent). NPC 227002 @1200909
+  - c2280_0005 (Mushroom Child). NPC 228000 @1200710
+  - c2280_0006 (Mushroom Child). NPC 228000 @1200711
+  - c2280_0010 (Mushroom Child). NPC 228002 @1200906
+  - c2280_0011 (Mushroom Child). NPC 228002 @1200907
+- Col: darkroot h0047B0
+  Area: darkroot_forest
+  Includes:
+  - c2270_0001 (Mushroom Parent). NPC 227000 @1200704
+- Col: darkroot h0046B0
+  Area: darkroot_forest
+  Includes:
+  - c2270_0002 (Mushroom Parent). NPC 227002 @1200908
+  - c2280_0002 (Mushroom Child). NPC 228000 @1200707
+  - c2280_0003 (Mushroom Child). NPC 228000 @1200708
+  - c2280_0004 (Mushroom Child). NPC 228000 @1200709
+  - c2280_0008 (Mushroom Child). NPC 228002 @1200904
+  - c2280_0009 (Mushroom Child). NPC 228002 @1200905
+- Col: darkroot h0049B0
+  Area: darkroot_forest
+  Includes:
+  - c2280_0000 (Mushroom Child). NPC 228000 @1200705
+  - c2280_0001 (Mushroom Child). NPC 228000 @1200706
+- Col: darkroot h0048B0
+  Area: darkroot_forest
+  Includes:
+  - c2280_0007 (Mushroom Child). NPC 228000 @1200712
+  - c3491_0002 (Evil Vagrant). NPC 349110 @1203921
+  - c3491_0005 (Evil Vagrant). NPC 349210 @1203922
+- Col: darkroot h0001B0
+  Area: darkroot
+  Includes:
+  - c2330_0000 (Demonic Foliage ). NPC 233000
+  - c2330_0001 (Demonic Foliage ). NPC 233000
+- Col: darkroot h0002B0
+  Area: darkroot
+  Includes:
+  - c2330_0002 (Demonic Foliage ). NPC 233000
+  - c2330_0003 (Demonic Foliage ). NPC 233000 @1200100
+- Col: darkroot h0005B0
+  Area: darkroot
+  Includes:
+  - c2330_0004 (Demonic Foliage ). NPC 233000 @1200101
+  - c2330_0005 (Demonic Foliage ). NPC 233000 @1200102
+  - c2330_0006 (Demonic Foliage ). NPC 233000 @1200103
+- Col: darkroot h0006B0
+  Area: darkroot_stone
+  Includes:
+  - c2330_0007 (Demonic Foliage ). NPC 233000 @1200104
+  - c2330_0008 (Demonic Foliage ). NPC 233000 @1200105
+  - c2330_0009 (Demonic Foliage ). NPC 233000 @1200106
+  - c2330_0010 (Demonic Foliage ). NPC 233000 @1200107
+  - c2330_0011 (Demonic Foliage ). NPC 233000 @1200108
+  - c2380_0002 (Giant Stone Knight). NPC 238000 @1200652
+  - c2380_0003 (Giant Stone Knight). NPC 238000 @1200653
+  - c2380_0004 (Giant Stone Knight). NPC 238000 @1200654
+  - c2380_0005 (Giant Stone Knight). NPC 238000 @1200655
+  - c2380_0006 (Giant Stone Knight). NPC 238000 @1200656
+  - c2380_0007 (Giant Stone Knight). NPC 238002 @1200900
+  - c2380_0008 (Giant Stone Knight). NPC 238002 @1200901
+  - c2380_0009 (Giant Stone Knight). NPC 238002 @1200902
+  - c2380_0010 (Giant Stone Knight). NPC 238002 @1200903
+  - c3370_0000 (Tree Lizard). NPC 337000 @1200600
+  - c3370_0002 (Tree Lizard). NPC 337000 @1200602
+- Col: darkroot h0044B0
+  Area: darkroot_forest
+  Includes:
+  - c2330_0012 (Demonic Foliage ). NPC 233001
+  - c2330_0013 (Demonic Foliage ). NPC 233001
+  - c2330_0014 (Demonic Foliage ). NPC 233001
+  - c2330_0015 (Demonic Foliage ). NPC 233001
+  - c2330_0016 (Demonic Foliage ). NPC 233001
+  - c2330_0017 (Demonic Foliage ). NPC 233001
+  - c2330_0018 (Demonic Foliage ). NPC 233001
+  - c2330_0019 (Demonic Foliage ). NPC 233001 @1200109
+  - c2330_0020 (Demonic Foliage ). NPC 233001
+  - c2330_0021 (Demonic Foliage ). NPC 233001 @1200110
+  - c2330_0022 (Demonic Foliage ). NPC 233001
+- Col: darkroot h0041B0
+  Area: darkroot_forest
+  Includes:
+  - c2330_0023 (Demonic Foliage ). NPC 233001 @1200111
+  - c2330_0024 (Demonic Foliage ). NPC 233001 @1200112
+  - c2330_0025 (Demonic Foliage ). NPC 233001 @1200113
+- Col: darkroot h0000B0
+  Area: darkroot
+  Includes:
+  - c2330_0026 (Demonic Foliage ). NPC 233000 @1200090
+- Col: darkroot h0031B0
+  Area: darkroot_stone
+  Includes:
+  - c2380_0000 (Giant Stone Knight). NPC 238000 @1200650
+  - c3350_0001 (Possessed Tree). NPC 335000 @1200001
+  - c3410_0001 (Frog-Ray). NPC 341000 @1200250
+  - c3410_0002 (Frog-Ray). NPC 341000 @1200251
+  - c3410_0003 (Frog-Ray). NPC 341000 @1200252
+  - c3410_0004 (Frog-Ray). NPC 341000 @1200253
+  - c3490_0001 (Good Vagrant). NPC 349004 @1203910
+- Col: darkroot h0032B0
+  Area: darkroot_stone
+  Includes:
+  - c2380_0001 (Giant Stone Knight). NPC 238000 @1200651
+  - c3491_0001 (Evil Vagrant). NPC 349104 @1203911
+  - c3491_0004 (Evil Vagrant). NPC 349204 @1203912
+- Col: darkroot h0019B0
+  Area: darkroot
+  Includes:
+  - c2710_0000 (Crystal Golem). NPC 271001
+  - c2710_0001 (Crystal Golem). NPC 271001
+  - c2710_0002 (Crystal Golem). NPC 271001
+- Col: darkroot h0014B0
+  Area: darkroot
+  Includes:
+  - c2710_0003 (Crystal Golem). NPC 271001
+- Col: darkroot h0021B0
+  Area: darkroot
+  Includes:
+  - c2795_0000 (Black Knight (Halberd)). NPC 279010 @1200750
+  - c3490_0000 (Good Vagrant). NPC 349004 @1203900
+- Col: darkroot h0062B0
+  Area: darkroot_butterfly
+  Includes:
+  - c3230_0000 (Moonlight Butterfly). NPC 323000 @1200801
+- Col: darkroot h0012B0
+  Area: darkroot
+  Includes:
+  - c3300_0000 (Crystal Lizard). NPC 330040 @1200400
+- Col: darkroot h0007B0
+  Area: darkroot_stone
+  Includes:
+  - c3350_0000 (Possessed Tree). NPC 335000 @1200000
+- Col: darkroot h0030B0
+  Area: darkroot_stone
+  Includes:
+  - c3410_0000 (Frog-Ray). NPC 341000
+- Col: darkroot h0067B0
+  Area: darkroot_forest
+  Includes:
+  - c3490_0002 (Good Vagrant). NPC 349010 @1203920
+- Col: darkroot h0035B0
+  Area: darkroot_sif
+  Includes:
+  - c5210_0000 (Sif). NPC 521000 @1200800
+- Col: darkroot h0050B0
+  Area: darkroot_forest
+  Includes:
+  - c5360_0000 (Great Feline). NPC 536000 @1200350
+  - c5360_0001 (Great Feline). NPC 536000 @1200351
+  - c5360_0002 (Great Feline). NPC 536000 @1200352
+- Col: dlc h0113B1
+  Area: dlc_manus
+  Includes:
+  - c0000_0006 (Human). NPC 6700 @6700
+  - c4500_0000 (Manus). NPC 450000 @1210840
+  - c4520_0000 (Young Sif). NPC 452010 @1210500
+  - c4520_0001 (Young Sif). NPC 452010 @1210501
+- Col: dlc h0095B1
+  Area: dlc_artorias
+  Includes:
+  - c0000_0013 (Human). NPC 6740 Ciaran @6740
+  - c4100_0000 (Artorias). NPC 410000 @1210820
+- Col: dlc h0108B1
+  Area: dlc_township
+  Includes:
+  - c2780_0000 (Mimic). NPC 278030 @1210600
+  - c4150_0004 (Bloathead). NPC 415020
+  - c4150_0017 (Bloathead). NPC 415020
+  - c4150_0023 (Bloathead). NPC 415020
+  - c4150_0025 (Bloathead). NPC 415020
+  - c4150_0031 (Bloathead). NPC 415020
+  - c4160_0007 (Bloathead Sorcerer). NPC 416020
+  - c4160_0015 (Bloathead Sorcerer). NPC 416001 @1210921
+- Col: dlc h0103B1
+  Area: dlc_township
+  Includes:
+  - c2780_0001 (Mimic). NPC 278031 @1210601
+  - c3300_0002 (Crystal Lizard). NPC 330070 @1210202
+  - c4150_0021 (Bloathead). NPC 415000
+  - c4160_0013 (Bloathead Sorcerer). NPC 416001 @1210919
+- Col: dlc h0023B1
+  Area: dlc_kalameet
+  Includes:
+  - c3300_0000 (Crystal Lizard). NPC 330070 @1210200
+- Col: dlc h0044B1
+  Area: dlc_forest
+  Includes:
+  - c3300_0001 (Crystal Lizard). NPC 330070 @1210201
+  - c4120_0004 (Stone Guardian). NPC 412000 @1210150
+  - c4120_0007 (Stone Guardian). NPC 412000 @1210151
+  - c4130_0014 (Scarecrow). NPC 413003
+- Col: dlc h1010B1
+  Area: dlc_township
+  Includes:
+  - c3300_0003 (Crystal Lizard). NPC 330070 @1210203
+  - c4150_0032 (Bloathead). NPC 415020
+- Col: dlc h0042B1
+  Area: dlc_forest
+  Includes:
+  - c3300_0004 (Crystal Lizard). NPC 330070 @1210204
+  - c3491_0000 (Evil Vagrant). NPC 349113 @1213901
+  - c3491_0003 (Evil Vagrant). NPC 349213 @1213902
+  - c4120_0000 (Stone Guardian). NPC 412000
+  - c4120_0013 (Stone Guardian). NPC 412001 @1210902
+  - c4130_0008 (Scarecrow). NPC 413002
+- Col: dlc h0036B1
+  Area: dlc_guardian
+  Includes:
+  - c3471_0000 (Sanctuary Guardian). NPC 347100 @1210800
+  - c3471_0001 (Sanctuary Guardian). NPC 347101 @1210801
+  - c3471_0002 (Sanctuary Guardian). NPC 347101 @1210802
+  - c3472_0000 (Sanctuary Guardian's Tail). NPC 347200 @1210810
+  - c3472_0001 (Sanctuary Guardian's Tail). NPC 347200 @1210811
+  - c3472_0002 (Sanctuary Guardian's Tail). NPC 347200 @1210812
+- Col: dlc h0041B1
+  Area: dlc_forest
+  Includes:
+  - c3490_0000 (Good Vagrant). NPC 349013 @1213900
+  - c4130_0007 (Scarecrow). NPC 413013
+  - c4130_0012 (Scarecrow). NPC 413001
+  - c4130_0026 (Scarecrow). NPC 413013
+- Col: dlc h3102B1
+  Area: dlc_township
+  Includes:
+  - c3490_0001 (Good Vagrant). NPC 349013 @1213910
+  - c4150_0006 (Bloathead). NPC 415000
+  - c4160_0002 (Bloathead Sorcerer). NPC 416010 @1210260
+- Col: dlc h1104B1
+  Area: dlc_township
+  Includes:
+  - c3490_0002 (Good Vagrant). NPC 349013 @1213920
+  - c4170_0000 (Humanity Phantom (small)). NPC 417000
+  - c4170_0012 (Humanity Phantom (small)). NPC 417000
+  - c4170_0015 (Humanity Phantom (small)). NPC 417000
+  - c4171_0009 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0015 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0016 (Humanity Phantom (medium)). NPC 417100
+- Col: dlc h2103B1
+  Area: dlc_township
+  Includes:
+  - c3491_0001 (Evil Vagrant). NPC 349113 @1213911
+  - c3491_0004 (Evil Vagrant). NPC 349213 @1213912
+  - c4150_0020 (Bloathead). NPC 415000
+  - c4160_0009 (Bloathead Sorcerer). NPC 416000
+- Col: dlc h1111B1
+  Area: dlc_township
+  Includes:
+  - c3491_0002 (Evil Vagrant). NPC 349113 @1213921
+  - c3491_0005 (Evil Vagrant). NPC 349213 @1213922
+  - c4172_0020 (Humanity Phantom (large)). NPC 417200
+- Col: dlc h0094B1
+  Area: dlc_forest
+  Includes:
+  - c4090_0000 (Marvelous Chester). NPC 409000 @6730
+  - c4130_0047 (Scarecrow). NPC 413014 @1210913
+  - c4130_0048 (Scarecrow). NPC 413004 @1210914
+  - c4130_0049 (Scarecrow). NPC 413004 @1210915
+  - c4190_0004 (Attack Dog (DLC)). NPC 419000
+  - c4190_0005 (Attack Dog (DLC)). NPC 419000
+- Col: dlc h0105B1
+  Area: dlc_township
+  Includes:
+  - c4090_0001 (Marvelous Chester). NPC 409010 @6731
+  - c4150_0014 (Bloathead). NPC 415020
+  - c4150_0015 (Bloathead). NPC 415020
+  - c4150_0022 (Bloathead). NPC 415020
+  - c4160_0008 (Bloathead Sorcerer). NPC 416020
+  - c4160_0011 (Bloathead Sorcerer). NPC 416020
+- Col: dlc h0102B1
+  Area: dlc_township
+  Includes:
+  - c4090_0002 (Marvelous Chester). NPC 409010 @6732
+  - c4150_0005 (Bloathead). NPC 415000
+  - c4150_0007 (Bloathead). NPC 415000
+  - c4150_0018 (Bloathead). NPC 415000
+  - c4150_0028 (Bloathead). NPC 415001 @1210916
+  - c4150_0029 (Bloathead). NPC 415001 @1210917
+  - c4160_0000 (Bloathead Sorcerer). NPC 416000
+- Col: dlc h0096B1
+  Area: dlc_gough
+  Includes:
+  - c4110_0000 (Hawkeye Gough). NPC 411000 @6720
+- Col: dlc h0047B1
+  Area: dlc_forest
+  Includes:
+  - c4120_0001 (Stone Guardian). NPC 412000
+  - c4130_0017 (Scarecrow). NPC 413000 @1210104
+  - c4130_0020 (Scarecrow). NPC 413003 @1210103
+  - c4130_0021 (Scarecrow). NPC 413000
+  - c4130_0041 (Scarecrow). NPC 413014 @1210907
+- Col: dlc h0046B1
+  Area: dlc_forest
+  Includes:
+  - c4120_0002 (Stone Guardian). NPC 412000
+  - c4120_0003 (Stone Guardian). NPC 412000
+  - c4120_0011 (Stone Guardian). NPC 412001 @1210900
+  - c4120_0012 (Stone Guardian). NPC 412001 @1210901
+  - c4130_0002 (Scarecrow). NPC 413000
+  - c4130_0003 (Scarecrow). NPC 413000
+  - c4130_0004 (Scarecrow). NPC 413000
+  - c4130_0005 (Scarecrow). NPC 413000
+- Col: dlc h0045B1
+  Area: dlc_forest
+  Includes:
+  - c4120_0005 (Stone Guardian). NPC 412000
+  - c4130_0000 (Scarecrow). NPC 413000
+  - c4130_0028 (Scarecrow). NPC 413000
+- Col: dlc h0048B1
+  Area: dlc_forest
+  Includes:
+  - c4120_0006 (Stone Guardian). NPC 412000
+  - c4130_0029 (Scarecrow). NPC 413000
+  - c4130_0031 (Scarecrow). NPC 413003
+  - c4130_0032 (Scarecrow). NPC 413000
+  - c4130_0039 (Scarecrow). NPC 413004 @1210905
+- Col: dlc h0051B1
+  Area: dlc_forest
+  Includes:
+  - c4120_0008 (Stone Guardian). NPC 412000
+  - c4130_0006 (Scarecrow). NPC 413002
+  - c4130_0009 (Scarecrow). NPC 413003
+  - c4130_0010 (Scarecrow). NPC 413002
+  - c4130_0025 (Scarecrow). NPC 413013 @1210106
+  - c4130_0046 (Scarecrow). NPC 413004 @1210912
+- Col: dlc h0050B1
+  Area: dlc_forest
+  Includes:
+  - c4130_0001 (Scarecrow). NPC 413003
+  - c4130_0016 (Scarecrow). NPC 413001 @1210100
+  - c4130_0022 (Scarecrow). NPC 413002 @1210101
+  - c4130_0023 (Scarecrow). NPC 413003 @1210102
+  - c4130_0024 (Scarecrow). NPC 413000
+  - c4130_0040 (Scarecrow). NPC 413014 @1210906
+- Col: dlc h0052B1
+  Area: dlc_forest
+  Includes:
+  - c4130_0013 (Scarecrow). NPC 413000
+  - c4130_0018 (Scarecrow). NPC 413013
+  - c4130_0042 (Scarecrow). NPC 413014 @1210908
+- Col: dlc h0040B1
+  Area: dlc_forest
+  Includes:
+  - c4130_0019 (Scarecrow). NPC 413012 @1210105
+  - c4130_0027 (Scarecrow). NPC 413010 @1210107
+- Col: dlc h0043B1
+  Area: dlc_forest
+  Includes:
+  - c4130_0033 (Scarecrow). NPC 413000
+  - c4130_0034 (Scarecrow). NPC 413000
+- Col: dlc h0035B1
+  Area: dlc_sanctuary
+  Includes:
+  - c4140_0000 (Elizabeth). NPC 414000 @6750
+- Col: dlc h0101B1
+  Area: dlc_township
+  Includes:
+  - c4150_0000 (Bloathead). NPC 415000
+  - c4150_0002 (Bloathead). NPC 415000
+  - c4150_0003 (Bloathead). NPC 415000
+  - c4150_0010 (Bloathead). NPC 415000
+  - c4160_0012 (Bloathead Sorcerer). NPC 416001 @1210918
+- Col: dlc h2100B1
+  Area: dlc_township
+  Includes:
+  - c4150_0001 (Bloathead). NPC 415000
+- Col: dlc h0104B1
+  Area: dlc_township
+  Includes:
+  - c4150_0008 (Bloathead). NPC 415020
+  - c4150_0009 (Bloathead). NPC 415020
+  - c4150_0011 (Bloathead). NPC 415020
+  - c4150_0030 (Bloathead). NPC 415001 @1210920
+- Col: dlc h0109B1
+  Area: dlc_township
+  Includes:
+  - c4150_0012 (Bloathead). NPC 415020
+  - c4150_0016 (Bloathead). NPC 415020
+  - c4150_0024 (Bloathead). NPC 415020
+  - c4160_0003 (Bloathead Sorcerer). NPC 416020
+- Col: dlc h2101B1
+  Area: dlc_township
+  Includes:
+  - c4150_0013 (Bloathead). NPC 415000
+  - c4150_0027 (Bloathead). NPC 415000
+- Col: dlc h2108B1
+  Area: dlc_township
+  Includes:
+  - c4150_0019 (Bloathead). NPC 415020
+- Col: dlc h1002B1
+  Area: dlc_township
+  Includes:
+  - c4150_0026 (Bloathead). NPC 415020 @1210350
+  - c4150_0033 (Bloathead). NPC 415020
+  - c4150_0034 (Bloathead). NPC 415020
+  - c4160_0001 (Bloathead Sorcerer). NPC 416020
+  - c4180_0005 (Chained Prisoner). NPC 418001 @1210924
+- Col: dlc h1003B1
+  Area: dlc_township
+  Includes:
+  - c4150_0035 (Bloathead). NPC 415020
+- Col: dlc h2102B1
+  Area: dlc_township
+  Includes:
+  - c4160_0004 (Bloathead Sorcerer). NPC 416000 @1210250
+  - c4160_0005 (Bloathead Sorcerer). NPC 416000 @1210251
+  - c4160_0006 (Bloathead Sorcerer). NPC 416000 @1210252
+- Col: dlc h1101B1
+  Area: dlc_township
+  Includes:
+  - c4160_0010 (Bloathead Sorcerer). NPC 416020
+  - c4171_0012 (Humanity Phantom (medium)). NPC 417100
+  - c4172_0005 (Humanity Phantom (large)). NPC 417200
+  - c4172_0006 (Humanity Phantom (large)). NPC 417200
+  - c4172_0007 (Humanity Phantom (large)). NPC 417200
+  - c4172_0008 (Humanity Phantom (large)). NPC 417200
+  - c4531_0000 (Young Alvina). NPC 453100 @6760
+- Col: dlc h1103B1
+  Area: dlc_township
+  Includes:
+  - c4170_0001 (Humanity Phantom (small)). NPC 417000 @1210300
+  - c4170_0003 (Humanity Phantom (small)). NPC 417000 @1210302
+  - c4172_0010 (Humanity Phantom (large)). NPC 417200 @1210304
+  - c4172_0018 (Humanity Phantom (large)). NPC 417200 @1210303
+  - c4520_0002 (Young Sif). NPC 452000 @1210502
+- Col: dlc h1112B1
+  Area: dlc_township
+  Includes:
+  - c4170_0002 (Humanity Phantom (small)). NPC 417000 @1210301
+  - c4171_0005 (Humanity Phantom (medium)). NPC 417100 @1210305
+- Col: dlc h1102B1
+  Area: dlc_township
+  Includes:
+  - c4170_0010 (Humanity Phantom (small)). NPC 417000
+  - c4171_0007 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0010 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0011 (Humanity Phantom (medium)). NPC 417100
+- Col: dlc h0111B1
+  Area: dlc_township
+  Includes:
+  - c4171_0000 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0001 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0002 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0003 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0004 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0006 (Humanity Phantom (medium)). NPC 417100
+  - c4172_0001 (Humanity Phantom (large)). NPC 417200
+  - c4172_0002 (Humanity Phantom (large)). NPC 417200
+  - c4172_0004 (Humanity Phantom (large)). NPC 417200
+  - c4172_0017 (Humanity Phantom (large)). NPC 417200
+  - c4180_0006 (Chained Prisoner). NPC 418001 @1210925
+- Col: dlc h0112B1
+  Area: dlc_township
+  Includes:
+  - c4171_0008 (Humanity Phantom (medium)). NPC 417100
+  - c4172_0009 (Humanity Phantom (large)). NPC 417200
+- Col: dlc h1201B1
+  Area: dlc_township
+  Includes:
+  - c4171_0013 (Humanity Phantom (medium)). NPC 417100
+  - c4171_0014 (Humanity Phantom (medium)). NPC 417100
+  - c4172_0014 (Humanity Phantom (large)). NPC 417200
+- Col: dlc h1110B1
+  Area: dlc_township
+  Includes:
+  - c4172_0000 (Humanity Phantom (large)). NPC 417200
+  - c4172_0003 (Humanity Phantom (large)). NPC 417200
+  - c4172_0016 (Humanity Phantom (large)). NPC 417200
+- Col: dlc h1210B1
+  Area: dlc_township
+  Includes:
+  - c4172_0012 (Humanity Phantom (large)). NPC 417200
+  - c4172_0013 (Humanity Phantom (large)). NPC 417200
+  - c4172_0015 (Humanity Phantom (large)). NPC 417200
+- Col: dlc h0106B1
+  Area: dlc_township
+  Includes:
+  - c4180_0000 (Chained Prisoner). NPC 418000
+  - c4180_0003 (Chained Prisoner). NPC 418001 @1210922
+- Col: dlc h0011B1
+  Area: dlc_forest
+  Includes:
+  - c4190_0001 (Attack Dog (DLC)). NPC 419000
+  - c4190_0002 (Attack Dog (DLC)). NPC 419000
+- Col: dlc h0010B1
+  Area: dlc_forest
+  Includes:
+  - c4190_0003 (Attack Dog (DLC)). NPC 419000
+- Col: dlc h0066B1
+  Area: dlc_kalameet
+  Includes:
+  - c4510_0000 (Black Dragon Kalameet). NPC 451000 @1210400
+- Col: dlc h0019B1
+  Area: dlc_kalameet
+  Includes:
+  - c4510_0001 (Black Dragon Kalameet). NPC 451001 @1210401
+- Col: dlc h0014B1
+  Area: dlc_kalameet
+  Includes:
+  - c4510_0002 (Black Dragon Kalameet). NPC 451000 @1210402
+- Col: dlc h0015B1
+  Area: dlc_kalameet
+  Includes:
+  - c4511_0000 (Kalameet's Tail). NPC 451100 @1210410
+- Col: catacombs
+  Area: catacombs
+- Col: catacombs h0101B0
+  Area: catacombs_start
+  Includes:
+  - c2900_0047 (Skeleton). NPC 290020 @1300183
+  - c2900_0048 (Skeleton). NPC 290020 @1300181
+  - c2900_0049 (Skeleton). NPC 290022 @1300182
+- Col: catacombs h0000B0
+  Area: catacombs_start
+  Includes:
+  - c2900_0000 (Skeleton). NPC 290020 @1300000
+  - c2900_0001 (Skeleton). NPC 290020 @1300001
+- Col: catacombs h0001B0
+  Area: catacombs_start
+  Includes:
+  - c2650_0004 (Necromancer). NPC 265000 @1300180
+- Col: catacombs h0036B0
+  Area: catacombs_pinwheel
+  Includes:
+  - c3320_0000 (Pinwheel). NPC 332000 @1300800
+  - c3320_0001 (Pinwheel). NPC 332001 @1300801
+  - c3320_0002 (Pinwheel). NPC 332001 @1300802
+  - c3320_0003 (Pinwheel). NPC 332001 @1300803
+  - c3320_0004 (Pinwheel). NPC 332001 @1300804
+  - c3320_0005 (Pinwheel). NPC 332001 @1300805
+  - c3320_0006 (Pinwheel). NPC 332001 @1300806
+  - c3320_0007 (Pinwheel). NPC 332001 @1300807
+  - c3320_0008 (Pinwheel). NPC 332001 @1300808
+  - c3320_0009 (Pinwheel). NPC 332001 @1300809
+  - c3320_0010 (Pinwheel). NPC 332001 @1300810
+  - c3320_0011 (Pinwheel). NPC 332001 @1300811
+  - c3320_0012 (Pinwheel). NPC 332001 @1300812
+  - c3320_0013 (Pinwheel). NPC 332001 @1300813
+  - c3320_0014 (Pinwheel). NPC 332001 @1300814
+- Col: totg
+  Area: totg
+- Col: totg h0041B1
+  Area: totg_lower
+  Includes:
+  - c0000_0007 (Human). NPC 6551 Paladin Leeroy @6551
+- Col: totg h0024B1
+  Area: totg_lower
+  Includes:
+  - c2795_0000 (Black Knight (Halberd)). NPC 279030 @1310300
+- Col: totg h0047B1
+  Area: totg_nito
+  Includes:
+  - c2900_0000 (Skeleton). NPC 290030 @1310120
+  - c2900_0001 (Skeleton). NPC 290032 @1310121
+  - c2900_0002 (Skeleton). NPC 290030 @1310122
+  - c2910_0019 (Giant Skeleton). NPC 291012 @1310125
+  - c2910_0020 (Giant Skeleton). NPC 291012 @1310124
+  - c2910_0021 (Giant Skeleton). NPC 291012 @1310123
+  - c5220_0000 (Gravelord Nito). NPC 522000 @1310800
+  - c5220_0001 (Gravelord Nito). NPC 522000 @1310810
+- Col: totg h0026B1
+  Area: totg_lower
+  Includes:
+  - c2910_0007 (Giant Skeleton). NPC 291011
+  - c2950_0002 (Skeleton Beast). NPC 295000
+  - c2950_0009 (Skeleton Beast). NPC 295001 @1310907
+  - c2950_0010 (Skeleton Beast). NPC 295001 @1310908
+- Col: totg h0021B1
+  Area: totg_lower
+  Includes:
+  - c2910_0016 (Giant Skeleton). NPC 291010
+  - c2950_0001 (Skeleton Beast). NPC 295000
+  - c2950_0005 (Skeleton Beast). NPC 295000
+- Col: totg h0043B1
+  Area: totg_lordvessel
+  Includes:
+  - c2910_0017 (Giant Skeleton). NPC 291013
+  - c2910_0018 (Giant Skeleton). NPC 291014 @1310251
+  - c2960_0012 (Bone Tower). NPC 296000 @1310200
+  - c2960_0013 (Bone Tower). NPC 296000 @1310201
+  - c2960_0014 (Bone Tower). NPC 296000 @1310202
+  - c2960_0015 (Bone Tower). NPC 296000 @1310250
+- Col: totg h0019B1
+  Area: totg_lower
+  Includes:
+  - c2910_0026 (Giant Skeleton). NPC 291015 @1310904
+  - c2950_0000 (Skeleton Beast). NPC 295000
+  - c2950_0007 (Skeleton Beast). NPC 295001 @1310905
+- Col: totg h4500B1
+  Area: totg_lordvessel
+  Includes:
+  - c2940_0000 (Skeleton Baby). NPC 294000
+  - c2940_0001 (Skeleton Baby). NPC 294000
+  - c2940_0002 (Skeleton Baby). NPC 294000
+  - c2940_0003 (Skeleton Baby). NPC 294000
+  - c2940_0004 (Skeleton Baby). NPC 294000
+  - c2940_0005 (Skeleton Baby). NPC 294000
+  - c2940_0006 (Skeleton Baby). NPC 294000
+  - c2940_0007 (Skeleton Baby). NPC 294000
+  - c2940_0008 (Skeleton Baby). NPC 294000
+  - c3490_0001 (Good Vagrant). NPC 349011 @1313910
+- Col: totg h0029B1
+  Area: totg_lower
+  Includes:
+  - c2950_0003 (Skeleton Beast). NPC 295000
+  - c2950_0004 (Skeleton Beast). NPC 295000
+  - c2950_0006 (Skeleton Beast). NPC 295000
+  - c2950_0008 (Skeleton Beast). NPC 295001 @1310906
+- Col: totg h0030B1
+  Area: totg_lower
+  Includes:
+  - c2960_0007 (Bone Tower). NPC 296000 @1310207
+  - c2960_0008 (Bone Tower). NPC 296000 @1310208
+  - c2960_0009 (Bone Tower). NPC 296000 @1310209
+  - c2960_0010 (Bone Tower). NPC 296000 @1310210
+  - c2960_0011 (Bone Tower). NPC 296000 @1310211
+- Col: totg h0042B1
+  Area: totg_lordvessel
+  Includes:
+  - c3300_0000 (Crystal Lizard). NPC 330050 @1310400
+- Col: totg h4502B1
+  Area: totg_lordvessel
+  Includes:
+  - c3320_0000 (Pinwheel). NPC 332002
+  - c3320_0001 (Pinwheel). NPC 332002
+  - c3320_0002 (Pinwheel). NPC 332002
+  - c3320_0003 (Pinwheel). NPC 332002
+  - c3320_0004 (Pinwheel). NPC 332002
+- Col: totg h0032B1
+  Area: totg_lower
+  Includes:
+  - c3491_0001 (Evil Vagrant). NPC 349111 @1313911
+  - c3491_0003 (Evil Vagrant). NPC 349211 @1313912
+- Col: greathollow
+  Area: greathollow
+- Col: greathollow h0005B2
+  Area: greathollow_ashlake
+  Includes:
+  - c0000_0004 (Human). NPC 6280 Siegmeyer of Catarina @6288
+  - c0000_0005 (Human). NPC 6291 Sieglinde of Catarina @6290
+- Col: greathollow h0502B2
+  Area: greathollow_ashlake
+  Includes:
+  - c3250_0000 (Man-Eater Shell). NPC 325001 @1320100
+  - c3250_0001 (Man-Eater Shell). NPC 325001 @1320101
+- Col: greathollow h0505B2
+  Area: greathollow_ashlake
+  Includes:
+  - c3250_0002 (Man-Eater Shell). NPC 325001 @1320102
+- Col: greathollow h0800B2
+  Area: greathollow_ashlake
+  Includes:
+  - c3450_0000 (Everlasting Dragon). NPC 345000 @1320800
+- Col: greathollow h0008B2
+  Area: greathollow_ashlake
+  Includes:
+  - c3451_0000 (Everlasting Dragon's Tail). NPC 345100 @1320801
+- Col: greathollow h0500B2
+  Area: greathollow_ashlake
+  Includes:
+  - c3490_0001 (Good Vagrant). NPC 349011 @1323910
+  - c3530_0000 (Hydra). NPC 353000 @1320700
+  - c3531_0000 (Hydra Head). NPC 353100 @1320701
+  - c3531_0001 (Hydra Head). NPC 353100 @1320702
+  - c3531_0002 (Hydra Head). NPC 353100 @1320703
+  - c3531_0003 (Hydra Head). NPC 353100 @1320704
+  - c3531_0004 (Hydra Head). NPC 353100 @1320705
+  - c3531_0005 (Hydra Head). NPC 353100 @1320706
+  - c3531_0006 (Hydra Head). NPC 353100 @1320707
+- Col: greathollow h0009B2
+  Area: greathollow_ashlake
+  Includes:
+  - c3491_0001 (Evil Vagrant). NPC 349111 @1323911
+  - c3491_0003 (Evil Vagrant). NPC 349211 @1323912
+- Col: blighttown
+  Area: blighttown
+- Col: blighttown h0004B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0000 (Infested Ghoul). NPC 206001
+  - c2060_0001 (Infested Ghoul). NPC 206000
+  - c2060_0006 (Infested Ghoul). NPC 206003 @1400900
+  - c2530_0000 (Blowdart Sniper). NPC 253002 @1400200
+- Col: blighttown h0002B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0002 (Infested Ghoul). NPC 206002
+  - c2060_0003 (Infested Ghoul). NPC 206000
+  - c2060_0004 (Infested Ghoul). NPC 206001
+  - c2810_0000 (Infested Barbarian (Club)). NPC 281000
+  - c2810_0001 (Infested Barbarian (Club)). NPC 281000
+  - c2810_0008 (Infested Barbarian (Club)). NPC 281000
+  - c3490_0000 (Good Vagrant). NPC 349007 @1403900
+- Col: blighttown h1600B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0005 (Infested Ghoul). NPC 206000
+  - c2060_0026 (Infested Ghoul). NPC 206000
+  - c2810_0002 (Infested Barbarian (Club)). NPC 281000
+- Col: blighttown h0005B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0007 (Infested Ghoul). NPC 206000
+  - c2060_0008 (Infested Ghoul). NPC 206002
+  - c2060_0009 (Infested Ghoul). NPC 206000
+  - c2060_0010 (Infested Ghoul). NPC 206000
+  - c2060_0012 (Infested Ghoul). NPC 206001 @1400450
+  - c2060_0016 (Infested Ghoul). NPC 206000
+- Col: blighttown h0017B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0011 (Infested Ghoul). NPC 206004 @1400901
+  - c2060_0015 (Infested Ghoul). NPC 206004 @1400902
+- Col: blighttown h0006B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0013 (Infested Ghoul). NPC 206000
+  - c2060_0014 (Infested Ghoul). NPC 206002
+- Col: blighttown h0028B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0017 (Infested Ghoul). NPC 206000
+  - c2060_0018 (Infested Ghoul). NPC 206000
+  - c2060_0019 (Infested Ghoul). NPC 206005 @1400903
+- Col: blighttown h0012B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0020 (Infested Ghoul). NPC 206003 @1400904
+  - c2060_0023 (Infested Ghoul). NPC 206000
+  - c2060_0024 (Infested Ghoul). NPC 206000
+  - c2530_0002 (Blowdart Sniper). NPC 253002 @1400202
+  - c5240_0000 (Parasitic Wall Hugger). NPC 524000 @1400000
+- Col: blighttown h0010B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0021 (Infested Ghoul). NPC 206000
+  - c3341_0000 (Flaming Attack Dog). NPC 334100
+  - c3341_0002 (Flaming Attack Dog). NPC 334100
+- Col: blighttown h0013B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0022 (Infested Ghoul). NPC 206000
+- Col: blighttown h0011B0
+  Area: blighttown_upper
+  Includes:
+  - c2060_0025 (Infested Ghoul). NPC 206002
+  - c2530_0001 (Blowdart Sniper). NPC 253002 @1400201
+  - c3491_0000 (Evil Vagrant). NPC 349107 @1403901
+  - c3491_0001 (Evil Vagrant). NPC 349207 @1403902
+- Col: blighttown h0060B0
+  Area: blighttown
+  Includes:
+  - c2810_0010 (Infested Barbarian (Club)). NPC 281000
+- Col: blighttown h0060B0
+  Area: newlondo_drakes
+  Includes:
+  - c2810_0011 (Infested Barbarian (Club)). NPC 281000
+  - c2810_0012 (Infested Barbarian (Club)). NPC 281000
+- Col: blighttown h0058B0
+  Area: blighttown_bell
+  Includes:
+  - c3210_0000 (Egg Carrier). NPC 321001 @6160
+  - c5340_0000 (The Fair Lady). NPC 534000 @1400700
+- Col: blighttown h5802B0
+  Area: blighttown_bell
+  Includes:
+  - c3220_0000 (Vile Maggot). NPC 322000 @1400411
+  - c3220_0001 (Vile Maggot). NPC 322000 @1400412
+  - c3220_0002 (Vile Maggot). NPC 322000 @1400413
+  - c3220_0003 (Vile Maggot). NPC 322000 @1400414
+  - c3220_0004 (Vile Maggot). NPC 322000 @1400415
+- Col: blighttown h0008B0
+  Area: blighttown_upper
+  Includes:
+  - c3341_0001 (Flaming Attack Dog). NPC 334100
+  - c3341_0003 (Flaming Attack Dog). NPC 334100
+- Col: blighttown h0053B0
+  Area: blighttown_quelaag
+  Includes:
+  - c5280_0000 (Quelaag). NPC 528000 @1400800
+- Col: demonruins h0064B1
+  Area: demonruins_izalith
+  Includes:
+  - c0000_0002 (Human). NPC 6003 Solaire @6002
+- Col: demonruins h0042B1
+  Area: demonruins_izalith
+  Includes:
+  - c0000_0003 (Human). NPC 6004 Solaire @6004
+  - c3300_0000 (Crystal Lizard). NPC 330020 @1410110
+  - c3480_0000 (Chaos Bug). NPC 348001 @1410100
+  - c3480_0001 (Chaos Bug). NPC 348000
+  - c3480_0002 (Chaos Bug). NPC 348000
+  - c3480_0003 (Chaos Bug). NPC 348000
+  - c3480_0004 (Chaos Bug). NPC 348000
+- Col: demonruins h0046B1
+  Area: demonruins_izalith
+  Includes:
+  - c0000_0005 (Human). NPC 6284 Siegmeyer of Catarina @6286
+  - c3240_0007 (Chaos Eater). NPC 324000
+- Col: demonruins h0061B1
+  Area: demonruins_stairs
+  Includes:
+  - c0000_0007 (Human). NPC 6543 Solaire @6542
+- Col: demonruins h0010B1
+  Area: demonruins_lower
+  Includes:
+  - c0000_0008 (Human). NPC 6561 Kirk @6560
+- Col: demonruins h0037B1
+  Area: demonruins_izalith
+  Includes:
+  - c0000_0009 (Human). NPC 6562 Kirk @6561
+  - c0000_0010 (Human). NPC 6620 @6620
+  - c3240_0008 (Chaos Eater). NPC 324000
+- Col: demonruins h0018B1
+  Area: demonruins_firesage
+  Includes:
+  - c2231_0000 (Demon Firesage). NPC 223100 @1410400
+- Col: demonruins h0009B1
+  Area: demonruins
+  Includes:
+  - c2240_0000 (Capra Demon). NPC 224001
+- Col: demonruins h1500B1
+  Area: demonruins_lower
+  Includes:
+  - c2240_0001 (Capra Demon). NPC 224001
+  - c2250_0000 (Taurus Demon). NPC 225002
+- Col: demonruins h0012B1
+  Area: demonruins_lower
+  Includes:
+  - c2240_0002 (Capra Demon). NPC 224001
+  - c2240_0003 (Capra Demon). NPC 224001
+  - c2240_0004 (Capra Demon). NPC 224001
+  - c2240_0005 (Capra Demon). NPC 224001
+  - c2240_0006 (Capra Demon). NPC 224001
+  - c2240_0008 (Capra Demon). NPC 224002 @1410901
+  - c2240_0009 (Capra Demon). NPC 224002 @1410902
+  - c3491_0001 (Evil Vagrant). NPC 349112 @1413911
+  - c3491_0005 (Evil Vagrant). NPC 349212 @1413912
+- Col: demonruins h0014B1
+  Area: demonruins_lower
+  Includes:
+  - c2240_0007 (Capra Demon). NPC 224002 @1410900
+  - c2240_0010 (Capra Demon). NPC 224002 @1410903
+  - c2240_0011 (Capra Demon). NPC 224002 @1410904
+  - c2430_0007 (Demonic Statue). NPC 243000
+  - c2430_0008 (Demonic Statue). NPC 243000
+  - c2430_0009 (Demonic Statue). NPC 243000
+  - c2430_0010 (Demonic Statue). NPC 243000
+  - c2430_0011 (Demonic Statue). NPC 243000
+- Col: demonruins h0015B1
+  Area: demonruins_lower
+  Includes:
+  - c2250_0001 (Taurus Demon). NPC 225002
+  - c2430_0012 (Demonic Statue). NPC 243000
+  - c2430_0013 (Demonic Statue). NPC 243000
+  - c3390_0001 (Burrowing Rockworm). NPC 339001 @1410301
+- Col: demonruins h0016B1
+  Area: demonruins_lower
+  Includes:
+  - c2250_0002 (Taurus Demon). NPC 225002
+  - c3390_0002 (Burrowing Rockworm). NPC 339003 @1410302
+  - c3390_0003 (Burrowing Rockworm). NPC 339003 @1410303
+  - c3390_0004 (Burrowing Rockworm). NPC 339003 @1410304
+  - c3390_0005 (Burrowing Rockworm). NPC 339003 @1410305
+  - c3390_0006 (Burrowing Rockworm). NPC 339003 @1410306
+  - c3490_0001 (Good Vagrant). NPC 349012 @1413910
+- Col: demonruins h1008B1
+  Area: demonruins
+  Includes:
+  - c2250_0003 (Taurus Demon). NPC 225002 @1410450
+  - c2250_0004 (Taurus Demon). NPC 225002 @1410451
+  - c2250_0005 (Taurus Demon). NPC 225002 @1410452
+  - c2250_0006 (Taurus Demon). NPC 225002 @1410453
+  - c2250_0007 (Taurus Demon). NPC 225002 @1410454
+  - c2250_0008 (Taurus Demon). NPC 225002 @1410455
+  - c2250_0009 (Taurus Demon). NPC 225002 @1410456
+- Col: demonruins h0041B1
+  Area: demonruins_izalith
+  Includes:
+  - c2300_0000 (Titanite Demon). NPC 230005 @1310150
+- Col: demonruins h0019B1
+  Area: demonruins_stairs
+  Includes:
+  - c2430_0000 (Demonic Statue). NPC 243000
+  - c2430_0003 (Demonic Statue). NPC 243000
+  - c2430_0004 (Demonic Statue). NPC 243000
+  - c2430_0005 (Demonic Statue). NPC 243000
+  - c2430_0006 (Demonic Statue). NPC 243000
+  - c2430_0031 (Demonic Statue). NPC 243000
+  - c2430_0032 (Demonic Statue). NPC 243000
+- Col: demonruins h0038B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0014 (Demonic Statue). NPC 243001
+  - c2430_0015 (Demonic Statue). NPC 243001
+  - c2430_0016 (Demonic Statue). NPC 243001
+  - c2430_0020 (Demonic Statue). NPC 243001
+  - c2430_0021 (Demonic Statue). NPC 243001
+  - c2430_0043 (Demonic Statue). NPC 243001
+  - c2430_0044 (Demonic Statue). NPC 243001
+- Col: demonruins h0034B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0018 (Demonic Statue). NPC 243001
+  - c2430_0038 (Demonic Statue). NPC 243001
+  - c2430_0039 (Demonic Statue). NPC 243001
+  - c2430_0040 (Demonic Statue). NPC 243001
+  - c2430_0041 (Demonic Statue). NPC 243001
+- Col: demonruins h0036B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0022 (Demonic Statue). NPC 243001
+  - c3240_0001 (Chaos Eater). NPC 324000
+- Col: demonruins h0033B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0023 (Demonic Statue). NPC 243001
+  - c2430_0033 (Demonic Statue). NPC 243001
+  - c2430_0034 (Demonic Statue). NPC 243001
+  - c2430_0035 (Demonic Statue). NPC 243001
+  - c2430_0036 (Demonic Statue). NPC 243001
+  - c2430_0037 (Demonic Statue). NPC 243001
+- Col: demonruins h0040B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0024 (Demonic Statue). NPC 243001
+- Col: demonruins h0039B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0025 (Demonic Statue). NPC 243001
+  - c2430_0026 (Demonic Statue). NPC 243001
+  - c3491_0004 (Evil Vagrant). NPC 349112 @1413931
+  - c3491_0007 (Evil Vagrant). NPC 349212 @1413932
+- Col: demonruins h2801B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0027 (Demonic Statue). NPC 243001
+  - c2430_0028 (Demonic Statue). NPC 243001
+- Col: demonruins h2900B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0029 (Demonic Statue). NPC 243001
+  - c2430_0030 (Demonic Statue). NPC 243001
+- Col: demonruins h0035B1
+  Area: demonruins_izalith
+  Includes:
+  - c2430_0042 (Demonic Statue). NPC 243001
+- Col: demonruins h0100B1
+  Area: demonruins
+  Includes:
+  - c3210_0000 (Egg Carrier). NPC 321000 @1410200
+  - c3210_0001 (Egg Carrier). NPC 321000 @1410201
+  - c3210_0002 (Egg Carrier). NPC 321000 @1410202
+  - c3210_0003 (Egg Carrier). NPC 321000 @1410203
+  - c3210_0004 (Egg Carrier). NPC 321000 @1410204
+  - c3210_0005 (Egg Carrier). NPC 321000 @1410205
+  - c3210_0006 (Egg Carrier). NPC 321000 @1410206
+  - c3210_0007 (Egg Carrier). NPC 321000 @1410207
+  - c3210_0008 (Egg Carrier). NPC 321000 @1410208
+  - c3210_0011 (Egg Carrier). NPC 321000 @1410211
+  - c3210_0012 (Egg Carrier). NPC 321000 @1410212
+  - c3210_0013 (Egg Carrier). NPC 321000 @1410213
+  - c3220_0000 (Vile Maggot). NPC 322000 @1410220
+  - c3220_0001 (Vile Maggot). NPC 322000 @1410221
+  - c3220_0002 (Vile Maggot). NPC 322000 @1410222
+  - c3220_0003 (Vile Maggot). NPC 322000 @1410223
+  - c3220_0004 (Vile Maggot). NPC 322000 @1410224
+  - c3220_0005 (Vile Maggot). NPC 322000 @1410225
+  - c3220_0006 (Vile Maggot). NPC 322000 @1410226
+  - c3220_0007 (Vile Maggot). NPC 322000 @1410227
+  - c3220_0008 (Vile Maggot). NPC 322000 @1410228
+  - c3220_0009 (Vile Maggot). NPC 322000 @1410229
+  - c3220_0010 (Vile Maggot). NPC 322000 @1410230
+  - c3220_0011 (Vile Maggot). NPC 322000 @1410231
+  - c3220_0012 (Vile Maggot). NPC 322000 @1410232
+  - c3220_0013 (Vile Maggot). NPC 322000 @1410233
+  - c3220_0014 (Vile Maggot). NPC 322000 @1410234
+  - c3220_0015 (Vile Maggot). NPC 322000 @1410235
+  - c3220_0016 (Vile Maggot). NPC 322000 @1410236
+  - c3220_0017 (Vile Maggot). NPC 322000 @1410237
+  - c3220_0018 (Vile Maggot). NPC 322000 @1410238
+  - c3220_0019 (Vile Maggot). NPC 322000 @1410239
+  - c3220_0020 (Vile Maggot). NPC 322000 @1410240
+  - c3220_0021 (Vile Maggot). NPC 322000 @1410241
+  - c3220_0022 (Vile Maggot). NPC 322000 @1410242
+  - c3220_0023 (Vile Maggot). NPC 322000 @1410243
+  - c3220_0024 (Vile Maggot). NPC 322000 @1410244
+  - c3220_0025 (Vile Maggot). NPC 322000 @1410245
+  - c3220_0026 (Vile Maggot). NPC 322000 @1410246
+  - c3220_0027 (Vile Maggot). NPC 322000 @1410247
+  - c3220_0028 (Vile Maggot). NPC 322000 @1410248
+  - c3220_0029 (Vile Maggot). NPC 322000 @1410249
+  - c3220_0030 (Vile Maggot). NPC 322000 @1410250
+  - c3220_0031 (Vile Maggot). NPC 322000 @1410251
+  - c3220_0032 (Vile Maggot). NPC 322000 @1410252
+  - c3220_0033 (Vile Maggot). NPC 322000 @1410253
+  - c3220_0034 (Vile Maggot). NPC 322000 @1410254
+  - c3220_0035 (Vile Maggot). NPC 322000 @1410255
+  - c3220_0036 (Vile Maggot). NPC 322000 @1410256
+  - c3220_0037 (Vile Maggot). NPC 322000 @1410257
+  - c3220_0038 (Vile Maggot). NPC 322000 @1410258
+  - c3220_0039 (Vile Maggot). NPC 322000 @1410259
+  - c3220_0040 (Vile Maggot). NPC 322000 @1410260
+  - c3220_0041 (Vile Maggot). NPC 322000 @1410261
+  - c3220_0042 (Vile Maggot). NPC 322000 @1410262
+  - c3220_0043 (Vile Maggot). NPC 322000 @1410263
+  - c3220_0044 (Vile Maggot). NPC 322000 @1410264
+  - c3220_0055 (Vile Maggot). NPC 322000 @1410275
+  - c3220_0056 (Vile Maggot). NPC 322000 @1410276
+  - c3220_0057 (Vile Maggot). NPC 322000 @1410277
+  - c3220_0058 (Vile Maggot). NPC 322000 @1410278
+  - c3220_0059 (Vile Maggot). NPC 322000 @1410279
+  - c3220_0060 (Vile Maggot). NPC 322000 @1410280
+  - c3220_0061 (Vile Maggot). NPC 322000 @1410281
+  - c3220_0062 (Vile Maggot). NPC 322000 @1410282
+  - c3220_0063 (Vile Maggot). NPC 322000 @1410283
+  - c3220_0064 (Vile Maggot). NPC 322000 @1410284
+  - c3220_0065 (Vile Maggot). NPC 322000 @1410285
+  - c3220_0066 (Vile Maggot). NPC 322000 @1410286
+  - c3220_0067 (Vile Maggot). NPC 322000 @1410287
+  - c3220_0068 (Vile Maggot). NPC 322000 @1410288
+  - c3220_0069 (Vile Maggot). NPC 322000 @1410289
+- Col: demonruins h0003B1
+  Area: demonruins
+  Includes:
+  - c3210_0009 (Egg Carrier). NPC 321000 @1410209
+  - c3220_0045 (Vile Maggot). NPC 322000 @1410265
+  - c3220_0046 (Vile Maggot). NPC 322000 @1410266
+  - c3220_0047 (Vile Maggot). NPC 322000 @1410267
+  - c3220_0048 (Vile Maggot). NPC 322000 @1410268
+  - c3220_0049 (Vile Maggot). NPC 322000 @1410269
+- Col: demonruins h0002B1
+  Area: demonruins
+  Includes:
+  - c3210_0010 (Egg Carrier). NPC 321000 @1410210
+  - c3220_0050 (Vile Maggot). NPC 322000 @1410270
+  - c3220_0051 (Vile Maggot). NPC 322000 @1410271
+  - c3220_0052 (Vile Maggot). NPC 322000 @1410272
+  - c3220_0053 (Vile Maggot). NPC 322000 @1410273
+  - c3220_0054 (Vile Maggot). NPC 322000 @1410274
+  - c3490_0000 (Good Vagrant). NPC 349012 @1413900
+  - c3491_0000 (Evil Vagrant). NPC 349112 @1413901
+  - c3491_0003 (Evil Vagrant). NPC 349212 @1413902
+- Col: demonruins h0048B1
+  Area: demonruins_izalith
+  Includes:
+  - c3240_0002 (Chaos Eater). NPC 324000 @1410410
+  - c3240_0003 (Chaos Eater). NPC 324000 @1410411
+  - c3240_0004 (Chaos Eater). NPC 324000 @1410412
+  - c3240_0005 (Chaos Eater). NPC 324000 @1410413
+  - c3240_0009 (Chaos Eater). NPC 324001 @1410905
+  - c3240_0010 (Chaos Eater). NPC 324001 @1410906
+  - c3240_0011 (Chaos Eater). NPC 324001 @1410907
+- Col: demonruins h0047B1
+  Area: demonruins_izalith
+  Includes:
+  - c3240_0006 (Chaos Eater). NPC 324000
+- Col: demonruins h0013B1
+  Area: demonruins_lower
+  Includes:
+  - c3390_0007 (Burrowing Rockworm). NPC 339002 @1410307
+- Col: demonruins h0027B1
+  Area: demonruins_izalith
+  Includes:
+  - c3421_0000 (Bounding Demon). NPC 342101 @1410350
+  - c3421_0001 (Bounding Demon). NPC 342101 @1410351
+  - c3421_0005 (Bounding Demon). NPC 342101 @1410355
+  - c3421_0010 (Bounding Demon). NPC 342101 @1410360
+  - c3421_0011 (Bounding Demon). NPC 342101 @1410361
+  - c3421_0012 (Bounding Demon). NPC 342101 @1410362
+  - c3421_0013 (Bounding Demon). NPC 342101 @1410363
+  - c3421_0014 (Bounding Demon). NPC 342101 @1410364
+  - c3421_0015 (Bounding Demon). NPC 342101 @1410365
+- Col: demonruins h2800B1
+  Area: demonruins_izalith
+  Includes:
+  - c3421_0002 (Bounding Demon). NPC 342101 @1410352
+  - c3421_0003 (Bounding Demon). NPC 342101 @1410353
+  - c3421_0007 (Bounding Demon). NPC 342101 @1410357
+  - c3421_0008 (Bounding Demon). NPC 342101 @1410358
+  - c3421_0016 (Bounding Demon). NPC 342101 @1410366
+  - c3421_0017 (Bounding Demon). NPC 342101 @1410367
+  - c3421_0018 (Bounding Demon). NPC 342101 @1410368
+- Col: demonruins h0029B1
+  Area: demonruins_izalith
+  Includes:
+  - c3421_0004 (Bounding Demon). NPC 342101 @1410354
+  - c3421_0009 (Bounding Demon). NPC 342101 @1410359
+  - c3421_0019 (Bounding Demon). NPC 342101 @1410369
+  - c3421_0020 (Bounding Demon). NPC 342101 @1410370
+  - c3421_0021 (Bounding Demon). NPC 342101 @1410371
+  - c3421_0022 (Bounding Demon). NPC 342101 @1410372
+  - c3421_0023 (Bounding Demon). NPC 342101 @1410373
+  - c3421_0024 (Bounding Demon). NPC 342101 @1410374
+  - c3421_0025 (Bounding Demon). NPC 342101 @1410375
+  - c3421_0026 (Bounding Demon). NPC 342101 @1410376
+  - c3421_0027 (Bounding Demon). NPC 342101 @1410377
+  - c3421_0028 (Bounding Demon). NPC 342101 @1410378
+- Col: demonruins h0028B1
+  Area: demonruins_izalith
+  Includes:
+  - c3421_0006 (Bounding Demon). NPC 342101 @1410356
+- Col: demonruins h0022B1
+  Area: demonruins_lordvessel
+  Includes:
+  - c3480_0005 (Chaos Bug). NPC 348000
+  - c3480_0006 (Chaos Bug). NPC 348000
+  - c3480_0007 (Chaos Bug). NPC 348000
+  - c3480_0008 (Chaos Bug). NPC 348000
+- Col: demonruins h0020B1
+  Area: demonruins_elevator
+  Includes:
+  - c3490_0002 (Good Vagrant). NPC 349012 @1413920
+  - c3491_0002 (Evil Vagrant). NPC 349112 @1413921
+  - c3491_0006 (Evil Vagrant). NPC 349212 @1413922
+- Col: demonruins h1028B1
+  Area: demonruins_izalith
+  Includes:
+  - c3490_0003 (Good Vagrant). NPC 349012 @1413930
+- Col: demonruins h0062B1
+  Area: demonruins_centipede
+  Includes:
+  - c5200_0000 (Centipede Demon). NPC 520000 @1410700
+  - c5201_0000 (Centipede Demon's Arm). NPC 520100 @1410710
+  - c5201_0001 (Centipede Demon's Arm). NPC 520100 @1410711
+  - c5201_0002 (Centipede Demon's Arm). NPC 520100 @1410712
+  - c5201_0003 (Centipede Demon's Arm). NPC 520100 @1410713
+  - c5201_0004 (Centipede Demon's Arm). NPC 520100 @1410714
+  - c5202_0000 (Centipede Demon's Tail). NPC 520200 @1410720
+  - c5202_0001 (Centipede Demon's Tail). NPC 520200 @1410721
+  - c5202_0002 (Centipede Demon's Tail). NPC 520200 @1410722
+  - c5202_0003 (Centipede Demon's Tail). NPC 520200 @1410723
+  - c5202_0004 (Centipede Demon's Tail). NPC 520200 @1410724
+- Col: demonruins h0045B1
+  Area: demonruins_bedofchaos
+  Includes:
+  - c5230_0000 (Bed of Chaos). NPC 523000 @1410801
+  - c5400_0000 (Bed of Chaos Arm). NPC 540000 @1410800
+- Col: demonruins h0000B1
+  Area: demonruins_ceaseless
+  Includes:
+  - c5250_0000 (Ceaseless Discharge). NPC 525000 @1410600
+- Col: demonruins h4500B1
+  Area: demonruins_bedofchaos
+  Includes:
+  - c5401_0000 (Bed of Chaos Worm). NPC 540100 @1410802
+- Col: sens h0005B0_0000
+  Area: sens
+  Includes:
+  - c0000_0004 (Human). NPC 6030 Big Hat Logan @6030
+  - c2690_0005 (Serpent Soldier). NPC 269003 @1500122
+- Col: sens h0033B0_0000
+  Area: sens_upper
+  Includes:
+  - c0000_0005 (Human). NPC 6250 Crestfallen Merchant @6250
+  - c3490_0002 (Good Vagrant). NPC 349008 @1503920
+- Col: sens h0001B0_0000
+  Area: sens
+  Includes:
+  - c0000_0006 (Human). NPC 6280 Siegmeyer of Catarina @6280
+- Col: sens h0028B0_0000
+  Area: sens_upper
+  Includes:
+  - c0000_0007 (Human). NPC 6510 Black Iron Tarkus @6510
+- Col: sens h0091B0_0000
+  Area: sens_mid
+  Includes:
+  - c0000_0008 (Human). NPC 6041 Griggs of Vinheim @6043
+  - c2700_0009 (Serpent Mage). NPC 270002 @1500908
+- Col: sens h0030B0_0000
+  Area: sens_upper
+  Includes:
+  - c0000_0009 (Human). NPC 6600 Undead Prince Ricard @6600
+- Col: sens h0105B0_0000
+  Area: sens
+  Includes:
+  - c2300_0000 (Titanite Demon). NPC 230002 @1500300
+  - c2300_0001 (Titanite Demon). NPC 230002 @1500301
+  - c3491_0000 (Evil Vagrant). NPC 349108 @1503901
+  - c3491_0003 (Evil Vagrant). NPC 349208 @1503902
+- Col: sens h0114B0_0000
+  Area: sens
+  Includes:
+  - c2300_0002 (Titanite Demon). NPC 230001 @1500302
+- Col: sens h0103B0_0000
+  Area: sens
+  Includes:
+  - c2300_0003 (Titanite Demon). NPC 230001 @1500303
+- Col: sens h0024B0_0000
+  Area: sens_irongolem
+  Includes:
+  - c2320_0000 (Iron Golem). NPC 232000 @1500800
+- Col: sens h0024B0_0000
+  Area: sens_upper
+  Includes:
+  - c2560_0000 (Balder Knight). NPC 256011
+  - c2860_0001 (Giant). NPC 286000 @1500100
+- Col: sens h0020B0_0000
+  Area: sens_upper
+  Includes:
+  - c2560_0001 (Balder Knight). NPC 256010
+- Col: sens h0037B0_0000
+  Area: sens_upper
+  Includes:
+  - c2560_0002 (Balder Knight). NPC 256010
+- Col: sens h0022B0_0000
+  Area: sens_upper
+  Includes:
+  - c2560_0003 (Balder Knight). NPC 256012
+- Col: sens h0021B0_0000
+  Area: sens_upper
+  Includes:
+  - c2570_0000 (Heavy Knight). NPC 257011 @1500201
+- Col: sens h0002B0_0000
+  Area: sens
+  Includes:
+  - c2690_0000 (Serpent Soldier). NPC 269000 @1500200
+  - c2690_0001 (Serpent Soldier). NPC 269000
+  - c2690_0002 (Serpent Soldier). NPC 269000
+- Col: sens h0003B0_0000
+  Area: sens
+  Includes:
+  - c2690_0003 (Serpent Soldier). NPC 269000
+  - c2690_0012 (Serpent Soldier). NPC 269004 @1500900
+  - c2690_0013 (Serpent Soldier). NPC 269004 @1500901
+  - c2700_0001 (Serpent Mage). NPC 270000
+  - c2700_0003 (Serpent Mage). NPC 270000
+  - c2700_0004 (Serpent Mage). NPC 270000
+  - c2700_0005 (Serpent Mage). NPC 270000
+- Col: sens h0006B0_0000
+  Area: sens
+  Includes:
+  - c2690_0004 (Serpent Soldier). NPC 269000 @1500110
+  - c2700_0000 (Serpent Mage). NPC 270000
+- Col: sens h0060B0_0000
+  Area: sens
+  Includes:
+  - c2690_0006 (Serpent Soldier). NPC 269000 @1500120
+  - c2690_0007 (Serpent Soldier). NPC 269000 @1500121
+- Col: sens h0007B0_0000
+  Area: sens
+  Includes:
+  - c2690_0008 (Serpent Soldier). NPC 269000
+  - c2690_0015 (Serpent Soldier). NPC 269004 @1500903
+- Col: sens h0014B0_0000
+  Area: sens_mid
+  Includes:
+  - c2690_0009 (Serpent Soldier). NPC 269000
+  - c2700_0007 (Serpent Mage). NPC 270000
+  - c2700_0008 (Serpent Mage). NPC 270002 @1500907
+- Col: sens h0016B0_0000
+  Area: sens_mid
+  Includes:
+  - c2690_0010 (Serpent Soldier). NPC 269000
+  - c2690_0011 (Serpent Soldier). NPC 269000
+  - c2690_0016 (Serpent Soldier). NPC 269004 @1500904
+  - c2700_0006 (Serpent Mage). NPC 270000
+- Col: sens h0015B0_0000
+  Area: sens_mid
+  Includes:
+  - c2690_0014 (Serpent Soldier). NPC 269004 @1500902
+- Col: sens h0032B0_0000
+  Area: sens_upper
+  Includes:
+  - c2690_0017 (Serpent Soldier). NPC 269004 @1500905
+  - c2690_0018 (Serpent Soldier). NPC 269004 @1500906
+  - c2700_0011 (Serpent Mage). NPC 270000
+- Col: sens h0017B0_0000
+  Area: sens_mid
+  Includes:
+  - c2700_0002 (Serpent Mage). NPC 270000
+  - c3490_0001 (Good Vagrant). NPC 349008 @1503910
+- Col: sens h0040B0_0000
+  Area: sens_upper
+  Includes:
+  - c2700_0010 (Serpent Mage). NPC 270002 @1500909
+- Col: sens h0012B0_0000
+  Area: sens_mid
+  Includes:
+  - c2780_0000 (Mimic). NPC 278000 @1500010
+- Col: sens h0035B0_0000
+  Area: sens_upper
+  Includes:
+  - c2860_0000 (Giant). NPC 286002 @1500101
+- Col: sens h0100B0_0000
+  Area: sens
+  Includes:
+  - c2860_0003 (Giant). NPC 286000 @1500102
+  - c3490_0000 (Good Vagrant). NPC 349008 @1503900
+- Col: sens h0019B0_0000
+  Area: sens_mid
+  Includes:
+  - c3491_0001 (Evil Vagrant). NPC 349108 @1503911
+  - c3491_0004 (Evil Vagrant). NPC 349208 @1503912
+- Col: sens h0039B0_0000
+  Area: sens_upper
+  Includes:
+  - c3491_0002 (Evil Vagrant). NPC 349108 @1503921
+  - c3491_0005 (Evil Vagrant). NPC 349208 @1503922
+- Col: anorlondo h0103B1_0000
+  Area: anorlondo_start
+  Includes:
+  - c0000_0003 (Human). NPC 6010 Darkmoon Knight @6010
+- Col: anorlondo h0021B1_0000
+  Area: anorlondo_cathedral
+  Includes:
+  - c0000_0004 (Human). NPC 6301 Lautrec of Carim @6302
+  - c0000_0009 (Human). NPC 6490 Lautrec's Guard @6490
+  - c0000_0010 (Human). NPC 6500 Lautrec's Guard @6500
+  - c0000_0012 (Human). NPC 6640 Darkmoon Soldier @6640
+  - c0000_0013 (Human). NPC 6650 Darkmoon Soldier @6650
+  - c2870_0012 (Sentinel or Royal Sentinel). NPC 287000 @1510412
+  - c2870_0013 (Sentinel or Royal Sentinel). NPC 287000 @1510413
+- Col: anorlondo h0017B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c0000_0005 (Human). NPC 6281 Siegmeyer of Catarina @6283
+  - c2410_0000 (Silver Knight). NPC 241000 @1510320
+  - c2410_0001 (Silver Knight). NPC 241003 @1510305
+  - c2410_0006 (Silver Knight). NPC 241000 @1510324
+  - c2410_0009 (Silver Knight). NPC 241000 @1510300
+  - c2410_0014 (Silver Knight). NPC 241000 @1510301
+  - c2410_0015 (Silver Knight). NPC 241000 @1510302
+  - c2410_0017 (Silver Knight). NPC 241006 @1510904
+  - c2780_0002 (Mimic). NPC 278012 @1510202
+  - c2780_0003 (Mimic). NPC 278013 @1510203
+- Col: anorlondo h0116B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c0000_0006 (Human). NPC 6002 Solaire @6003
+- Col: anorlondo h0025B1_0000
+  Area: anorlondo_cathedral
+  Includes:
+  - c0000_0011 (Human). NPC 6542 Solaire @6543
+  - c2410_0005 (Silver Knight). NPC 241004 @1510500
+  - c3491_0003 (Evil Vagrant). NPC 349109 @1513921
+  - c3491_0005 (Evil Vagrant). NPC 349209 @1513922
+- Col: anorlondo h0000B1_0000
+  Area: anorlondo_start
+  Includes:
+  - c2260_0000 (Batwing Demon). NPC 226000 @1510100
+- Col: anorlondo h0012B1_0000
+  Area: anorlondo_main
+  Includes:
+  - c2260_0003 (Batwing Demon). NPC 226000 @1510110
+  - c2260_0004 (Batwing Demon). NPC 226000 @1510111
+  - c2260_0010 (Batwing Demon). NPC 226000 @1510117
+  - c3490_0001 (Good Vagrant). NPC 349009 @1513910
+- Col: anorlondo h0014B1_0000
+  Area: anorlondo_main
+  Includes:
+  - c2260_0005 (Batwing Demon). NPC 226000 @1510112
+  - c2260_0006 (Batwing Demon). NPC 226000 @1510113
+  - c2410_0011 (Silver Knight). NPC 241004 @1510327
+  - c2410_0012 (Silver Knight). NPC 241004 @1510328
+  - c3491_0001 (Evil Vagrant). NPC 349109 @1513911
+  - c3491_0004 (Evil Vagrant). NPC 349209 @1513912
+- Col: anorlondo h0013B1_0000
+  Area: anorlondo_blacksmith
+  Includes:
+  - c2260_0007 (Batwing Demon). NPC 226000 @1510114
+  - c2260_0008 (Batwing Demon). NPC 226000 @1510115
+  - c2260_0011 (Batwing Demon). NPC 226000 @1510118
+  - c2260_0012 (Batwing Demon). NPC 226000 @1510119
+- Col: anorlondo h0019B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c2300_0000 (Titanite Demon). NPC 230004 @1510250
+  - c2410_0002 (Silver Knight). NPC 241004 @1510321
+- Col: anorlondo h0022B1_0000
+  Area: anorlondo_os
+  Includes:
+  - c2360_0000 (Smough). NPC 236000 @1510810
+  - c2360_0001 (Smough). NPC 236001 @1510811
+  - c5270_0000 (Ornstein). NPC 527000 @1510800
+  - c5271_0000 (Super Ornstein). NPC 527100 @1510801
+- Col: anorlondo h0007B1_0000
+  Area: anorlondo_rafters
+  Includes:
+  - c2400_0000 (Painting Guardian). NPC 240000
+  - c2400_0001 (Painting Guardian). NPC 240000
+  - c2400_0002 (Painting Guardian). NPC 240000
+  - c2400_0004 (Painting Guardian). NPC 240000
+  - c2400_0010 (Painting Guardian). NPC 240000 @1510310
+  - c2400_0011 (Painting Guardian). NPC 240000
+  - c3491_0000 (Evil Vagrant). NPC 349109 @1513901
+  - c3491_0002 (Evil Vagrant). NPC 349209 @1513902
+- Col: anorlondo h0207B1_0000
+  Area: anorlondo_rafters
+  Includes:
+  - c2400_0003 (Painting Guardian). NPC 240000
+- Col: anorlondo h0038B1_0000
+  Area: anorlondo_main
+  Includes:
+  - c2400_0005 (Painting Guardian). NPC 240000
+  - c2400_0006 (Painting Guardian). NPC 240000
+  - c2400_0015 (Painting Guardian). NPC 240000
+  - c2400_0016 (Painting Guardian). NPC 240000
+- Col: anorlondo h0039B1_0000
+  Area: anorlondo_painting
+  Includes:
+  - c2400_0007 (Painting Guardian). NPC 240000
+  - c2400_0008 (Painting Guardian). NPC 240000
+  - c2400_0009 (Painting Guardian). NPC 240000
+  - c2400_0012 (Painting Guardian). NPC 240000
+  - c2400_0013 (Painting Guardian). NPC 240000
+  - c2400_0014 (Painting Guardian). NPC 240000
+- Col: anorlondo h0016B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c2410_0003 (Silver Knight). NPC 241003 @1510322
+  - c2410_0004 (Silver Knight). NPC 241003 @1510323
+  - c2410_0010 (Silver Knight). NPC 241000 @1510326
+  - c2410_0013 (Silver Knight). NPC 241003 @1510329
+  - c2410_0016 (Silver Knight). NPC 241005 @1510903
+- Col: anorlondo h0018B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c2410_0007 (Silver Knight). NPC 241004 @1510325
+  - c2410_0019 (Silver Knight). NPC 241006 @1510906
+  - c2410_0021 (Silver Knight). NPC 241006 @1510908
+- Col: anorlondo h0117B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c2410_0018 (Silver Knight). NPC 241005 @1510905
+  - c2410_0020 (Silver Knight). NPC 241005 @1510907
+  - c3490_0003 (Good Vagrant). NPC 349009 @1513920
+- Col: anorlondo h0027B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c2410_0022 (Silver Knight). NPC 241005 @1510909
+- Col: anorlondo h0035B1_0000
+  Area: anorlondo_building
+  Includes:
+  - c2780_0000 (Mimic). NPC 278010 @1510200
+- Col: anorlondo h0040B1_0000
+  Area: anorlondo_start
+  Includes:
+  - c2780_0001 (Mimic). NPC 278011 @1510201
+  - c2870_0001 (Sentinel or Royal Sentinel). NPC 287010 @1510401
+  - c2870_0008 (Sentinel or Royal Sentinel). NPC 287010 @1510408
+  - c2870_0009 (Sentinel or Royal Sentinel). NPC 287010 @1510409
+  - c2870_0014 (Sentinel or Royal Sentinel). NPC 287011 @1510900
+- Col: anorlondo h0026B1_0000
+  Area: anorlondo_blacksmith
+  Includes:
+  - c2860_0000 (Giant). NPC 286001 @6210
+- Col: anorlondo h0002B1_0000
+  Area: anorlondo_start
+  Includes:
+  - c2870_0000 (Sentinel or Royal Sentinel). NPC 287010 @1510400
+  - c2870_0004 (Sentinel or Royal Sentinel). NPC 287010 @1510404
+  - c2870_0005 (Sentinel or Royal Sentinel). NPC 287010 @1510405
+  - c2870_0015 (Sentinel or Royal Sentinel). NPC 287011 @1510901
+- Col: anorlondo h0011B1_0000
+  Area: anorlondo_main
+  Includes:
+  - c2870_0002 (Sentinel or Royal Sentinel). NPC 287010 @1510402
+  - c2870_0003 (Sentinel or Royal Sentinel). NPC 287010 @1510403
+  - c5351_0001 (Lightning Gargoyles). NPC 535100 @1510452
+  - c5353_0001 (Gaygolye Tail). NPC 535301 @1510453
+- Col: anorlondo h0111B1_0000
+  Area: anorlondo_main
+  Includes:
+  - c2870_0016 (Sentinel or Royal Sentinel). NPC 287011 @1510902
+- Col: anorlondo h0004B1_0000
+  Area: anorlondo_start
+  Includes:
+  - c3490_0000 (Good Vagrant). NPC 349009 @1513900
+- Col: anorlondo h0024B1_0000
+  Area: anorlondo_gwynevere
+  Includes:
+  - c5310_0000 (Gwynevere). NPC 531000 @1510600
+- Col: anorlondo h0031B1_0001
+  Area: anorlondo_gwyndolin
+  Includes:
+  - c5320_0000 (Gwyndolin). NPC 532000 @1510650
+- Col: anorlondo h0005B1_0000
+  Area: anorlondo_prerafters
+  Includes:
+  - c5351_0000 (Lightning Gargoyles). NPC 535100 @1510450
+  - c5353_0000 (Gaygolye Tail). NPC 535300 @1510451
+- Col: newlondo h0023B0_0000
+  Area: newlondo_building
+  Includes:
+  - c0000_0003 (Human). NPC 6180 Ingward @6180
+  - c3491_0001 (Evil Vagrant). NPC 349106 @1603911
+  - c3491_0004 (Evil Vagrant). NPC 349206 @1603912
+- Col: newlondo h0002B0_0000
+  Area: newlondo
+  Includes:
+  - c0000_0004 (Human). NPC 6220 Rickert of Vinheim @6220
+  - c2500_0000 (Hollow). NPC 250040
+  - c2500_0001 (Hollow). NPC 250040
+  - c2500_0002 (Hollow). NPC 250040
+  - c2500_0003 (Hollow). NPC 250040
+  - c2500_0004 (Hollow). NPC 250040
+  - c2500_0005 (Hollow). NPC 250040
+  - c2500_0006 (Hollow). NPC 250040
+  - c2500_0007 (Hollow). NPC 250040
+  - c2500_0008 (Hollow). NPC 250040
+  - c2500_0009 (Hollow). NPC 250040
+- Col: newlondo h0038B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c0000_0006 (Human). NPC 6521 Witch Beatrice @6520
+  - c3491_0003 (Evil Vagrant). NPC 349111 @1603921
+  - c3491_0005 (Evil Vagrant). NPC 349211 @1603922
+- Col: newlondo h0005B0_0000
+  Area: newlondo
+  Includes:
+  - c0000_0007 (Human). NPC 6271 Crestfallen Warrior @6271
+  - c2500_0012 (Hollow). NPC 250040
+  - c2500_0014 (Hollow). NPC 250040
+- Col: newlondo h0030B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0001 (Darkwraith). NPC 239000 @1600101
+  - c2390_0002 (Darkwraith). NPC 239000 @1600102
+- Col: newlondo h0032B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0003 (Darkwraith). NPC 239000 @1600103
+  - c2390_0004 (Darkwraith). NPC 239000 @1600104
+  - c2390_0005 (Darkwraith). NPC 239000 @1600105
+  - c2390_0014 (Darkwraith). NPC 239003 @1600902
+  - c3490_0003 (Good Vagrant). NPC 349011 @1603920
+  - c3500_0000 (Mass of Souls). NPC 350000 @1600400
+  - c3501_0000 (Wisp (exploding skull)). NPC 350100 @1600410
+  - c3501_0001 (Wisp (exploding skull)). NPC 350100 @1600411
+  - c3501_0002 (Wisp (exploding skull)). NPC 350100 @1600412
+  - c3501_0003 (Wisp (exploding skull)). NPC 350100 @1600413
+  - c3501_0004 (Wisp (exploding skull)). NPC 350100 @1600414
+  - c3501_0005 (Wisp (exploding skull)). NPC 350100 @1600415
+- Col: newlondo h0033B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0006 (Darkwraith). NPC 239000 @1600106
+  - c2390_0008 (Darkwraith). NPC 239000 @1600108
+  - c2390_0012 (Darkwraith). NPC 239003 @1600900
+- Col: newlondo h0034B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0007 (Darkwraith). NPC 239000 @1600107
+- Col: newlondo h0035B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0009 (Darkwraith). NPC 239000 @1600109
+  - c2390_0010 (Darkwraith). NPC 239000 @1600110
+  - c2390_0016 (Darkwraith). NPC 239003 @1600904
+  - c3500_0001 (Mass of Souls). NPC 350000 @1600401
+  - c3501_0006 (Wisp (exploding skull)). NPC 350100 @1600416
+  - c3501_0007 (Wisp (exploding skull)). NPC 350100 @1600417
+  - c3501_0008 (Wisp (exploding skull)). NPC 350100 @1600418
+  - c3501_0009 (Wisp (exploding skull)). NPC 350100 @1600419
+  - c3501_0010 (Wisp (exploding skull)). NPC 350100 @1600420
+  - c3501_0011 (Wisp (exploding skull)). NPC 350100 @1600421
+- Col: newlondo h0071B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0011 (Darkwraith). NPC 239000 @1600100
+- Col: newlondo h0031B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0013 (Darkwraith). NPC 239003 @1600901
+- Col: newlondo h0111B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0015 (Darkwraith). NPC 239003 @1600903
+- Col: newlondo h0036B0_0000
+  Area: newlondo_lower
+  Includes:
+  - c2390_0017 (Darkwraith). NPC 239003 @1600905
+- Col: newlondo h0004B0_0000
+  Area: newlondo
+  Includes:
+  - c2500_0010 (Hollow). NPC 250040
+  - c2500_0011 (Hollow). NPC 250040
+- Col: newlondo h0001B0_0000
+  Area: newlondo
+  Includes:
+  - c2500_0013 (Hollow). NPC 250040
+- Col: newlondo h1000B0_0000
+  Area: newlondo
+  Includes:
+  - c2670_0000 (Ghost (Male)). NPC 267000 @1600350
+  - c2670_0001 (Ghost (Male)). NPC 267000 @1600203
+  - c2670_0002 (Ghost (Male)). NPC 267000 @1600351
+  - c2670_0003 (Ghost (Male)). NPC 267000 @1600205
+  - c2670_0004 (Ghost (Male)). NPC 267000 @1600202
+  - c2670_0012 (Ghost (Male)). NPC 267000 @1600252
+  - c2670_0013 (Ghost (Male)). NPC 267000 @1600253
+  - c2670_0014 (Ghost (Male)). NPC 267000 @1600255
+  - c2670_0016 (Ghost (Male)). NPC 267000 @1600204
+  - c2670_0017 (Ghost (Male)). NPC 267000 @1600355
+  - c2670_0018 (Ghost (Male)). NPC 267000 @1600207
+  - c2670_0019 (Ghost (Male)). NPC 267000 @1600208
+  - c2670_0020 (Ghost (Male)). NPC 267000 @1600356
+  - c2670_0021 (Ghost (Male)). NPC 267000 @1600357
+  - c2670_0022 (Ghost (Male)). NPC 267000 @1600250
+  - c2670_0029 (Ghost (Male)). NPC 267000 @1600209
+  - c2670_0030 (Ghost (Male)). NPC 267000 @1600210
+  - c2670_0031 (Ghost (Male)). NPC 267000 @1600211
+- Col: newlondo h1001B0_0000
+  Area: newlondo_building
+  Includes:
+  - c2670_0005 (Ghost (Male)). NPC 267000 @1600352
+  - c2670_0006 (Ghost (Male)). NPC 267000 @1600353
+  - c2670_0007 (Ghost (Male)). NPC 267000 @1600201
+  - c2670_0008 (Ghost (Male)). NPC 267000 @1600200
+  - c2670_0009 (Ghost (Male)). NPC 267000 @1600354
+  - c2670_0010 (Ghost (Male)). NPC 267000 @1600301
+  - c2670_0011 (Ghost (Male)). NPC 267000 @1600302
+  - c2670_0015 (Ghost (Male)). NPC 267000 @1600206
+  - c2670_0023 (Ghost (Male)). NPC 267000 @1600358
+  - c2670_0024 (Ghost (Male)). NPC 267000 @1600359
+  - c2670_0025 (Ghost (Male)). NPC 267000 @1600360
+  - c2670_0026 (Ghost (Male)). NPC 267000 @1600251
+  - c2670_0027 (Ghost (Male)). NPC 267000 @1600254
+  - c2670_0028 (Ghost (Male)). NPC 267000 @1600361
+- Col: newlondo h1100B0_0000
+  Area: newlondo_building
+  Includes:
+  - c2680_0000 (Ghost (Female)). NPC 268000 @1600310
+  - c2680_0001 (Ghost (Female)). NPC 268000 @1600300
+- Col: newlondo h0051B0_0000
+  Area: newlondo_drakes
+  Includes:
+  - c3420_0000 (Undead Dragon). NPC 342002 @1600500
+- Col: newlondo h0106B0_0000
+  Area: newlondo
+  Includes:
+  - c3490_0000 (Good Vagrant). NPC 349006 @1603900
+- Col: newlondo h0021B0_0001
+  Area: newlondo_building
+  Includes:
+  - c3490_0001 (Good Vagrant). NPC 349006 @1603910
+- Col: newlondo h0006B0_0000
+  Area: newlondo
+  Includes:
+  - c3491_0000 (Evil Vagrant). NPC 349106 @1603901
+  - c3491_0002 (Evil Vagrant). NPC 349206 @1603902
+- Col: newlondo h0052B0_0000
+  Area: newlondo_drakes
+  Includes:
+  - c3520_0007 (Drake). NPC 352002
+  - c3520_0012 (Drake). NPC 352002
+  - c3520_0013 (Drake). NPC 352002
+- Col: newlondo h0054B0_0000
+  Area: newlondo_drakes
+  Includes:
+  - c3520_0009 (Drake). NPC 352002
+  - c3520_0010 (Drake). NPC 352002
+  - c3520_0011 (Drake). NPC 352002
+- Col: newlondo h0040B0_0000
+  Area: newlondo_fourkings
+  Includes:
+  - c5330_0000 (Frampt / Kaathe). NPC 533001 @6340
+  - c5390_0000 (Four Kings). NPC 539000 @1600800
+  - c5390_0001 (Four Kings). NPC 539001 @1600801
+  - c5390_0002 (Four Kings). NPC 539001 @1600802
+  - c5390_0003 (Four Kings). NPC 539001 @1600803
+  - c5390_0004 (Four Kings). NPC 539001 @1600804
+- Col: dukes h0021B0
+  Area: dukes_prison
+  Includes:
+  - c0000_0002 (Human). NPC 6031 Big Hat Logan @6032
+- Col: dukes h0023B0
+  Area: dukes_prison
+  Includes:
+  - c0000_0003 (Human). NPC 6070 Rhea of Thorolund @6073
+  - c2690_0000 (Serpent Soldier). NPC 269001 @1700100
+  - c2690_0002 (Serpent Soldier). NPC 269002
+  - c2690_0003 (Serpent Soldier). NPC 269002
+  - c2700_0000 (Serpent Mage). NPC 270001 @1700101
+  - c2800_0000 (Undead Crystal Soldier). NPC 280000 @1700200
+  - c3330_0000 (Pisaca). NPC 333000 @1700110
+  - c3330_0001 (Pisaca). NPC 333000 @1700111
+  - c3330_0002 (Pisaca). NPC 333000 @1700112
+  - c3330_0003 (Pisaca). NPC 333001 @1700150
+  - c3330_0004 (Pisaca). NPC 333002 @1700151
+  - c3330_0005 (Pisaca). NPC 333000 @1700120
+  - c3330_0006 (Pisaca). NPC 333000 @1700116
+  - c3330_0007 (Pisaca). NPC 333000 @1700117
+  - c3330_0008 (Pisaca). NPC 333000 @1700118
+  - c3330_0009 (Pisaca). NPC 333000 @1700113
+  - c3330_0010 (Pisaca). NPC 333000 @1700114
+  - c3330_0012 (Pisaca). NPC 333000 @1700115
+- Col: dukes h0051B0
+  Area: dukes_caves
+  Includes:
+  - c0000_0004 (Human). NPC 6290 Sieglinde of Catarina @6291
+  - c2710_0004 (Crystal Golem). NPC 271000
+  - c2710_0005 (Crystal Golem). NPC 271000
+  - c2710_0009 (Crystal Golem). NPC 271000
+  - c2710_0013 (Crystal Golem). NPC 271000
+  - c2710_0014 (Crystal Golem). NPC 271000
+  - c2710_0016 (Crystal Golem). NPC 271002 @1700905
+  - c2711_0000 (Golden Crystal Golem). NPC 271101 @1700500
+- Col: dukes h0030B0
+  Area: dukes_hallway
+  Includes:
+  - c0000_0005 (Human). NPC 6610 Crystal General @6610
+- Col: dukes h0035B0
+  Area: dukes_prison # actually in seath1, but quest progression etc. etc.
+  Includes:
+  - c0000_0006 (Human). NPC 6032 Big Hat Logan @6033
+- Col: dukes h0001B0
+  Area: dukes_library
+  Includes:
+  - c2370_0000 (Channeler). NPC 237001 @1700300
+  - c2800_0010 (Undead Crystal Soldier). NPC 280000
+  - c2800_0011 (Undead Crystal Soldier). NPC 280000
+  - c2800_0012 (Undead Crystal Soldier). NPC 280000
+  - c2800_0019 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0017B0
+  Area: dukes_prison
+  Includes:
+  - c2370_0001 (Channeler). NPC 237001 @1700301
+  - c2800_0027 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0049B0
+  Area: dukes_prison
+  Includes:
+  - c2370_0002 (Channeler). NPC 237003 @1700900
+  - c2800_0020 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0008B0
+  Area: dukes_prison
+  Includes:
+  - c2370_0003 (Channeler). NPC 237003 @1700901
+  - c2800_0036 (Undead Crystal Soldier). NPC 280001
+- Col: dukes h0041B0
+  Area: dukes_prison
+  Includes:
+  - c2370_0004 (Channeler). NPC 237003 @1700902
+- Col: dukes h0014B0
+  Area: dukes_prison
+  Includes:
+  - c2370_0005 (Channeler). NPC 237003 @1700903
+  - c2370_0006 (Channeler). NPC 237001 @1700302
+- Col: dukes h0028B0
+  Area: dukes_prison
+  Includes:
+  - c2690_0014 (Serpent Soldier). NPC 269002 @1700103
+- Col: dukes h0027B0
+  Area: dukes_prison
+  Includes:
+  - c2690_0015 (Serpent Soldier). NPC 269002 @1700102
+- Col: dukes h0050B0
+  Area: dukes_caves
+  Includes:
+  - c2710_0000 (Crystal Golem). NPC 271000
+  - c2710_0002 (Crystal Golem). NPC 271000
+  - c2710_0008 (Crystal Golem). NPC 271000
+  - c2710_0011 (Crystal Golem). NPC 271000
+  - c2710_0015 (Crystal Golem). NPC 271002 @1700904
+- Col: dukes h0053B0
+  Area: dukes_caves
+  Includes:
+  - c2710_0001 (Crystal Golem). NPC 271000
+  - c2710_0017 (Crystal Golem). NPC 271002 @1700906
+  - c2710_0018 (Crystal Golem). NPC 271002 @1700907
+- Col: dukes h0070B0
+  Area: dukes_caves
+  Includes:
+  - c2710_0006 (Crystal Golem). NPC 271000
+- Col: dukes h0000B0
+  Area: dukes_library
+  Includes:
+  - c2710_0010 (Crystal Golem). NPC 271000 @1700510
+  - c2800_0006 (Undead Crystal Soldier). NPC 280000
+  - c2800_0007 (Undead Crystal Soldier). NPC 280000
+  - c2800_0008 (Undead Crystal Soldier). NPC 280001
+  - c2800_0009 (Undead Crystal Soldier). NPC 280000
+  - c2800_0046 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0052B0
+  Area: dukes_caves
+  Includes:
+  - c2710_0012 (Crystal Golem). NPC 271000
+- Col: dukes h0073B0
+  Area: dukes_caves
+  Includes:
+  - c2711_0001 (Golden Crystal Golem). NPC 271101 @1700501
+  - c2711_0002 (Golden Crystal Golem). NPC 271101 @1700502
+  - c3230_0001 (Moonlight Butterfly). NPC 323001 @1700351
+  - c3300_0001 (Crystal Lizard). NPC 330010 @1700451
+  - c3300_0002 (Crystal Lizard). NPC 330010 @1700452
+  - c3300_0003 (Crystal Lizard). NPC 330010 @1700453
+  - c3490_0002 (Good Vagrant). NPC 349013 @1703910
+  - c3491_0002 (Evil Vagrant). NPC 349113 @1703911
+  - c3491_0003 (Evil Vagrant). NPC 349213 @1703912
+- Col: dukes h0044B0
+  Area: dukes_prison
+  Includes:
+  - c2780_0000 (Mimic). NPC 278020 @1700400
+- Col: dukes h0006B0
+  Area: dukes_library
+  Includes:
+  - c2780_0001 (Mimic). NPC 278021 @1700401
+  - c2800_0015 (Undead Crystal Soldier). NPC 280000
+  - c2800_0021 (Undead Crystal Soldier). NPC 280000
+  - c2800_0022 (Undead Crystal Soldier). NPC 280000
+  - c2800_0023 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0022B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0003 (Undead Crystal Soldier). NPC 280000
+  - c2800_0004 (Undead Crystal Soldier). NPC 280000
+  - c2800_0005 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0009B0
+  Area: dukes_library
+  Includes:
+  - c2800_0013 (Undead Crystal Soldier). NPC 280001
+  - c2800_0014 (Undead Crystal Soldier). NPC 280001
+- Col: dukes h0096B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0016 (Undead Crystal Soldier). NPC 280000
+  - c2800_0017 (Undead Crystal Soldier). NPC 280000
+  - c2800_0018 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0002B0
+  Area: dukes_library
+  Includes:
+  - c2800_0024 (Undead Crystal Soldier). NPC 280001
+- Col: dukes h0092B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0025 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0091B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0026 (Undead Crystal Soldier). NPC 280001
+  - c2800_0044 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0016B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0028 (Undead Crystal Soldier). NPC 280000
+  - c2800_0029 (Undead Crystal Soldier). NPC 280001
+- Col: dukes h0012B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0030 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0011B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0031 (Undead Crystal Soldier). NPC 280000
+  - c2800_0032 (Undead Crystal Soldier). NPC 280000
+  - c2800_0033 (Undead Crystal Soldier). NPC 280001
+  - c3490_0001 (Good Vagrant). NPC 349013 @1703900
+  - c3491_0000 (Evil Vagrant). NPC 349213 @1703902
+  - c3491_0001 (Evil Vagrant). NPC 349113 @1703901
+- Col: dukes h0007B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0034 (Undead Crystal Soldier). NPC 280000
+  - c2800_0035 (Undead Crystal Soldier). NPC 280001
+- Col: dukes h0004B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0037 (Undead Crystal Soldier). NPC 280001
+  - c2800_0038 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0018B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0039 (Undead Crystal Soldier). NPC 280001
+  - c2800_0042 (Undead Crystal Soldier). NPC 280001
+  - c2800_0045 (Undead Crystal Soldier). NPC 280001
+- Col: dukes h0040B0
+  Area: dukes_prison
+  Includes:
+  - c2800_0043 (Undead Crystal Soldier). NPC 280000
+- Col: dukes h0072B0
+  Area: dukes_caves
+  Includes:
+  - c3230_0000 (Moonlight Butterfly). NPC 323001 @1700350
+- Col: dukes h0080B0
+  Area: dukes_caves
+  Includes:
+  - c3230_0002 (Moonlight Butterfly). NPC 323001 @1700352
+  - c3250_0000 (Man-Eater Shell). NPC 325000 @1700250
+  - c3250_0001 (Man-Eater Shell). NPC 325000 @1700251
+  - c3250_0002 (Man-Eater Shell). NPC 325000 @1700252
+  - c3250_0003 (Man-Eater Shell). NPC 325000 @1700253
+  - c3250_0004 (Man-Eater Shell). NPC 325000 @1700254
+  - c3250_0005 (Man-Eater Shell). NPC 325000 @1700255
+- Col: dukes h0031B0
+  Area: dukes_hallway
+  Includes:
+  - c3300_0000 (Crystal Lizard). NPC 330010 @1700450
+- Col: dukes h0020B0
+  Area: dukes_prison
+  Includes:
+  - c3330_0020 (Pisaca). NPC 333003 @1700908
+  - c3330_0021 (Pisaca). NPC 333003 @1700909
+- Col: dukes h0103B0
+  Area: dukes_start
+  Includes:
+  - c3461_0000 (Armored Tusk (Reinforced)). NPC 346100 @1700190
+- Col: dukes h0100B0
+  Area: dukes_start
+  Includes:
+  - c3461_0001 (Armored Tusk (Reinforced)). NPC 346100 @1700191
+- Col: dukes h0032B0
+  Area: dukes_seath1
+  Includes:
+  - c5290_0000 (Seath). NPC 529001 @1700700
+- Col: dukes h0082B0
+  Area: dukes_seath2
+  Includes:
+  - c5290_0001 (Seath). NPC 529000 @1700800
+  - c5291_0000 (Seath's Tail). NPC 529100 @1700801
+- Col: kiln h0003B0
+  Area: kiln
+  Includes:
+  - c0000_0002 (Human). NPC 6544 Solaire @6544
+- Col: kiln h0001B0
+  Area: kiln
+  Includes:
+  - c2790_0001 (Black Knight). NPC 279050 @1800200
+  - c2790_0002 (Black Knight). NPC 279051 @1800201
+  - c2790_0005 (Black Knight). NPC 279053 @1800204
+- Col: kiln h0004B0
+  Area: kiln
+  Includes:
+  - c2790_0003 (Black Knight). NPC 279050 @1800202
+- Col: kiln h0005B0
+  Area: kiln
+  Includes:
+  - c2790_0004 (Black Knight). NPC 279052 @1800203
+  - c2790_0010 (Black Knight). NPC 279061 @1800904
+- Col: kiln h0008B0
+  Area: kiln
+  Includes:
+  - c2790_0006 (Black Knight). NPC 279061 @1800900
+- Col: kiln h0009B0
+  Area: kiln
+  Includes:
+  - c2790_0007 (Black Knight). NPC 279062 @1800901
+  - c3490_0000 (Good Vagrant). NPC 349014 @1803900
+- Col: kiln h0002B0
+  Area: kiln
+  Includes:
+  - c2790_0008 (Black Knight). NPC 279063 @1800902
+  - c3491_0000 (Evil Vagrant). NPC 349114 @1803901
+  - c3491_0001 (Evil Vagrant). NPC 349214 @1803902
+- Col: kiln h0007B0
+  Area: kiln
+  Includes:
+  - c2790_0009 (Black Knight). NPC 279060 @1800903
+- Col: kiln h0000B0
+  Area: kiln_start
+  Includes:
+  - c2791_0000 (Black Knight (Kiln Ghost)). NPC 279100 @1800100
+  - c2791_0001 (Black Knight (Kiln Ghost)). NPC 279100 @1800101
+  - c2791_0002 (Black Knight (Kiln Ghost)). NPC 279100 @1800102
+  - c2791_0003 (Black Knight (Kiln Ghost)). NPC 279100 @1800103
+  - c2791_0004 (Black Knight (Kiln Ghost)). NPC 279100 @1800104
+  - c2791_0005 (Black Knight (Kiln Ghost)). NPC 279100 @1800105
+- Col: kiln h0014B0
+  Area: kiln_start
+  Includes:
+  - c5330_0016 (Frampt / Kaathe). NPC 533000 @6331
+  - c5330_0017 (Frampt / Kaathe). NPC 533001 @6341
+- Col: kiln h0006B0
+  Area: kiln_gwyn
+  Includes:
+  - c5370_0000 (Gwyn). NPC 537000 @1800800
+- Col: asylum h0013B1
+  Area: asylum_oscar
+  Includes:
+  - c0000_0002 (Human). NPC 6020 Oscar of Astora @6023
+  - c0000_0003 (Human). NPC 6021 Oscar of Astora @6024
+- Col: asylum h0016B1
+  Area: asylum_stray
+  Includes:
+  - c2230_0000 (Stray Demon). NPC 223000 @1810810
+- Col: asylum h0005B1
+  Area: asylum
+  Includes:
+  - c2232_0000 (Asylum Demon). NPC 223200 @1810800
+  - c2500_0016 (Hollow). NPC 250025 @1810205
+  - c2500_0017 (Hollow). NPC 250025 @1810206
+- Col: asylum h0001B1
+  Area: asylum
+  Includes:
+  - c2500_0000 (Hollow). NPC 250020 @1810101
+  - c2500_0005 (Hollow). NPC 250020 @1810106
+  - c2792_0000 (Black Knight (Sword)). NPC 279070 @1810200
+- Col: asylum h0003B1
+  Area: asylum
+  Includes:
+  - c2500_0001 (Hollow). NPC 250020 @1810102
+- Col: asylum h1101B1
+  Area: asylum_oscar
+  Includes:
+  - c2500_0002 (Hollow). NPC 250022 @1810103
+  - c2500_0018 (Hollow). NPC 250025 @1810207
+- Col: asylum h1400B1
+  Area: asylum_oscar
+  Includes:
+  - c2500_0003 (Hollow). NPC 250021 @1810104
+  - c2500_0019 (Hollow). NPC 250024 @1810208
+  - c3491_0000 (Evil Vagrant). NPC 349106 @1813901
+  - c3491_0001 (Evil Vagrant). NPC 349206 @1813902
+- Col: asylum h0000B1
+  Area: asylum
+  Includes:
+  - c2500_0006 (Hollow). NPC 250020 @1810107
+- Col: asylum h0002B1
+  Area: asylum
+  Includes:
+  - c2500_0007 (Hollow). NPC 250020 @1810108
+- Col: asylum h0014B1
+  Area: asylum_oscar
+  Includes:
+  - c2500_0009 (Hollow). NPC 250022 @1810110
+  - c2500_0010 (Hollow). NPC 250022 @1810111
+  - c2500_0020 (Hollow). NPC 250025 @1810209
+  - c2500_0021 (Hollow). NPC 250025 @1810210
+- Col: asylum h0008B1
+  Area: asylum
+  Includes:
+  - c2500_0011 (Hollow). NPC 250021 @1810112
+  - c2792_0001 (Black Knight (Sword)). NPC 279070 @1810213
+- Col: asylum h0050B1
+  Area: asylum_outside
+  Includes:
+  - c2500_0012 (Hollow). NPC 250023 @1810201
+  - c2500_0013 (Hollow). NPC 250023 @1810202
+  - c2500_0014 (Hollow). NPC 250023 @1810203
+- Col: asylum h0051B1
+  Area: asylum_outside
+  Includes:
+  - c2500_0015 (Hollow). NPC 250023 @1810204
+- Col: asylum h0015B1
+  Area: asylum_oscar
+  Includes:
+  - c2550_0000 (Undead Soldier). NPC 255030 @1810113
+  - c2550_0001 (Undead Soldier). NPC 255031 @1810211
+  - c2550_0002 (Undead Soldier). NPC 255032 @1810212
+- Col: asylum h1100B1
+  Area: asylum_oscar
+  Includes:
+  - c3490_0000 (Good Vagrant). NPC 349006 @1813900
