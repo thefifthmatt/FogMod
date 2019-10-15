@@ -506,7 +506,7 @@ Entrances:
 - Name: o1420_0000
   ID: 1001700
   Area: depths
-  Text: Near the area with the Channeler
+  Text: Near the area with the Channeler in the Depths
   Tags: world
   ASide:
     Area: depths
@@ -575,7 +575,7 @@ Entrances:
 - Name: o1409_0000
   ID: 1011998
   Area: parish
-  Text: Between Taurus Demon and Hellkite bridge
+  Text: Between area after Taurus Demon and Hellkite bridge
   Tags: pvp
   ASide:
     Area: parish_hellkite
@@ -646,7 +646,7 @@ Entrances:
 - Name: o1416_0000
   ID: 1011702
   Area: parish
-  Text: Near bridge crossing over the boar in Undead Parish
+  Text: At the bridge crossing over the boar in Undead Parish
   Tags: world
   ASide:
     Area: parish_hellkite
@@ -788,7 +788,7 @@ Entrances:
 - Name: o2906_0000
   ID: 1201700
   Area: darkroot
-  Text: Between Darkroot bonfire and the area with the stone knights
+  Text: Between the Darkroot Garden bonfire and the area with the stone knights
   Tags: world
   ASide:
     Area: darkroot
@@ -988,7 +988,7 @@ Entrances:
 - Name: o3963_0000
   ID: 1311710
   Area: totg
-  Text: TotG gold fog gate
+  Text: Golden fog gate in Tomb of the Giants
   Tags: lordvessel
   ASide:
     Area: totg_lower
@@ -1090,7 +1090,7 @@ Entrances:
 - Name: o4960_0000
   ID: 1411710
   Area: demonruins
-  Text: Gold fog gate in Demon Ruins
+  Text: Golden fog gate in Demon Ruins
   Tags: lordvessel
   ASide:
     Area: demonruins_lower
@@ -1142,7 +1142,7 @@ Entrances:
 - Name: o4965_0000
   ID: 1411892
   Area: demonruins
-  Text: After Centipede Demon boss
+  Text: After Centipede Demon
   Tags: boss
   ASide:
     Area: demonruins_centipede
@@ -1241,7 +1241,7 @@ Entrances:
 - Name: o5152_0000
   ID: 1501700
   Area: sens
-  Text: Near outside boulder stairway and Siegmeyer
+  Text: Near the outside boulder stairway and Siegmeyer in Sen's Fortress
   Tags: world
   ASide:
     Area: sens
@@ -1295,7 +1295,7 @@ Entrances:
 - Name: o5863_0000
   ID: 1511994
   Area: anorlondo
-  Text: At the doorway connecting the elevator building and the first gargoyle bridge
+  Text: At the doorway connecting the first Anor Londo elevator and the first gargoyle
   Tags: pvp
   ASide:
     Area: anorlondo_prerafters
@@ -1343,7 +1343,7 @@ Entrances:
 - Name: o5869_0000
   ID: 1511754
   Area: anorlondo
-  Text: From the main cathedral out of a broken window in front
+  Text: From the Anor Londo main cathedral out of a broken window in front
   Comment: Move the treasure object XX. Also figure out how to enable this...
   Tags: pvp
   ASide:
@@ -1354,7 +1354,7 @@ Entrances:
 - Name: o5870_0000
   ID: 1511750
   Area: anorlondo
-  Text: Between the main cathedral to the area with bedrooms and paintings
+  Text: Between the Anor Londo main cathedral and the area with bedrooms and paintings
   Tags: pvp
   ASide:
     Area: anorlondo_cathedral
@@ -1363,7 +1363,7 @@ Entrances:
 - Name: o5871_0000
   ID: 1511752
   Area: anorlondo
-  Text: From the main cathedral to the Giant Blacksmith stairway
+  Text: Between the Anor Londo main cathedral and the Giant Blacksmith
   Tags: pvp
   ASide:
     Area: anorlondo_blacksmith
@@ -1491,7 +1491,7 @@ Entrances:
 - Name: o7908_0000
   ID: 1701996
   Area: dukes
-  Text: Near the hallway with the crystal warrior
+  Text: At the hallway with the crystal warrior in Duke's Archives
   Tags: pvp
   ASide:
     Area: dukes_library
@@ -1510,8 +1510,8 @@ Entrances:
 - Name: o8051_0000
   ID: 1801994
   Area: kiln
-  Text: At the Kiln start
-  Tags: pvp kiln
+  Text: Between the Kiln door and Black Knight area
+  Tags: pvp kiln major
   ASide:
     Area: kiln_stairs
     Tags: higher

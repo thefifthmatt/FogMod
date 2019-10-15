@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static SoulsIds.GameSpec;
 
 namespace FogMod
 {
@@ -30,7 +30,7 @@ namespace FogMod
                         opt[arg] = true;
                     }
                 }
-                new Randomizer().Randomize(opt);
+                new Randomizer().Randomize(opt, args.Contains("ptde") ? FromGame.DS1 : FromGame.DS1R, null);
             }
             else
             {

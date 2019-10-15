@@ -109,41 +109,69 @@ namespace FogMod
                 if (e.ASide == null || e.BSide == null) throw new Exception($"{e.Name} warp missing both sides");
             }
             // Mark entrances as randomized or not
+            Dictionary<string, List<string>> allText = new Dictionary<string, List<string>>();
             foreach (Entrance e in ann.Entrances)
             {
+                if (e.HasTag("unused")) continue;
                 if (!opt["lordvessel"] && e.HasTag("lordvessel"))
                 {
                     e.Tags += " door";
                     e.DoorCond = "AND anorlondo_gwynevere kiln_start";
+                    if (opt["dumptext"]) AddMulti(allText, "lordvessel", e.Text);
                 }
                 if (e.HasTag("door"))
                 {
                     e.IsFixed = true;
                 }
-                if (!opt["world"] && e.HasTag("world"))
+                else if (opt["lords"] && e.Area == "kiln")
                 {
                     e.IsFixed = true;
                 }
-                if (!opt["boss"] && e.HasTag("boss"))
+                else if (!opt["world"] && e.HasTag("world"))
                 {
                     e.IsFixed = true;
+                    if (opt["dumptext"]) AddMulti(allText, "world", e.Text);
                 }
-                if (!opt["minor"] && e.HasTag("pvp") && !e.HasTag("major"))
+                else if (!opt["boss"] && e.HasTag("boss"))
                 {
                     e.IsFixed = true;
+                    if (opt["dumptext"]) AddMulti(allText, "boss", e.Text);
                 }
-                if (!opt["major"] && e.HasTag("pvp") && e.HasTag("major"))
+                else if (!opt["minor"] && e.HasTag("pvp") && !e.HasTag("major"))
                 {
                     e.IsFixed = true;
+                    if (opt["dumptext"]) AddMulti(allText, "minor", e.Text);
                 }
-                if (opt["lords"] && e.Area == "kiln")
+                else if (!opt["major"] && e.HasTag("pvp") && e.HasTag("major"))
                 {
                     e.IsFixed = true;
+                    if (opt["dumptext"]) AddMulti(allText, "major", e.Text);
                 }
             }
             foreach (Entrance e in ann.Warps)
             {
-                if (e.HasTag("norandom") || !opt["warp"]) e.IsFixed = true;
+                if (e.HasTag("unused")) continue;
+                if (e.HasTag("norandom"))
+                {
+                    e.IsFixed = true;
+                }
+                else if (!opt["warp"])
+                {
+                    e.IsFixed = true;
+                    if (opt["dumptext"]) AddMulti(allText, "warp", e.Text);
+                }
+            }
+            if (opt["dumptext"] && allText.Count > 0)
+            {
+                foreach (KeyValuePair<string, List<string>> entry in allText)
+                {
+                    Console.WriteLine(entry.Key);
+                    foreach (string text in entry.Value)
+                    {
+                        Console.WriteLine($"- {text}");
+                    }
+                    Console.WriteLine();
+                }
             }
             // Process connection metadata
             ignore = new List<(string, string)>();

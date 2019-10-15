@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SoulsFormats;
+using static SoulsIds.GameSpec;
 
 namespace FogMod
 {
     public partial class MainForm : Form
     {
         private static string defaultPath = @"C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS REMASTERED\DarkSoulsRemastered.exe";
+        private static string defaultPath2 = @"C:\Program Files (x86)\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\DARKSOULS.exe";
         private RandomizerOptions options = new RandomizerOptions();
+        private FromGame game = FromGame.UNKNOWN;
 
         public MainForm()
         {
@@ -29,6 +28,10 @@ namespace FogMod
             {
                 exe.Text = defaultPath;
             }
+            else if (File.Exists(defaultPath2))
+            {
+                exe.Text = defaultPath2;
+            }
             options["dryrun"] = false;
             string defaultOpts = Properties.Settings.Default.Options;
             if (string.IsNullOrWhiteSpace(defaultOpts))
@@ -41,14 +44,27 @@ namespace FogMod
             }
         }
 
-        private void UpdateBackupFiles()
+        private void UpdateExePath()
         {
             bool valid = true;
             string gamePath = null;
             try
             {
                 gamePath = Path.GetDirectoryName(exe.Text);
-                if (exe.Text.Trim() == "" || !Directory.Exists(gamePath) || Path.GetFileName(exe.Text).ToLower() != "darksoulsremastered.exe")
+                if (exe.Text.Trim() == "" || !Directory.Exists(gamePath))
+                {
+                    valid = false;
+                }
+                string exeName = Path.GetFileName(exe.Text).ToLower();
+                if (exeName == "darksoulsremastered.exe")
+                {
+                    game = FromGame.DS1R;
+                }
+                else if (exeName == "darksouls.exe")
+                {
+                    game = FromGame.DS1;
+                }
+                else
                 {
                     valid = false;
                 }
@@ -59,17 +75,18 @@ namespace FogMod
             }
             if (!valid)
             {
+                game = FromGame.UNKNOWN;
                 restoreButton.Enabled = false;
                 restoreL.Text = "";
                 return;
             }
             Properties.Settings.Default.Exe = exe.Text;
             Properties.Settings.Default.Save();
-            List<string> files = GameDataWriter.GetAllBaseFiles();
+            List<string> files = GameDataWriter.GetAllBaseFiles(game);
             if (files.Count == 0)
             {
                 randb.Enabled = false;
-                statusL.Text = @"Error: FogMod dist subdirectory is missing";
+                statusL.Text = $@"Error: FogMod dist\{game} subdirectory is missing";
             }
             List<string> times = new List<string>();
             foreach (string file in files)
@@ -96,8 +113,8 @@ namespace FogMod
         private void OpenExe(object sender, EventArgs e)
         {
             OpenFileDialog exeDialog = new OpenFileDialog();
-            exeDialog.Title = "Select Dark Souls Remastered install location";
-            exeDialog.Filter = "DS1R exe|DarkSoulsRemastered.exe";
+            exeDialog.Title = "Select Dark Souls install location";
+            exeDialog.Filter = "Dark Souls exe|DarkSoulsRemastered.exe;DARKSOULS.exe";
             exeDialog.RestoreDirectory = true;
             try
             {
@@ -144,17 +161,15 @@ namespace FogMod
             {
                 rand.Seed = new Random().Next();
             }
-            if (!File.Exists(exe.Text))
+            if (!File.Exists(exe.Text) || game == FromGame.UNKNOWN)
             {
                 statusL.Text = "Game exe not set";
                 return;
             }
             string gameDir = Path.GetDirectoryName(exe.Text);
-            if (Path.GetFileName(exe.Text).ToLower() != "darksoulsremastered.exe"
-                || !File.Exists($@"{gameDir}\event\common.emevd.dcx")
-                || !File.Exists($@"{gameDir}\map\MapStudio\m10_02_00_00.msb"))
+            if (!File.Exists($@"{gameDir}\map\MapStudio\m10_02_00_00.msb"))
             {
-                statusL.Text = "Did not find DSR installation at game path";
+                statusL.Text = "Did not find unpacked installation at game path";
                 return;
             }
             working = true;
@@ -172,7 +187,7 @@ namespace FogMod
                 Console.SetOut(log);
                 try
                 {
-                    randomizer.Randomize(rand, gameDir);
+                    randomizer.Randomize(rand, game, gameDir);
                     statusL.Text = $"Done. Info in {runId}";
                 }
                 catch (Exception ex)
@@ -190,12 +205,12 @@ namespace FogMod
             randb.Text = $"Randomize!";
             randb.BackColor = original;
             working = false;
-            UpdateBackupFiles();
+            UpdateExePath();
         }
 
         private void UpdateFile(object sender, EventArgs e)
         {
-            UpdateBackupFiles();
+            UpdateExePath();
         }
 
         private void UpdateOptions(object sender, EventArgs e)
@@ -209,11 +224,11 @@ namespace FogMod
         {
             if (working) return;
             string gamePath = Path.GetDirectoryName(exe.Text);
-            if (exe.Text.Trim() == "" || !Directory.Exists(gamePath))
+            if (exe.Text.Trim() == "" || !Directory.Exists(gamePath) || game == FromGame.UNKNOWN)
             {
                 return;
             }
-            List<string> files = GameDataWriter.GetAllBaseFiles();
+            List<string> files = GameDataWriter.GetAllBaseFiles(game);
             List<string> desc = new List<string>();
             foreach (string file in files)
             {
@@ -221,7 +236,10 @@ namespace FogMod
                 string bak = path + ".bak";
                 if (File.Exists(bak)) desc.Add(path);
             }
-            DialogResult dialogResult = MessageBox.Show(string.Join("\n", desc) + "\n\nTo completely ensure restoration of vanilla files, also use Properties -> Local Files -> Verify Integrity Of Game Files in Steam.", "Restore these files?", MessageBoxButtons.YesNo);
+            string fullRestore = game == FromGame.DS1R
+                ? "\n\nTo completely ensure restoration of vanilla files, also use Properties -> Local Files -> Verify Integrity Of Game Files in Steam."
+                : "";  // Can't really recommend anything for PTDE
+            DialogResult dialogResult = MessageBox.Show(string.Join("\n", desc) + fullRestore, "Restore these files?", MessageBoxButtons.YesNo);
             if (dialogResult != DialogResult.Yes) return;
             foreach (string file in files)
             {
@@ -233,7 +251,7 @@ namespace FogMod
                     File.Move(bak, path);
                 }
             }
-            UpdateBackupFiles();
+            UpdateExePath();
         }
 
         private void ReadControlFlags(Control control)

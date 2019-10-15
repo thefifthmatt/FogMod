@@ -10,24 +10,30 @@ using SoulsIds;
 using SoulsFormats;
 using static SoulsFormats.EMEVD.Instruction;
 using YamlDotNet.Serialization;
+using static SoulsIds.GameSpec;
 
 namespace FogMod
 {
     public class GameDataWriter
     {
         private int tempColEventBase = 5350; // or 5900 might also work
-        public void Write(RandomizerOptions opt, GameEditor editor, Annotations ann, Graph g, string gameDir)
+        public void Write(RandomizerOptions opt, Annotations ann, Graph g, string gameDir, FromGame game)
         {
-            editor.Spec.GameDir = "dist";
+            GameEditor editor = new GameEditor(game);
+            bool remastered = game == FromGame.DS1R;
+            string distBase = $@"dist\{game}";
+            editor.Spec.GameDir = distBase;
             Dictionary<string, MSB1> maps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
             Dictionary<string, PARAM.Layout> layouts = editor.LoadLayouts();
             Dictionary<string, PARAM> Params = editor.LoadParams(layouts);
-            Dictionary<string, FMG> fmgs = editor.LoadBnd(@"dist\msg\ENGLISH\menu.msgbnd.dcx", (data, name) => name == "Event_text_" ? FMG.Read(data) : null);
+            string dcxExt = remastered ? ".dcx" : "";
+            string fmgEvent = remastered ? "Event_text_" : "イベントテキスト";
+            Dictionary<string, FMG> fmgs = editor.LoadBnd($@"{distBase}\msg\ENGLISH\menu.msgbnd{dcxExt}", (data, name) => name == fmgEvent ? FMG.Read(data) : null);
 
-            editor.Spec.GameDir = gameDir ?? GameSpec.ForGame(GameSpec.FromGame.DS1R).GameDir;
+            editor.Spec.GameDir = gameDir ?? ForGame(game).GameDir;
 
             // Backup
-            List<string> files = GetAllBaseFiles();
+            List<string> files = GetAllBaseFiles(game);
             foreach (string file in files)
             {
                 string path = $@"{editor.Spec.GameDir}\{file}";
@@ -291,7 +297,7 @@ namespace FogMod
                 }
             }
             Console.WriteLine($@"Writing {editor.Spec.GameDir}\{editor.Spec.ParamFile}");
-            editor.OverrideBnd($@"dist\param\GameParam\GameParam.parambnd.dcx", @"param\GameParam", Params, f => f.Write());
+            editor.OverrideBnd($@"{distBase}\{editor.Spec.ParamFile}", @"param\GameParam", Params, f => f.Write());
 
             // Write stuff
             int mk = 1815800;
@@ -694,7 +700,7 @@ namespace FogMod
             }
 
             if (events.Count > 400) throw new Exception("Internal error: too many warps");
-            foreach (string path in Directory.GetFiles("dist/event", "*.emevd.dcx"))
+            foreach (string path in Directory.GetFiles($@"{distBase}\event", "*.emevd*"))
             {
                 string name = GameEditor.BaseName(path);
                 EMEVD evd = EMEVD.Read(path);
@@ -753,7 +759,7 @@ namespace FogMod
                         }
                     }
                 }
-                string evPath = $@"{editor.Spec.GameDir}\event\{name}.emevd.dcx";
+                string evPath = $@"{editor.Spec.GameDir}\event\{Path.GetFileName(path)}";
                 Console.WriteLine("Writing " + evPath);
                 evd.Write(evPath);
             }
@@ -766,25 +772,26 @@ namespace FogMod
                 entry.Value.Write(path);
             }
             Console.WriteLine($@"Copying ESDs to {editor.Spec.GameDir}\{editor.Spec.EsdDir}");
-            foreach (string path in Directory.GetFiles("dist/script/talk", "*.talkesdbnd.dcx"))
+            foreach (string path in Directory.GetFiles($@"{distBase}\{editor.Spec.EsdDir}", "*.talkesdbnd*"))
             {
                 File.Copy(path, $@"{editor.Spec.GameDir}\{editor.Spec.EsdDir}\{Path.GetFileName(path)}", true);
             }
             // Hardcode some messages
-            Console.WriteLine($@"Writing messages to {editor.Spec.GameDir}\{editor.Spec.EsdDir}\msg\ENGLISH");
-            fmgs["Event_text_"][15000280] = "Return to Asylum";
-            fmgs["Event_text_"][15000281] = "Sealed in New Londo Ruins";
-            fmgs["Event_text_"][15000282] = "Fog Gate Randomizer breaks when online.\nChange Launch setting in Network settings and then reload.";
-            editor.OverrideBnd(@"dist\msg\ENGLISH\menu.msgbnd.dcx", @"msg\ENGLISH", fmgs, fmg => fmg.Write());
+            Console.WriteLine($@"Writing messages to {editor.Spec.GameDir}\msg\ENGLISH");
+            fmgs[fmgEvent][15000280] = "Return to Asylum";
+            fmgs[fmgEvent][15000281] = "Sealed in New Londo Ruins";
+            fmgs[fmgEvent][15000282] = "Fog Gate Randomizer breaks when online.\nChange Launch setting in Network settings and then reload.";
+            editor.OverrideBnd($@"{distBase}\msg\ENGLISH\menu.msgbnd{dcxExt}", @"msg\ENGLISH", fmgs, fmg => fmg.Write());
         }
 
-        public static List<string> GetAllBaseFiles()
+        public static List<string> GetAllBaseFiles(FromGame game)
         {
             List<string> files = new List<string>();
-            if (!Directory.Exists("dist")) return files;
-            foreach (string path in Directory.GetFiles("dist", "*.*", SearchOption.AllDirectories))
+            string distBase = $@"dist\{game}"; 
+            if (!Directory.Exists(distBase)) return files;
+            foreach (string path in Directory.GetFiles(distBase, "*.*", SearchOption.AllDirectories))
             {
-                if (path.EndsWith(".dcx") || path.EndsWith(".msb")) files.Add(path.Replace(@"dist\", ""));
+                if (path.EndsWith(".dcx") || path.EndsWith(".msb") || path.EndsWith(".emevd") || path.EndsWith("bnd")) files.Add(path.Replace($@"{distBase}\", ""));
             }
             return files;
         }
