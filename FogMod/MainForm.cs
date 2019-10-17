@@ -86,7 +86,7 @@ namespace FogMod
             if (files.Count == 0)
             {
                 randb.Enabled = false;
-                statusL.Text = $@"Error: FogMod dist\{game} subdirectory is missing";
+                setStatus($@"Error: FogMod dist\{game} subdirectory is missing", true);
             }
             List<string> times = new List<string>();
             foreach (string file in files)
@@ -138,6 +138,12 @@ namespace FogMod
             }
         }
 
+        private void setStatus(string msg, bool error=false)
+        {
+            statusL.Text = msg;
+            statusStrip1.BackColor = error ? Color.IndianRed : SystemColors.Control;
+        }
+
         // Horrible hack, winforms sucks
         private bool working = false;
         private async void Randomize(object sender, EventArgs e)
@@ -153,7 +159,7 @@ namespace FogMod
                 }
                 else
                 {
-                    statusL.Text = "Invalid fixed seed";
+                    setStatus("Invalid fixed seed", true);
                     return;
                 }
             }
@@ -163,20 +169,19 @@ namespace FogMod
             }
             if (!File.Exists(exe.Text) || game == FromGame.UNKNOWN)
             {
-                statusL.Text = "Game exe not set";
+                setStatus("Game exe not set", true);
                 return;
             }
             string gameDir = Path.GetDirectoryName(exe.Text);
             if (!File.Exists($@"{gameDir}\map\MapStudio\m10_02_00_00.msb"))
             {
-                statusL.Text = "Did not find unpacked installation at game path";
+                setStatus("Did not find unpacked installation at game path", true);
                 return;
             }
             working = true;
             randomizeL.Text = $"Seed: {rand.Seed}";
             randb.Text = $"Randomizing...";
-            statusL.Text = "Randomizing...";
-            Color original = randb.BackColor;
+            setStatus("Randomizing...");
             randb.BackColor = Color.LightYellow;
             Randomizer randomizer = new Randomizer();
             await Task.Factory.StartNew(() => {
@@ -188,12 +193,12 @@ namespace FogMod
                 try
                 {
                     randomizer.Randomize(rand, game, gameDir);
-                    statusL.Text = $"Done. Info in {runId}";
+                    setStatus($"Done. Info in {runId}");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-                    statusL.Text = $"Error! See error message in {runId}";
+                    setStatus($"Error! See error message in {runId}", true);
                 }
                 finally
                 {
@@ -203,7 +208,7 @@ namespace FogMod
             });
             randb.Enabled = true;
             randb.Text = $"Randomize!";
-            randb.BackColor = original;
+            randb.BackColor = SystemColors.Control;
             working = false;
             UpdateExePath();
         }

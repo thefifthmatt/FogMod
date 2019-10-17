@@ -694,8 +694,12 @@ Entrances:
 - Name: o1421_0001
   ID: 1011972
   Area: parish
-  Text: unused
-  Tags: unused
+  Tags: pvp door
+  DoorCond: burg_capra
+  ASide:
+    Area: burg_lower
+  BSide:
+    Area: depths
 - Name: o1600_0000
   ID: 1101990
   Area: paintedworld
@@ -703,6 +707,7 @@ Entrances:
   Tags: boss
   ASide:
     Area: paintedworld
+    Cond: paintedworld
   BSide:
     Area: paintedworld_priscilla
     Flag: 4
@@ -743,6 +748,7 @@ Entrances:
   Tags: pvp major
   ASide:
     Area: parish_andre
+    Tags: higher
   BSide:
     Area: darkroot
 - Name: o2902_0000
@@ -764,6 +770,7 @@ Entrances:
     Area: darkroot
   BSide:
     Area: newlondo_drakes
+    Tags: higher
 - Name: o2904_0000
   ID: 1201890
   Area: darkroot
@@ -1235,6 +1242,7 @@ Entrances:
   Tags: pvp
   ASide:
     Area: parish_andre
+    Tags: higher
   BSide:
     Area: sens
     Cond: AND blighttown_bell parish_bell

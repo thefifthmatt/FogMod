@@ -17,7 +17,7 @@ namespace FogMod
         public (Edge, Edge) addNode(Side side, Entrance e, bool from, bool to)
         {
             string name = e?.EdgeName;
-            string text = (e == null ? "in map" : e.Text);
+            string text = (e == null ? (side.HasTag("hard") ? "hard jump" : "in map") : e.Text);
             bool isFixed = e == null ? true : e.IsFixed;
             Edge exit = from ? new Edge { Expr = side.Expr, From = side.Area, Name = name, Text = text, IsFixed = isFixed, Side = side, Type = EdgeType.Exit } : null;
             Edge entrance = to ? new Edge { Expr = side.Expr, To = side.Area, Name = name, Text = text, IsFixed = isFixed, Side = side, Type = EdgeType.Entrance } : null;
@@ -206,7 +206,7 @@ namespace FogMod
                     // This adds an exit for first area and entrance for second area.
                     // If a shortcut, adds an entrance for first area and exit for second area.
                     Side self = new Side { Area = area.Name, Expr = side.Expr, Tags = side.Tags };
-                    Side other = new Side { Area = side.Area };
+                    Side other = new Side { Area = side.Area, Tags = side.HasTag("hard") ? "hard" : null };
                     bool shortcut = side.HasTag("shortcut");
                     if (shortcut)
                     {
@@ -238,6 +238,8 @@ namespace FogMod
             foreach (KeyValuePair<Connection, List<(Edge, Edge)>> entry in warpEdges)
             {
                 if (entry.Value.Count != 2) throw new Exception($"Bidirectional warp expected for {entry.Key} - non-bidirectional should be marked unique");
+                // Don't actually connect, just validate
+                if (opt["unconnected"]) continue;
                 (Edge exit1, Edge entrance1) = entry.Value[0];
                 (Edge exit2, Edge entrance2) = entry.Value[1];
                 if (exit1.From == exit2.From) throw new Exception($"Duplicate warp {exit1} and {exit2} - should be marked unique");
@@ -276,7 +278,7 @@ namespace FogMod
                         Edge entrance = addNode(to, e, from: true, to: true).Item2;
                         connect(exit, entrance);
                     }
-                    else
+                    else if (e.IsFixed || !opt["unconnected"])
                     {
                         // This adds entrance/exit on first side and/or entrance/exit on second side.
                         Edge exit = ignore.Contains((e.Name, to.Area)) ? null : addNode(to, e, from: true, to: true).Item1;
@@ -284,6 +286,19 @@ namespace FogMod
                         if (exit != null && entrance != null && e.IsFixed)
                         {
                             connect(exit, entrance);
+                        }
+                    }
+                    else
+                    {
+                        if (!ignore.Contains((e.Name, to.Area)))
+                        {
+                            addNode(to, e, true, false);
+                            addNode(to, e, false, true);
+                        }
+                        if (!ignore.Contains((e.Name, from.Area)))
+                        {
+                            addNode(from, e, true, false);
+                            addNode(from, e, false, true);
                         }
                     }
                 }

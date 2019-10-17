@@ -79,7 +79,7 @@ namespace FogMod
             int tries = 0;
             GraphChecker checker = new GraphChecker();
             CheckRecord check = null;
-            bool pairedOnly = true;
+            bool pairedOnly = !opt["unconnected"];
             while (tries++ < 100)
             {
                 if (opt["explain"]) Console.WriteLine($"------------------------ Try {tries}");
@@ -227,7 +227,7 @@ namespace FogMod
                     g.connect(oldExit, newEntrance);
                     g.connect(newExit, oldEntrance);
                 }
-                pairedOnly = true;
+                pairedOnly = !opt["unconnected"];
             }
             if (check == null || check.Unvisited.Count > 0) throw new Exception($"Couldn't solve seed {opt.DisplaySeed} - try a different one");
 
@@ -330,6 +330,7 @@ namespace FogMod
 
             if (opt["dumpgraph"])
             {
+                Console.WriteLine("Writing ../fog.dot");
                 bool bi = false;
                 TextWriter dot = File.CreateText(@"..\fog.dot");
                 dot.WriteLine($"{(bi ? "di" : "")}graph {{");

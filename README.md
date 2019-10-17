@@ -2,7 +2,7 @@
 
 Changes how areas link together by randomizing where fog gates lead to, in the spirit of ALttP/OoT entrance randomizers
 
-Fog gates are now permanent, and traversing them warps you to the other side of a different fog gate. Bosses and enemies can be scaled based on these new connections. Both of these are fixed for any given seed.
+Fog gates are now permanent, and traversing them warps you to the other side of a different fog gate. These warps are fixed for a given seed.
 
 This mod was designed for Dark Souls Remastered, but it should also work for PTDE. The game installation location to randomize is configurable in the randomizer UI.
 
@@ -14,11 +14,13 @@ It is configurable which types of entrances are randomized and which behave like
 - Traversable fog gates (non-boss)
 - Boss fog gates
 - Preexisting warps between areas
-- Lordvessel gates
 - Major PvP fog gates (between areas)
 - Minor PvP fog gates
+- Lordvessel gates
 
-No new fog gates are added. PvP fog gates are ones you normally only see when you are invaded. Adding them makes randomizations a bit more different from the base game, while still being interestingly nonlinear.
+No new fog gates are added. PvP fog gates are ones you normally only see when you are invaded. When included in randomization, they add more fun ways for areas to be connected.
+
+By default, warps are bidirectional, meaning you can explore the world like it is a cut up and reassembled version of the base game. If you instead enable the "Disconnected fog gates" option, warps become points of no return. This is similar to ALttP Insanity Entrance Shuffle or OoT BetaQuest. The plan is for more 'gimmick' mechanics along these lines to be added in the future.
 
 There are a few other differences from the base game:
 
@@ -32,7 +34,7 @@ There are a few other differences from the base game:
 ### How to win
 By defeating Gwyn. If the "Require Lord Souls" option is enabled then opening the Firelink Altar door is the only way to get to Gwyn. Warps to the Firelink Altar are not randomized, mainly because they are tied to serpent loyalty.
 
-Taking notes can be helpful to remember how to get to different places. Alternatively, have a good memory, or rely on chat to have good memory.
+Taking notes can be helpful to remember how to get to different important places. Alternatively, have a good memory, or rely on chat to have good memory.
 
 Starting with or using the master key is never required. If you have it, it can be used to access areas early, but there may be significant scaling differences on the other side of those doors.
 
@@ -44,7 +46,7 @@ The randomizer checks what is the shortest path for you to access a blacksmith w
 ## Installation
 For PTDE only, you must first unpack Dark Souls for modding. (https://www.nexusmods.com/darksouls/mods/1304)
 
-To install the mod, run FogMod.exe, select your options, and click "Randomize!" to randomize. This automatically creates backups. You must select the game exe manually if you have a non-standard DS1 install location. You can also enter a seed (any number between 0 and 4294967295). For all changes to take effect, restart the game, and start a new save file.
+To install the mod, unzip FogMod.zip anywhere. It should contain FogMod.exe along with a dist subdirectory used by the randomizer. Run FogMod.exe, select your options, and click "Randomize!" to randomize. This automatically creates backups. You must select the game exe manually if you have a non-standard DS1 install location. You can also enter a seed (any number between 0 and 4294967295). For all changes to take effect, restart the game, and start a new save file.
 
 When randomizing with scaling enabled, try not to access existing save files that have been previously accessed with different scaling (different seed or options) or no scaling. If you quit out of a save file with enemies loaded into the area, and the scaling changes too much on reload, the game will crash to desktop. The save file is not corrupted, but can't be opened anymore unless you return to the previous enemy scaling.
 
@@ -138,12 +140,6 @@ Preexisting warps between areas
 - Warp to Firelink crow's nest
 - To Duke's Archives prison
 
-Lordvessel gates
-
-- Golden fog gate in Tomb of the Giants
-- Golden fog gate in Demon Ruins
-- Golden fog gate leading to Duke's Archives
-
 Major PvP fog gates (between areas)
 
 - Between Firelink Shrine and Upper Burg
@@ -182,3 +178,9 @@ Minor PvP fog gates
 - Between the Anor Londo main cathedral and the Giant Blacksmith
 - At the first elevator in Duke's Archives
 - At the hallway with the crystal warrior in Duke's Archives
+
+Lordvessel gates
+
+- Golden fog gate in Tomb of the Giants
+- Golden fog gate in Demon Ruins
+- Golden fog gate leading to Duke's Archives

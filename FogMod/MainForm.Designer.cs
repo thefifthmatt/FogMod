@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.minor = new System.Windows.Forms.CheckBox();
@@ -62,6 +63,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusL = new System.Windows.Forms.ToolStripStatusLabel();
             this.randomizeL = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.unconnected = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -86,7 +89,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(451, 263);
+            this.groupBox1.Size = new System.Drawing.Size(451, 255);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Randomized entrances";
@@ -95,10 +98,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label3.Location = new System.Drawing.Point(24, 233);
+            this.label3.Location = new System.Drawing.Point(24, 194);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(367, 13);
-            this.label3.TabIndex = 11;
+            this.label3.TabIndex = 9;
             this.label3.Text = "Enable and randomize invasion fog gates usually separating off smaller areas";
             // 
             // minor
@@ -106,11 +109,11 @@
             this.minor.AutoSize = true;
             this.minor.Checked = true;
             this.minor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.minor.Location = new System.Drawing.Point(7, 212);
+            this.minor.Location = new System.Drawing.Point(7, 173);
             this.minor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.minor.Name = "minor";
             this.minor.Size = new System.Drawing.Size(147, 20);
-            this.minor.TabIndex = 10;
+            this.minor.TabIndex = 8;
             this.minor.Text = "Minor PvP fog gates";
             this.minor.UseVisualStyleBackColor = true;
             this.minor.CheckedChanged += new System.EventHandler(this.UpdateOptions);
@@ -119,10 +122,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label4.Location = new System.Drawing.Point(24, 196);
+            this.label4.Location = new System.Drawing.Point(24, 157);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(310, 13);
-            this.label4.TabIndex = 9;
+            this.label4.TabIndex = 7;
             this.label4.Text = "Enable and randomize invasion fog gates separating major areas";
             // 
             // major
@@ -130,11 +133,11 @@
             this.major.AutoSize = true;
             this.major.Checked = true;
             this.major.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.major.Location = new System.Drawing.Point(7, 175);
+            this.major.Location = new System.Drawing.Point(7, 136);
             this.major.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.major.Name = "major";
             this.major.Size = new System.Drawing.Size(148, 20);
-            this.major.TabIndex = 8;
+            this.major.TabIndex = 6;
             this.major.Text = "Major PvP fog gates";
             this.major.UseVisualStyleBackColor = true;
             this.major.CheckedChanged += new System.EventHandler(this.UpdateOptions);
@@ -143,20 +146,20 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label5.Location = new System.Drawing.Point(25, 158);
+            this.label5.Location = new System.Drawing.Point(25, 232);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(328, 13);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 11;
             this.label5.Text = "Randomize golden fog gates, in which case they are never dispelled";
             // 
             // lordvessel
             // 
             this.lordvessel.AutoSize = true;
-            this.lordvessel.Location = new System.Drawing.Point(8, 135);
+            this.lordvessel.Location = new System.Drawing.Point(8, 209);
             this.lordvessel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lordvessel.Name = "lordvessel";
             this.lordvessel.Size = new System.Drawing.Size(131, 20);
-            this.lordvessel.TabIndex = 6;
+            this.lordvessel.TabIndex = 10;
             this.lordvessel.Text = "Lordvessel gates";
             this.lordvessel.UseVisualStyleBackColor = true;
             this.lordvessel.CheckedChanged += new System.EventHandler(this.UpdateOptions);
@@ -235,6 +238,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.unconnected);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.bboc);
             this.groupBox2.Controls.Add(this.label1);
@@ -250,7 +255,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(451, 218);
+            this.groupBox2.Size = new System.Drawing.Size(451, 255);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
@@ -261,9 +266,9 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label9.Location = new System.Drawing.Point(24, 193);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(247, 13);
+            this.label9.Size = new System.Drawing.Size(280, 13);
             this.label9.TabIndex = 21;
-            this.label9.Text = "Unrelated to the mod, BoC floor no longer crumbles";
+            this.label9.Text = "BoC floor no longer crumbles. Not related to randomization";
             // 
             // bboc
             // 
@@ -283,9 +288,10 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label1.Location = new System.Drawing.Point(24, 156);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(331, 13);
+            this.label1.Size = new System.Drawing.Size(401, 13);
             this.label1.TabIndex = 19;
-            this.label1.Text = "Check for Lower Burg skip, Duke\'s skip, TotG/Gaping fog gate skips";
+            this.label1.Text = "Completing the run may require Lower Burg skip, Duke\'s skip, various fog gate ski" +
+    "ps";
             // 
             // scale
             // 
@@ -307,9 +313,9 @@
             this.hard.Location = new System.Drawing.Point(7, 135);
             this.hard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.hard.Name = "hard";
-            this.hard.Size = new System.Drawing.Size(95, 20);
+            this.hard.Size = new System.Drawing.Size(108, 20);
             this.hard.TabIndex = 18;
-            this.hard.Text = "Jump skips";
+            this.hard.Text = "Glitched logic";
             this.hard.UseVisualStyleBackColor = true;
             this.hard.CheckedChanged += new System.EventHandler(this.UpdateOptions);
             // 
@@ -469,9 +475,31 @@
             this.randomizeL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.randomizeL.Location = new System.Drawing.Point(796, 372);
             this.randomizeL.Name = "randomizeL";
+            this.randomizeL.ReadOnly = true;
             this.randomizeL.Size = new System.Drawing.Size(119, 14);
             this.randomizeL.TabIndex = 11;
             this.randomizeL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label11.Location = new System.Drawing.Point(24, 229);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(365, 13);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "If enabled, entering a fog gate you just exited can send you somewhere else";
+            // 
+            // unconnected
+            // 
+            this.unconnected.AutoSize = true;
+            this.unconnected.Location = new System.Drawing.Point(7, 208);
+            this.unconnected.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.unconnected.Name = "unconnected";
+            this.unconnected.Size = new System.Drawing.Size(169, 20);
+            this.unconnected.TabIndex = 22;
+            this.unconnected.Text = "Disconnected fog gates";
+            this.unconnected.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -491,9 +519,10 @@
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "DS1 Fog Gate Randomizer";
+            this.Text = "DS1 Fog Gate Randomizer v0.1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -541,6 +570,8 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusL;
         private System.Windows.Forms.TextBox randomizeL;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox unconnected;
     }
 }
 

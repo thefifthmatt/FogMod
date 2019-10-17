@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using static FogMod.Util;
@@ -308,7 +309,7 @@ namespace FogMod
                 return (byte.Parse(spec.Map.Substring(1, 2)), byte.Parse(spec.Map.Substring(4, 2)));
             }
             List<List<object>> events = new List<List<object>>();
-            List<float> getPos(string at) => at.Split(' ').Select(c => float.Parse(c)).ToList();
+            List<float> getPos(string at) => at.Split(' ').Select(c => float.Parse(c, CultureInfo.InvariantCulture)).ToList();
             void AddWarpEvent(byte mode, string toArea, List<int> p, string col=null)
             {
                 (byte area, byte block) = GetDest(toArea);
@@ -426,7 +427,7 @@ namespace FogMod
                         string[] parts = side.CustomWarp.Split(' ');
                         string customArea = parts[0];
                         MSB1 customMsb = msbs[customArea];
-                        List<float> pos = parts.Skip(1).Select(c => float.Parse(c)).ToList();
+                        List<float> pos = parts.Skip(1).Select(c => float.Parse(c, CultureInfo.InvariantCulture)).ToList();
 
                         MSB1.Part.Player p = new MSB1.Part.Player();
                         p.Name = $"c0000_{50 + players[customArea]++:d4}";
@@ -568,6 +569,27 @@ namespace FogMod
                     box.Width = 10;
                     box.Height = 5;
                 }
+                if (map == "kiln")
+                {
+                    if (opt["patchkiln"])
+                    {
+                        MSB1.Part.Player player = msb.Parts.Players.Find(p => p.Name == "c0000_0000");
+                        player.Position = new Vector3(50.3f, -63.27f, 106.1f);
+                        player.Rotation = new Vector3(0, -105, 0);
+                    }
+                }
+                if (map == "anorlondo")
+                {
+                    // Use this unless the area after the broken window becomes its own unique area
+                    if (!g.entranceIds["o5869_0000"].IsFixed)
+                    {
+                        MSB1.Part.Object obj = msb.Parts.Objects.Find(e => e.Name == "o0500_0006");
+                        obj.Position = new Vector3(444.106f, 160.258f, 255.887f);
+                        obj.Rotation = new Vector3(-3, -90, 0);
+                        obj.CollisionName = "h0025B1_0000";
+                        obj.UnkT0C = 50; // initial animation
+                    }
+                }
                 if (map == "asylum")
                 {
                     HashSet<int> secondary = new HashSet<int> { 1811613, 1811616, 1811619, 1811622 };
@@ -635,7 +657,7 @@ namespace FogMod
                         if (exit.IsFixed && entrance.IsFixed) continue;
                         throw new Exception($"Missing warps - {a == null} {b == null} for {exit} -> {entrance}");
                     }
-                    if (exit.Name == entrance.Name && exit.IsFixed)
+                    if (exit.Name == entrance.Name && exit.IsFixed && !opt["alwaysshow"])
                     {
                         Entrance e = g.entranceIds[exit.Name];
                         if (vanillaEntrances.Contains(e.Name)) continue;
@@ -781,6 +803,7 @@ namespace FogMod
             fmgs[fmgEvent][15000280] = "Return to Asylum";
             fmgs[fmgEvent][15000281] = "Sealed in New Londo Ruins";
             fmgs[fmgEvent][15000282] = "Fog Gate Randomizer breaks when online.\nChange Launch setting in Network settings and then reload.";
+            fmgs[fmgEvent][15000283] = "Go to jail";
             editor.OverrideBnd($@"{distBase}\msg\ENGLISH\menu.msgbnd{dcxExt}", @"msg\ENGLISH", fmgs, fmg => fmg.Write());
         }
 
