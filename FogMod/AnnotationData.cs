@@ -111,6 +111,8 @@ namespace FogMod
             public int ActionRegion { get; set; }
             // Don't include the side as a random entrance/exit if the given entrance is not randomized either
             public string ExcludeIfRandomized { get; set; }
+            // The map to add the warp into, if different from the entrance's map
+            public string DestinationMap { get; set; }
             [YamlIgnore]
             public Expr Expr { get; set; }
             [YamlIgnore]

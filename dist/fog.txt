@@ -30,6 +30,11 @@ Areas:
     Tags: drop hard
 - Name: burg_bonfire
   Tags: trivial
+- Name: burg_above_bonfire
+  Tags: trivial
+  To:
+  - Area: burg_bonfire
+    Tags: shortcut
 - Name: burg_ladder
   Tags: trivial
 - Name: burg_lower
@@ -102,9 +107,9 @@ Areas:
 - Name: dlc_manus
   Tags: boss
 - Name: dlc_top
-  Tags: optional trivial
+  Tags: trivial
 - Name: dlc_bottom
-  Tags: optional trivial
+  Tags: trivial
   To:
   - Area: dlc_top
     Tags: shortcut
@@ -328,6 +333,7 @@ Warps:
     WarpFlag: 5301
   BSide:
     Area: asylum_outside
+    DestinationMap: asylum
     Cutscene: 180130
 - ID: 1512500
   Area: paintedworld
@@ -339,6 +345,7 @@ Warps:
     WarpFlag: 5302
   BSide:
     Area: anorlondo_painting
+    DestinationMap: anorlondo
     BeforeWarpFlag: 6909
 - ID: 1212510
   Area: darkroot
@@ -351,6 +358,7 @@ Warps:
     WarpFlag: 5303
   BSide:
     Area: dlc_start
+    DestinationMap: dlc
 - ID: 1312110
   Area: catacombs
   Text: Getting into coffin to Nito
@@ -360,6 +368,7 @@ Warps:
     WarpFlag: 5309
   BSide:
     Area: totg_coffin
+    DestinationMap: totg
     BeforeWarpFlag: 11310050
 - ID: 1302010
   Area: totg
@@ -370,6 +379,7 @@ Warps:
     WarpFlag: 5310
   BSide:
     Area: catacombs
+    DestinationMap: catacombs
 - ID: 1510998  # Actual region of 1502501 is in Sen's map, not in Anor Londo
   Area: sens
   Text: From Sen's to Anor Londo
@@ -379,6 +389,7 @@ Warps:
     WarpFlag: 5304
   BSide:
     Area: anorlondo_start
+    DestinationMap: anorlondo
     Tags: player
 - ID: 1102510
   Area: anorlondo
@@ -391,6 +402,7 @@ Warps:
     WarpFlag: 5305
   BSide:
     Area: paintedworld
+    DestinationMap: paintedworld
 - ID: 1502500
   Area: anorlondo
   Text: From Anor Londo back to Sen's
@@ -400,6 +412,7 @@ Warps:
     WarpFlag: 5306
   BSide:
     Area: sens_irongolem
+    DestinationMap: sens
 - ID: 1022121
   Area: asylum
   Text: Warp to Firelink crow's nest
@@ -409,6 +422,7 @@ Warps:
     WarpFlag: 5307
   BSide:
     Area: firelink_crow
+    DestinationMap: firelink
     Cutscene: 100226
 - ID: 1702901
   Area: dukes
@@ -501,6 +515,7 @@ Entrances:
   DoorCond: depths_gaping
   ASide:
     Area: blighttown_upper
+    Tags: dnofts
   BSide:
     Area: depths
 - Name: o1420_0000
@@ -520,6 +535,7 @@ Entrances:
   ASide:
     Area: parish_gargoyles
     Flag: 3
+    BossTrigger: 1012996
     # TrapFlag: 11010000
   BSide:
     Area: parish_church
@@ -689,8 +705,7 @@ Entrances:
   ASide:
     Area: parish_hellkite
   BSide:
-    Area: burg_bonfire
-    Cond: parish_hellkite
+    Area: burg_above_bonfire
 - Name: o1421_0001
   ID: 1011972
   Area: parish
@@ -748,6 +763,7 @@ Entrances:
   Tags: pvp major
   ASide:
     Area: parish_andre
+    DestinationMap: parish
     Tags: higher
   BSide:
     Area: darkroot
@@ -770,6 +786,7 @@ Entrances:
     Area: darkroot
   BSide:
     Area: newlondo_drakes
+    DestinationMap: newlondo
     Tags: higher
 - Name: o2904_0000
   ID: 1201890
@@ -816,7 +833,6 @@ Entrances:
   ID: 1201986
   Area: darkroot
   Text: In the spot of the Crest of Artorias door
-  Comment: Can be opened from inside? XX That is where it seemingly leads
   Tags: pvp door unique
   DoorCond: parish_andre
   ASide:
@@ -864,7 +880,7 @@ Entrances:
     Area: dlc_township
   BSide:
     Area: dlc_bottom
-    ExcludeIfRandomized: o2914
+    # ExcludeIfRandomized: o2914
 - Name: o2913
   ID: 1211994
   Area: dlc
@@ -883,7 +899,7 @@ Entrances:
     Area: dlc_forest
   BSide:
     Area: dlc_top
-    ExcludeIfRandomized: o2912_0001
+    # ExcludeIfRandomized: o2912_0001
 - Name: o2915_0000
   ID: 1211890
   Area: dlc
@@ -928,7 +944,8 @@ Entrances:
     Area: dlc_forest
   BSide:
     Area: dlc_kalameet
-    Flag: 11210010  # Custom flag
+    Flag: 11210004
+    TrapFlag: 11210592
 - Name: o2920_0000
   ID: 1211986
   Area: dlc
@@ -1061,6 +1078,7 @@ Entrances:
   DoorCond: depths_gaping
   ASide:
     Area: blighttown_upper
+    Tags: dnofts
   BSide:
     Area: depths
 - Name: o4953_0000
@@ -1242,6 +1260,7 @@ Entrances:
   Tags: pvp
   ASide:
     Area: parish_andre
+    DestinationMap: parish
     Tags: higher
   BSide:
     Area: sens
@@ -1352,7 +1371,7 @@ Entrances:
   ID: 1511754
   Area: anorlondo
   Text: From the Anor Londo main cathedral out of a broken window in front
-  Comment: Move the treasure object XX. Also figure out how to enable this...
+  Comment: Add a possibility for fog gates with only exits, no entrances
   Tags: pvp
   ASide:
     Area: anorlondo_cathedral
@@ -1574,6 +1593,7 @@ DefaultCost:
   burg_posttaurus: 0.2075472  # SL 22
   parish_hellkite: 0.2075472  # SL 22
   parish_church: 0.2264151  # SL 23
+  burg_above_bonfire: 0.2264151  # SL 23
   burg_ladder: 0.245283  # SL 24
   parish_gargoyles: 0.245283  # SL 24
   parish_andre: 0.245283  # SL 24
@@ -1649,6 +1669,7 @@ DefaultCost:
   dukes_seath2: 0.8867925  # SL 63
   totg_nito: 0.8867925  # SL 63
   demonruins_stairs: 0.9056604  # SL 64
+  dlc_top: 0.9056604  # SL 64
   dlc_artorias: 0.9056604  # SL 64
   dlc_kalameet: 0.9056604  # SL 64
   demonruins_centipede: 0.9245283  # SL 65
@@ -1659,6 +1680,7 @@ DefaultCost:
   dlc_township: 0.9811321  # SL 68
   demonruins_bedofchaos: 1  # SL 70
   dlc_manus: 1  # SL 70
+  dlc_bottom: 1  # SL 70
   kiln_stairs: 1  # SL 70
   kiln: 1  # SL 70
   kiln_gwyn: 1  # SL 70

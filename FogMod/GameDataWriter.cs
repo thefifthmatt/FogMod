@@ -333,12 +333,14 @@ namespace FogMod
                 }
                 for (int i = 0; i <= 1; i++)
                 {
-                    MSB1 msb = msbs[e.Area];
-                    MSB1.Part.Object fog = msb.Parts.Objects.Find(o => o.Name == e.Name);
-
                     bool front = i == 0;
                     Side side = front ? e.ASide : e.BSide;
                     if (side == null) continue;
+
+                    string map = side.DestinationMap ?? e.Area;
+                    MSB1 msb = msbs[map];
+                    MSB1.Part.Object fog = msbs[e.Area].Parts.Objects.Find(o => o.Name == e.Name);
+
                     if (side.BossTrigger != 0 && side.BossTriggerArea != null)
                     {
                         if (bossTriggerRegions[side.Area] != side.BossTrigger) throw new Exception($"Non-unique boss trigger for {side.Area}");
@@ -413,14 +415,14 @@ namespace FogMod
                         if (side.HasTag("higher")) warpPosition = new Vector3(warpPosition.X, warpPosition.Y + 1, warpPosition.Z);
 
                         MSB1.Part.Player p = new MSB1.Part.Player();
-                        p.Name = $"c0000_{50 + players[e.Area]++:d4}";
+                        p.Name = $"c0000_{50 + players[map]++:d4}";
                         p.ModelName = "c0000";
                         p.EntityID = warpID;
                         p.Position = warpPosition;
                         p.Rotation = warpRotation;
                         p.Scale = new Vector3(1, 1, 1);
                         msb.Parts.Players.Add(p);
-                        side.Warp = new WarpPoint { ID = e.ID, Map = e.Area, Action = actionID, Player = warpID };
+                        side.Warp = new WarpPoint { ID = e.ID, Map = map, Action = actionID, Player = warpID };
                     }
                     else
                     {
@@ -449,15 +451,15 @@ namespace FogMod
             foreach (Entrance e in ann.Warps)
             {
                 if (e.HasTag("unused") || e.HasTag("norandom")) continue;
-                e.ASide.Warp = new WarpPoint { ID = e.ID, Map = e.Area, Cutscene = e.ASide.Cutscene };
-                string toArea = e.BSide.Area.Split('_')[0];
+                e.ASide.Warp = new WarpPoint { ID = e.ID, Map = e.ASide.DestinationMap ?? e.Area, Cutscene = e.ASide.Cutscene };
+                e.BSide.Warp = new WarpPoint { ID = e.ID, Map = e.BSide.DestinationMap ?? e.Area, Cutscene = e.BSide.Cutscene };
                 if (e.BSide.HasTag("player"))
                 {
-                    e.BSide.Warp = new WarpPoint { ID = e.ID, Map = toArea, Cutscene = e.BSide.Cutscene, Player = e.ID };
+                    e.BSide.Warp.Player = e.ID;
                 }
                 else
                 {
-                    e.BSide.Warp = new WarpPoint { ID = e.ID, Map = toArea, Cutscene = e.BSide.Cutscene, Region = e.ID };
+                    e.BSide.Warp.Region = e.ID;
                 }
             }
             int getPlayer(WarpPoint warp)

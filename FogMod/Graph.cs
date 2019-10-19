@@ -193,7 +193,7 @@ namespace FogMod
             {
                 Area = e.Key,
                 Cost = e.Value.HasTag("trivial") ? 0 : (e.Value.HasTag("boss") ? 3 : 1),
-                ScalingBase = opt["nochange"] ? e.Value.ScalingBase : null,
+                ScalingBase = opt["dumpdist"] ? e.Value.ScalingBase : null,
             });
             foreach (Area area in ann.Areas)
             {
