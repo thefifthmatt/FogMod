@@ -6,7 +6,7 @@ namespace FogMod
 {
     public class RandomizerOptions
     {
-        private SortedDictionary<string, bool> opt = new SortedDictionary<string, bool> { { "v2", true } };
+        private SortedDictionary<string, bool> opt = new SortedDictionary<string, bool> { { "v3", true } };
 
         public RandomizerOptions Copy()
         {
@@ -21,6 +21,7 @@ namespace FogMod
             get { return opt.ContainsKey(name) ? opt[name] : false; }
             set { opt[name] = value; }
         }
+        public string Language = "ENGLISH";
         public int Seed { get; set; }
         public uint DisplaySeed => (uint)Seed;
         public SortedSet<string> GetEnabled()
@@ -29,7 +30,8 @@ namespace FogMod
         }
         public override string ToString() => $"{string.Join(" ", GetEnabled())} {DisplaySeed}";
         public string ConfigHash() => (JavaStringHash($"{string.Join(" ", GetEnabled())}") % 99999).ToString().PadLeft(5, '0');
-        private static uint JavaStringHash(string s)
+
+        public static uint JavaStringHash(string s)
         {
             unchecked
             {

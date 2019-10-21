@@ -13,10 +13,13 @@ namespace FogMod
         {
             public List<ConfigAnnotation> Options { get; set; }
             public List<Area> Areas { get; set; }
+            public List<Item> KeyItems { get; set; }
             public List<Entrance> Warps { get; set; }
             public List<Entrance> Entrances { get; set; }
+            public List<CustomStart> CustomStarts { get; set; }
             public Dictionary<string, float> DefaultCost { get; set; }
             public List<Enemies> Enemies { get; set; }
+            public Dictionary<int, string> LotLocations { get; set; }
         }
         public class ConfigAnnotation
         {
@@ -35,41 +38,68 @@ namespace FogMod
                 }
             }
         }
+        // Abuse OOP in a bad way
+        public abstract class Taggable
+        {
+            public string Tags {
+                get => tags;
+                set
+                {
+                    tags = value;
+                    if (tags == null)
+                    {
+                        TagList = new List<string>();
+                    }
+                    else
+                    {
+                        TagList = Tags.Split(' ').ToList();
+                    }
+                }
+            }
+            [YamlIgnore]
+            private string tags = null;
+            [YamlIgnore]
+            public List<string> TagList = new List<string>();
+            public bool HasTag(string tag) => TagList.Contains(tag);
+        }
+        public class Area : Taggable
+        {
+            public string Name { get; set; }            
+            public string ScalingBase { get; set; }
+            public List<Side> To { get; set; }
+        }
         public class Enemies
         {
             public string Col { get; set; }
             public string Area { get; set; }
             public List<string> Includes { get; set; }
         }
-        public class Area
+        public class Item : Taggable
         {
             public string Name { get; set; }
-            public string Tags { get; set; }
-            public string ScalingBase { get; set; }
-            public List<Side> To { get; set; }
-            // Should maybe cache?
-            [YamlIgnore]
-            public List<string> TagList => Tags == null ? new List<string>() : Tags.Split(' ').ToList();
-            public bool HasTag(string tag) => TagList.Contains(tag);
+            public string ID { get; set; }
+            public string Area { get; set; }
         }
-        public class Entrance
+        public class CustomStart
+        {
+            public string Name { get; set; }
+            public string Area { get; set; }
+            public string Respawn { get; set; }
+        }
+        public class Entrance : Taggable
         {
             public string Name { get; set; }
             public int ID { get; set; }
             public string Area { get; set; }
             public string Text { get; set; }
             public string Comment { get; set; }
-            public string Tags { get; set; }
             public string DoorCond { get; set; }
             public Side ASide { get; set; }
             public Side BSide { get; set; }
             [YamlIgnore]
             public bool IsFixed { get; set; }
             [YamlIgnore]
-            public List<string> TagList => Tags == null ? new List<string>() : Tags.Split(' ').ToList();
-            [YamlIgnore]
             public string EdgeName => Name ?? ID.ToString();
-            public bool HasTag(string tag) => TagList.Contains(tag);
             public List<Side> Sides()
             {
                 List<Side> sides = new List<Side>();
@@ -77,12 +107,10 @@ namespace FogMod
                 if (BSide != null) sides.Add(BSide);
                 return sides;
             }
-
         }
-        public class Side
+        public class Side : Taggable
         {
             public string Area { get; set; }
-            public string Tags { get; set; }
             // Flag to escape
             public int Flag { get; set; }
             // If escape flag is set, ignore until this flag normally traps the player in the arena
@@ -117,9 +145,6 @@ namespace FogMod
             public Expr Expr { get; set; }
             [YamlIgnore]
             public WarpPoint Warp { get; set; }
-            [YamlIgnore]
-            public List<string> TagList => Tags == null ? new List<string>() : Tags.Split(' ').ToList();
-            public bool HasTag(string tag) => TagList.Contains(tag);
         }
         private static List<MapSpec> allSpecs = new List<MapSpec>
         {

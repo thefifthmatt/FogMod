@@ -26,12 +26,13 @@ namespace FogMod
             editor.Spec.GameDir = distBase;
             Dictionary<string, MSB1> maps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
             Dictionary<string, PARAM.Layout> layouts = editor.LoadLayouts();
+            Dictionary<string, PARAM> baseParams = editor.LoadParams(layouts);
+
+            editor.Spec.GameDir = gameDir;
             Dictionary<string, PARAM> Params = editor.LoadParams(layouts);
             string dcxExt = remastered ? ".dcx" : "";
             string fmgEvent = remastered ? "Event_text_" : "イベントテキスト";
-            Dictionary<string, FMG> fmgs = editor.LoadBnd($@"{distBase}\msg\ENGLISH\menu.msgbnd{dcxExt}", (data, name) => name == fmgEvent ? FMG.Read(data) : null);
-
-            editor.Spec.GameDir = gameDir ?? ForGame(game).GameDir;
+            Dictionary<string, FMG> fmgs = editor.LoadBnd($@"{editor.Spec.GameDir}\msg\{opt.Language}\menu.msgbnd{dcxExt}", (data, name) => name == fmgEvent ? FMG.Read(data) : null);
 
             // Backup
             List<string> files = GetAllBaseFiles(game);
@@ -58,7 +59,6 @@ namespace FogMod
                 Dictionary<string, string> models = editor.LoadNames("ModelName", n => n);
                 Dictionary<int, string> chrs = editor.LoadNames("CharaInitParam", n => int.Parse(n));
                 List<Enemies> cols = new List<Enemies>();
-                int unique = 0;
                 foreach (KeyValuePair<string, MSB1> entry in msbs)
                 {
                     string map = entry.Key;
@@ -106,43 +106,59 @@ namespace FogMod
                 AddMulti(rankCols, (parts[0], parts[1]), enemy);
             }
 
-            // Add new scalings
-            HashSet<string> rankCells = new HashSet<string>(
-                ("maxHpRate maxStaminaRate physicsAttackPowerRate magicAttackPowerRate fireAttackPowerRate thunderAttackPowerRate " +
-                "physicsDiffenceRate magicDiffenceRate fireDiffenceRate thunderDiffenceRate staminaAttackRate").Split(' '));
-            // 7001 is 1 physattackpower. 7015 is 2.5. (defense scales from 1 to 3. stamina attack rate scales from 1 to 2.)
-            Dictionary<int, PARAM.Row> baseRanks = Params["SpEffectParam"].Rows.Where(r => r.ID >= 7001 && r.ID <= 7015).ToDictionary(r => (int)r.ID, r => r);
-            PARAM.Row baseRank = baseRanks[7015];
-            List<float> rankRatios = new List<float>();
-            for (int i = 0; i <= 50; i++)
-            {
-                PARAM.Row rank = new PARAM.Row(7200 + i, null, layouts["SP_EFFECT_PARAM_ST"]);
-                // float ratio = 0.3f + (3 - 0.3f) * i / 30;  // arithmetic ranking
-                float ratio = (float)Math.Pow(4, (i - 25) / 25.0);  // logarithmic ranking
-                rankRatios.Add(ratio);
-                foreach (PARAM.Cell cell in rank.Cells)
-                {
-                    PARAM.Cell baseCell = baseRank[cell.Name];
-                    if (rankCells.Contains(cell.Name))
-                    {
-                        // if ratio is 1, value should be 1.
-                        // if ratio is 2.5, value should be the same as base row.
-                        float baseRatio = (float)baseCell.Value / 2.5f;
-                        float rankValue = ratio;
-                        if (rankValue >= 1) rankValue *= baseRatio;
-                        else rankValue /= baseRatio;
-                        cell.Value = rankValue;
-                    }
-                    else
-                    {
-                        cell.Value = baseCell.Value;
-                    }
-                }
-                Params["SpEffectParam"].Rows.Add(rank);
-            }
-
+            // Clear out previous values
+            Params["SpEffectParam"].Rows = Params["SpEffectParam"].Rows.Where(r => r.ID < 7200 || r.ID >= 7400).ToList();
+            // In lieu of a better way to do this, just copy the params here. They could be different if there was a better way to clear out scaling.
+            Params["NpcParam"] = baseParams["NpcParam"];
+            Params["GameAreaParam"] = baseParams["GameAreaParam"];
             if (opt["scale"])
             {
+                Dictionary<int, PARAM.Row> baseNpcs = baseParams["NpcParam"].Rows.ToDictionary(r => (int)r.ID, r => r);
+                Dictionary<int, PARAM.Row> newNpcs = Params["NpcParam"].Rows.ToDictionary(r => (int)r.ID, r => r);
+                // Add new scalings
+                HashSet<string> rankCells = new HashSet<string>(
+                    ("maxHpRate maxStaminaRate physicsAttackPowerRate magicAttackPowerRate fireAttackPowerRate thunderAttackPowerRate " +
+                    "physicsDiffenceRate magicDiffenceRate fireDiffenceRate thunderDiffenceRate staminaAttackRate").Split(' '));
+                HashSet<string> dmgCells = new HashSet<string>(
+                    "physicsAttackPowerRate magicAttackPowerRate fireAttackPowerRate thunderAttackPowerRate".Split(' '));
+                // 7001 is 1 physattackpower. 7015 is 2.5. (defense scales from 1 to 3. stamina attack rate scales from 1 to 2.)
+                Dictionary<int, PARAM.Row> baseRanks = baseParams["SpEffectParam"].Rows.Where(r => r.ID >= 7001 && r.ID <= 7015).ToDictionary(r => (int)r.ID, r => r);
+                PARAM.Row baseRank = baseRanks[7015];
+                List<float> rankRatios = new List<float>();
+                const int range = 40;
+                const int middle = range / 2;
+                List<float> dmgMults = new List<float> { 1, 1.15f, 1.3f, 0.9f, 0.8f };
+                for (int d = 0; d < dmgMults.Count; d++)
+                {
+                    for (int i = 0; i <= range; i++)
+                    {
+                        PARAM.Row rank = new PARAM.Row(7200 + i + range * d, null, layouts["SP_EFFECT_PARAM_ST"]);
+                        // float ratio = 0.3f + (3 - 0.3f) * i / range;  // arithmetic ranking
+                        float ratio = (float)Math.Pow(4, 1.0 * (i - middle) / middle);  // logarithmic ranking
+                        rankRatios.Add(ratio);
+                        foreach (PARAM.Cell cell in rank.Cells)
+                        {
+                            PARAM.Cell baseCell = baseRank[cell.Name];
+                            if (rankCells.Contains(cell.Name))
+                            {
+                                // if ratio is 1, value should be 1.
+                                // if ratio is 2.5, value should be the same as base row.
+                                float baseRatio = (float)baseCell.Value / 2.5f;
+                                float rankValue = ratio;
+                                if (rankValue >= 1) rankValue *= baseRatio;
+                                else rankValue /= baseRatio;
+                                if (dmgCells.Contains(cell.Name)) rankValue *= dmgMults[d];
+                                cell.Value = rankValue;
+                            }
+                            else
+                            {
+                                cell.Value = baseCell.Value;
+                            }
+                        }
+                        Params["SpEffectParam"].Rows.Add(rank);
+                    }
+                }
+
                 int findSpEffect(float val)
                 {
                     for (int i = 0; i < rankRatios.Count; i++)
@@ -152,7 +168,6 @@ namespace FogMod
                     }
                     return 7200 + rankRatios.Count - 1;
                 }
-                Dictionary<int, PARAM.Row> baseNpcs = Params["NpcParam"].Rows.ToDictionary(r => (int)r.ID, r => r);
                 // By NPC param id and then by logical area
                 Dictionary<int, Dictionary<string, List<MSB1.Part.Enemy>>> npcs = new Dictionary<int, Dictionary<string, List<MSB1.Part.Enemy>>>();
                 foreach (KeyValuePair<string, MSB1> entry in msbs)
@@ -209,12 +224,13 @@ namespace FogMod
                     foreach (KeyValuePair<string, List<MSB1.Part.Enemy>> npcArea in npcType.Value)
                     {
                         string area = npcArea.Key;
-                        float ratio = area != null && g.areaRatios.TryGetValue(area, out float val) ? val : 1;
+                        (float ratio, float dmgRatio) = area != null && g.areaRatios.TryGetValue(area, out (float, float) val) ? val : (1, 1);
                         if (Math.Abs(ratio - 1) < 0.01f) continue;
                         float initialRatio = 1;
+                        int baseSp = -1;
                         if (npcID >= 120000)
                         {
-                            int baseSp = (int)baseNpcs[npcID]["spEffectID4"].Value;
+                            baseSp = (int)baseNpcs[npcID]["spEffectID4"].Value;
                             if (baseRanks.TryGetValue(baseSp, out PARAM.Row spRow))
                             {
                                 initialRatio = (float)spRow["physicsAttackPowerRate"].Value;
@@ -222,33 +238,50 @@ namespace FogMod
                         }
                         float ratioFromBase = ratio * initialRatio;
                         int sp = findSpEffect(ratioFromBase);
+                        PARAM.Row baseNpc = baseNpcs[npcID];
                         PARAM.Row newNpc;
                         // Quelaag broked under certain circumstances
-                        if (npcID == 528000 && sp < 7225)
+                        if (npcID == 528000 && sp < 7200 + middle)
                         {
-                            sp = 7225;
+                            sp = 7200 + middle;
+                        }
+                        else if (dmgRatio / ratio > 1.15)
+                        {
+                            // Use more damage dealing version if meets threshhold (due to being scaled down)
+                            sp += range;
+                            if (dmgRatio / ratio > 1.3)
+                            {
+                                sp += range;
+                            }
+                        }
+                        else if (dmgRatio / ratio < 0.9)
+                        {
+                            sp += range * 3;
+                            if (dmgRatio / range < 0.8)
+                            {
+                                sp += range;
+                            }
                         }
                         if (npcType.Value.Count == 1)
                         {
                             // If only one NPC, replace it
-                            newNpc = baseNpcs[npcID];
+                            newNpc = newNpcs[npcID];
                             if (npcID == 528000 && ratioFromBase < 1)
                             {
-                                newNpc["hp"].Value = (uint)((uint)newNpc["hp"].Value * ratio);
+                                newNpc["hp"].Value = (uint)((uint)baseNpc["hp"].Value * ratio);
                             }
                         }
                         else
                         {
                             // Make a new one otherwise
-                            PARAM.Row baseNpc = baseNpcs[npcID];
                             int newID = npcID;
-                            while (baseNpcs.ContainsKey(newID)) newID++;
+                            while (newNpcs.ContainsKey(newID)) newID++;
                             newNpc = new PARAM.Row(newID, null, layouts["NPC_PARAM_ST"]);
                             foreach (PARAM.Cell cell in newNpc.Cells)
                             {
                                 cell.Value = baseNpc[cell.Name].Value;
                             }
-                            baseNpcs[newID] = newNpc;
+                            newNpcs[newID] = newNpc;
                             Params["NpcParam"].Rows.Add(newNpc);
                             foreach (MSB1.Part.Enemy enemy in npcArea.Value)
                             {
@@ -279,26 +312,26 @@ namespace FogMod
                             {
                                 if (enemy.EntityID > 0)
                                 {
-                                    PARAM.Row gameArea = Params["GameAreaParam"][enemy.EntityID];
+                                    PARAM.Row gameArea = baseParams["GameAreaParam"][enemy.EntityID];
                                     if (gameArea != null)
                                     {
                                         souls = (uint)gameArea["bonusSoul_single"].Value;
                                         newSouls = getNewSouls(souls, ratio);
-                                        gameArea["bonusSoul_single"].Value = newSouls;
-                                        gameArea["bonusSoul_multi"].Value = newSouls;
+                                        PARAM.Row newArea = Params["GameAreaParam"][enemy.EntityID];
+                                        newArea["bonusSoul_single"].Value = newSouls;
+                                        newArea["bonusSoul_multi"].Value = newSouls;
                                     }
                                 }
                             }
                         }
                         if (opt["debugscale"])
                         {
-                            Console.WriteLine($"Change for {npcID} {area}: {ratio} * {initialRatio} = {ratio * initialRatio}, sp {sp}. Souls {souls} -> {newSouls}. {(npcType.Value.Count == 1 ? " UNIQUE" : "")} {(newSouls > 50000 ? "BIG" : "")}");
+                            Console.WriteLine($"Change for {npcID} {area}: {ratio} * {initialRatio} = {ratio * initialRatio}, dmg ratio {dmgRatio / ratio}, sp {baseSp} -> {sp}. "
+                                + $"Souls {souls} -> {newSouls}. {(npcType.Value.Count == 1 ? " UNIQUE" : "")} {(newSouls > 50000 ? "BIG" : "")}");
                         }
                     }
                 }
             }
-            Console.WriteLine($@"Writing {editor.Spec.GameDir}\{editor.Spec.ParamFile}");
-            editor.OverrideBnd($@"{distBase}\{editor.Spec.ParamFile}", @"param\GameParam", Params, f => f.Write());
 
             // Write stuff
             int mk = 1815800;
@@ -501,14 +534,21 @@ namespace FogMod
             }
             // Add warp point for softlock prevention
             int softWarp = mk++;
+            string[] respawnParts = g.start.Respawn.Split(' ');
+            string startMap = respawnParts[0];
+            int startRespawn = int.Parse(respawnParts[1]);
             {
-                MSB1 msb = msbs["asylum"];
+                MSB1 msb = msbs[startMap];
                 MSB1.Part.Player p = new MSB1.Part.Player();
-                p.Name = $"c0000_{50 + players["asylum"]++:d4}";
+                p.Name = $"c0000_{50 + players[startMap]++:d4}";
                 p.ModelName = "c0000";
                 p.EntityID = softWarp;
-                p.Position = new Vector3(33.9f, 193.15f, -25.2f);
-                p.Rotation = new Vector3(0, -115, 0);
+                MSB1.Event.SpawnPoint spawn = msb.Events.SpawnPoints.Find(e => e.EntityID == startRespawn);
+                if (spawn == null) throw new Exception($"Bad custom start {g.start.Respawn}, can't find spawn point {startRespawn}");
+                MSB1.Region region = msb.Regions.Regions.Find(e => e.Name == spawn.SpawnPointName);
+                if (region == null) throw new Exception($"Bad custom start {g.start.Respawn}, can't find region {spawn.SpawnPointName}");
+                p.Position = region.Position;
+                p.Rotation = region.Rotation;
                 p.Scale = new Vector3(1, 1, 1);
                 msb.Parts.Players.Add(p);
             }
@@ -524,7 +564,7 @@ namespace FogMod
                     {
                         if (map == "firelink" && col.Name == "h0017B2_0000")
                         {
-                            col.PlayRegionID = -69696969 - 10;
+                            col.PlayRegionID = -69696968 - 10;
                         }
                         if (false && map == "demonruins" && col.Name == "h0005B1")
                         {
@@ -736,10 +776,15 @@ namespace FogMod
                         {
                             evt.Instructions.Add(new EMEVD.Instruction(2000, 0, init));
                         }
-                        evt.Instructions.Add(new EMEVD.Instruction(2000, 0, new List<object> { 0, (uint)8900, softWarp }));
+                        (byte area, byte block) = GetDest(startMap);
+                        evt.Instructions.Add(new EMEVD.Instruction(2000, 0, new List<object> { 0, (uint)8900, area, block, softWarp }));
                         for (int i = 0; i < playRegions.Count; i++)
                         {
                             evt.Instructions.Add(new EMEVD.Instruction(2000, 0, new List<object> { i, (uint)8901, tempColEventBase + i, playRegions[i] }));
+                        }
+                        if (opt["start"])
+                        {
+                            evt.Instructions.Add(new EMEVD.Instruction(2000, 0, new List<object> { 0, (uint)8950, area, block, softWarp, startRespawn }));
                         }
                     }
                     if (evt.ID == 0 && name == "m14_01_00_00" && opt["bboc"])
@@ -795,18 +840,20 @@ namespace FogMod
                 Console.WriteLine("Writing " + path);
                 entry.Value.Write(path);
             }
+            Console.WriteLine($@"Writing {editor.Spec.GameDir}\{editor.Spec.ParamFile}");
+            editor.OverrideBnd($@"{editor.Spec.GameDir}\{editor.Spec.ParamFile}", @"param\GameParam", Params, f => f.Write());
             Console.WriteLine($@"Copying ESDs to {editor.Spec.GameDir}\{editor.Spec.EsdDir}");
             foreach (string path in Directory.GetFiles($@"{distBase}\{editor.Spec.EsdDir}", "*.talkesdbnd*"))
             {
                 File.Copy(path, $@"{editor.Spec.GameDir}\{editor.Spec.EsdDir}\{Path.GetFileName(path)}", true);
             }
             // Hardcode some messages
-            Console.WriteLine($@"Writing messages to {editor.Spec.GameDir}\msg\ENGLISH");
-            fmgs[fmgEvent][15000280] = "Return to Asylum";
+            Console.WriteLine($@"Writing messages to {editor.Spec.GameDir}\msg\{opt.Language}");
+            fmgs[fmgEvent][15000280] = $"Return to {g.start.Name}";
             fmgs[fmgEvent][15000281] = "Sealed in New Londo Ruins";
             fmgs[fmgEvent][15000282] = "Fog Gate Randomizer breaks when online.\nChange Launch setting in Network settings and then reload.";
-            fmgs[fmgEvent][15000283] = "Go to jail";
-            editor.OverrideBnd($@"{distBase}\msg\ENGLISH\menu.msgbnd{dcxExt}", @"msg\ENGLISH", fmgs, fmg => fmg.Write());
+            fmgs[fmgEvent][15000283] = g.entranceIds["1702901"].IsFixed ? "Go to jail" : "Go to jail (randomized warp)";
+            editor.OverrideBnd($@"{editor.Spec.GameDir}\msg\{opt.Language}\menu.msgbnd{dcxExt}", $@"msg\{opt.Language}", fmgs, fmg => fmg.Write());
         }
 
         public static List<string> GetAllBaseFiles(FromGame game)

@@ -16,19 +16,21 @@ namespace FogMod
             PAIRED,
             UNPAIRED
         }
-        public void Connect(RandomizerOptions opt, Graph g, Annotations ann, Random random)
+        public void Connect(RandomizerOptions opt, Graph g, Annotations ann)
         {
             Dictionary<string, Node> graph = g.graph;
             List<Edge> allFroms = graph.Values.SelectMany(node => node.From.Where(e => e.From == null)).ToList();
             List<Edge> allTos = graph.Values.SelectMany(node => node.To.Where(e => e.To == null)).ToList();
-            Shuffle(random, allFroms);
-            Shuffle(random, allTos);
+            Random shuffleRandom = new Random(opt.Seed);
+            Shuffle(shuffleRandom, allFroms);
+            Shuffle(shuffleRandom, allTos);
 
             // For now, try to connect one-way to one-way and have distinct silos.
             foreach (EdgeSilo siloType in Enum.GetValues(typeof(EdgeSilo)))
             {
                 List<Edge> froms = allFroms.Where(e => (e.Pair == null) == (siloType == EdgeSilo.UNPAIRED)).ToList();
                 List<Edge> tos = allTos.Where(e => (e.Pair == null) == (siloType == EdgeSilo.UNPAIRED)).ToList();
+                if (opt["explain"]) Console.WriteLine($"Connecting silo {siloType}: {froms.Count} with no from, and {tos.Count} with no to");
 
                 while (true)
                 {
@@ -75,6 +77,21 @@ namespace FogMod
                 if (froms.Count > 0 || tos.Count > 0) throw new Exception($"Internal error: unconnected edges after randomization:\nFrom edges: {string.Join(", ", froms)}\nTo edges: {string.Join(", ", tos)}");
             }
 
+            if (opt["start"])
+            {
+                g.start = ann.CustomStarts[new Random(opt.Seed - 1).Next(ann.CustomStarts.Count)];
+            }
+            else
+            {
+                g.start = new CustomStart
+                {
+                    Name = "Asylum",
+                    Area = "asylum",
+                    Respawn = "asylum 1812961",
+                };
+            }
+            string start = g.start.Area;
+
             // Massive pile of edge-swapping heuristics incoming
             int tries = 0;
             GraphChecker checker = new GraphChecker();
@@ -83,7 +100,7 @@ namespace FogMod
             while (tries++ < 100)
             {
                 if (opt["explain"]) Console.WriteLine($"------------------------ Try {tries}");
-                check = checker.Check(opt, g);
+                check = checker.Check(opt, g, start);
                 if (check.Unvisited.Count == 0)
                 {
                     break;
@@ -121,7 +138,7 @@ namespace FogMod
                         pairedOnly = false;
                         continue;
                     }
-                    throw new Exception($"Could not find edge into unreachable areas {string.Join(", ", check.Unvisited)}");
+                    throw new Exception($"Could not find edge into unreachable areas [{string.Join(", ", check.Unvisited)}] starting from {start}");
                 }
 
                 (Edge, float) victim = (null, 0);
@@ -276,7 +293,7 @@ namespace FogMod
             {
                 if (opt["explain"]) Console.WriteLine($"Blacksmith {area}: {string.Join(", ", check.Records[area].Visited)}");
             }
-            g.areaRatios = new Dictionary<string, float>();
+            g.areaRatios = new Dictionary<string, (float, float)>();
             int k = 0;
             foreach (NodeRecord rec in check.Records.Values.OrderBy(r => r.Dist))
             {
@@ -286,6 +303,7 @@ namespace FogMod
                 bool preBlacksmithBoss = preBlacksmith.Contains(rec.Area) && isBoss;
                 if (preBlacksmithBoss && desiredCost > 0.05) desiredCost = 0.05f;
                 float ratio = 1;
+                float dmgRatio = 1;
                 if (rec.Area == "kiln_gwyn")
                 {
                     // Keep ratio 1
@@ -293,7 +311,7 @@ namespace FogMod
                 else if (ann.DefaultCost.TryGetValue(rec.Area, out float defaultCost))
                 {
                     // This scaling constant factor is a bit tricky to tune.
-                    // Originally used 400-1100, based on HP scaling over the course of a game. This seems to better match expected boss HP, even if damage can be low initially.
+                    // Originally used 400-1100, based on HP scaling over the course of a game. This seems to better match expected boss HP.
                     ratio = (33 + 66 * desiredCost) / (33 + 66 * defaultCost);
                     // If it's randomized to past 70% of the way, don't make it easier.
                     if (ratio < 1 && ((double)k / check.Records.Count) > 0.7)
@@ -301,16 +319,23 @@ namespace FogMod
                         ratio = 1;
                     }
                     // If it's early enough in vanilla (i.e. before expected access to blacksmith), don't make it easier either.
-                    if (defaultCost <= (ann.DefaultCost.TryGetValue("parish_church", out float val) ? val : 0.25) && ratio < 1)
+                    else if (defaultCost <= (ann.DefaultCost.TryGetValue("parish_church", out float val) ? val : 0.25) && ratio < 1)
                     {
                         ratio = 1;
                     }
+                    else
+                    {
+                        // Damage does not scale as much
+                        dmgRatio = (50 + 50 * desiredCost) / (50 + 50 * defaultCost);
+                    }
                 }
-                g.areaRatios[rec.Area] = ratio;
+                g.areaRatios[rec.Area] = (ratio, dmgRatio);
                 
                 // Print out the connectivity info for spoiler logs
                 if (rec.Area == "anorlondo_os") Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                Console.WriteLine($"{rec.Area} {(opt["explain"] ? $"{desiredCost * 100:0.}% " : "")}(scaling: {ratio * 100:0.}%)" + (opt["debugareas"] ? $" [{string.Join(",", new SortedSet<string>(rec.Visited))}]" : "") + (isBoss ? " <----" : ""));
+                string areas = opt["debugareas"] ? $" [{string.Join(",", new SortedSet<string>(rec.Visited))}]" : "";
+                string scaling = opt["scale"] ? $" (scaling: {ratio * 100:0.}%)" : "";
+                Console.WriteLine($"{rec.Area}{(opt["explain"] ? $" {desiredCost * 100:0.}%" : "")}" + scaling + areas + (isBoss ? " <----" : ""));
                 foreach (KeyValuePair<Edge, float> entry in rec.InEdge.OrderBy(e => e.Value))
                 {
                     Edge e = entry.Key;

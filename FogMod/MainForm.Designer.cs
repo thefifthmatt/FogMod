@@ -43,6 +43,10 @@
             this.worldL = new System.Windows.Forms.Label();
             this.world = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.start = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.unconnected = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.bboc = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -63,8 +67,9 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusL = new System.Windows.Forms.ToolStripStatusLabel();
             this.randomizeL = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.unconnected = new System.Windows.Forms.CheckBox();
+            this.language = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -238,6 +243,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.start);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.unconnected);
             this.groupBox2.Controls.Add(this.label9);
@@ -255,10 +262,52 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(451, 255);
+            this.groupBox2.Size = new System.Drawing.Size(451, 296);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label12.Location = new System.Drawing.Point(24, 265);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(335, 13);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "Immediately warp away from Asylum, returning later through a fog gate";
+            // 
+            // start
+            // 
+            this.start.AutoSize = true;
+            this.start.Location = new System.Drawing.Point(7, 244);
+            this.start.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.start.Name = "start";
+            this.start.Size = new System.Drawing.Size(215, 20);
+            this.start.TabIndex = 24;
+            this.start.Text = "Random start outside of Asylum";
+            this.start.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label11.Location = new System.Drawing.Point(24, 229);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(365, 13);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "If enabled, entering a fog gate you just exited can send you somewhere else";
+            // 
+            // unconnected
+            // 
+            this.unconnected.AutoSize = true;
+            this.unconnected.Location = new System.Drawing.Point(7, 208);
+            this.unconnected.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.unconnected.Name = "unconnected";
+            this.unconnected.Size = new System.Drawing.Size(169, 20);
+            this.unconnected.TabIndex = 22;
+            this.unconnected.Text = "Disconnected fog gates";
+            this.unconnected.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -288,10 +337,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label1.Location = new System.Drawing.Point(24, 156);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(401, 13);
+            this.label1.Size = new System.Drawing.Size(357, 13);
             this.label1.TabIndex = 19;
-            this.label1.Text = "Completing the run may require Lower Burg skip, Duke\'s skip, various fog gate ski" +
-    "ps";
+            this.label1.Text = "Various glitches may be required, similar to Race Mode+ in item randomizer";
             // 
             // scale
             // 
@@ -378,7 +426,7 @@
             // fixedseed
             // 
             this.fixedseed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.fixedseed.Location = new System.Drawing.Point(161, 344);
+            this.fixedseed.Location = new System.Drawing.Point(161, 379);
             this.fixedseed.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fixedseed.Name = "fixedseed";
             this.fixedseed.Size = new System.Drawing.Size(153, 22);
@@ -388,7 +436,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.label10.Location = new System.Drawing.Point(18, 347);
+            this.label10.Location = new System.Drawing.Point(18, 382);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(137, 16);
             this.label10.TabIndex = 3;
@@ -398,7 +446,7 @@
             // 
             this.randb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.randb.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.randb.Location = new System.Drawing.Point(794, 344);
+            this.randb.Location = new System.Drawing.Point(794, 379);
             this.randb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.randb.Name = "randb";
             this.randb.Size = new System.Drawing.Size(121, 27);
@@ -410,7 +458,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.button2.Location = new System.Drawing.Point(794, 283);
+            this.button2.Location = new System.Drawing.Point(794, 318);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(121, 27);
@@ -422,7 +470,7 @@
             // exe
             // 
             this.exe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.exe.Location = new System.Drawing.Point(16, 285);
+            this.exe.Location = new System.Drawing.Point(16, 320);
             this.exe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.exe.Name = "exe";
             this.exe.Size = new System.Drawing.Size(770, 22);
@@ -433,7 +481,7 @@
             // 
             this.restoreButton.Enabled = false;
             this.restoreButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.restoreButton.Location = new System.Drawing.Point(794, 314);
+            this.restoreButton.Location = new System.Drawing.Point(794, 349);
             this.restoreButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.restoreButton.Name = "restoreButton";
             this.restoreButton.Size = new System.Drawing.Size(121, 27);
@@ -446,9 +494,9 @@
             // 
             this.restoreL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.restoreL.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.restoreL.Location = new System.Drawing.Point(24, 314);
+            this.restoreL.Location = new System.Drawing.Point(320, 347);
             this.restoreL.Name = "restoreL";
-            this.restoreL.Size = new System.Drawing.Size(762, 27);
+            this.restoreL.Size = new System.Drawing.Size(466, 27);
             this.restoreL.TabIndex = 9;
             this.restoreL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -456,7 +504,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusL});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 389);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(932, 22);
             this.statusStrip1.TabIndex = 10;
@@ -473,39 +521,53 @@
             this.randomizeL.BackColor = System.Drawing.SystemColors.Control;
             this.randomizeL.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.randomizeL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.randomizeL.Location = new System.Drawing.Point(796, 372);
+            this.randomizeL.Location = new System.Drawing.Point(796, 410);
             this.randomizeL.Name = "randomizeL";
             this.randomizeL.ReadOnly = true;
             this.randomizeL.Size = new System.Drawing.Size(119, 14);
             this.randomizeL.TabIndex = 11;
             this.randomizeL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label11
+            // language
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label11.Location = new System.Drawing.Point(24, 229);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(365, 13);
-            this.label11.TabIndex = 23;
-            this.label11.Text = "If enabled, entering a fog gate you just exited can send you somewhere else";
+            this.language.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.language.Enabled = false;
+            this.language.FormattingEnabled = true;
+            this.language.Location = new System.Drawing.Point(161, 349);
+            this.language.Name = "language";
+            this.language.Size = new System.Drawing.Size(153, 24);
+            this.language.TabIndex = 12;
+            this.language.SelectedIndexChanged += new System.EventHandler(this.UpdateLanguage);
             // 
-            // unconnected
+            // label13
             // 
-            this.unconnected.AutoSize = true;
-            this.unconnected.Location = new System.Drawing.Point(7, 208);
-            this.unconnected.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.unconnected.Name = "unconnected";
-            this.unconnected.Size = new System.Drawing.Size(169, 20);
-            this.unconnected.TabIndex = 22;
-            this.unconnected.Text = "Disconnected fog gates";
-            this.unconnected.UseVisualStyleBackColor = true;
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.label13.Location = new System.Drawing.Point(19, 354);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(108, 16);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "Game language:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.label14.Location = new System.Drawing.Point(19, 275);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(382, 32);
+            this.label14.TabIndex = 14;
+            this.label14.Text = "Runs usually take 4-8 hours to complete depending on options. \r\nSee documentation" +
+    " to learn more!";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(932, 411);
+            this.ClientSize = new System.Drawing.Size(932, 450);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.language);
             this.Controls.Add(this.randomizeL);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.restoreL);
@@ -522,7 +584,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "DS1 Fog Gate Randomizer v0.1";
+            this.Text = "DS1 Fog Gate Randomizer v0.2";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -572,6 +634,11 @@
         private System.Windows.Forms.TextBox randomizeL;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox unconnected;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox start;
+        private System.Windows.Forms.ComboBox language;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
     }
 }
 

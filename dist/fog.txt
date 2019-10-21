@@ -26,8 +26,19 @@ Areas:
   To:
   - Area: burg_start
     Tags: drop
+  - Area: burg_upperresidence
+    Cond: residence_key
+    Tags: door
   - Area: burg_lower
     Tags: drop hard
+  - Area: burg_capra
+    Tags: drop hard
+  - Area: depths
+    Tags: drop hard
+- Name: burg_upperresidence
+  To:
+  - Area: burg_upper
+    Tags: drop
 - Name: burg_bonfire
   Tags: trivial
 - Name: burg_above_bonfire
@@ -38,6 +49,11 @@ Areas:
 - Name: burg_ladder
   Tags: trivial
 - Name: burg_lower
+  To:
+  - Area: burg_lowerresidence
+    Cond: residence_key
+    Tags: door
+- Name: burg_lowerresidence
 - Name: burg_taurus
   Tags: boss
 - Name: burg_posttaurus
@@ -75,9 +91,18 @@ Areas:
   - Area: firelink
     Tags: shortcut
 - Name: paintedworld
+  To:
+  - Area: paintedworld_annex
+    Cond: annex_key
+    Tags: door
+- Name: paintedworld_annex
 - Name: paintedworld_priscilla
   Tags: boss
 - Name: darkroot
+  To:
+  - Area: dlc_hallway
+    Cond: purple_cowards_crystal
+    Tags: hard
 - Name: darkroot_stone
   To:
   - Area: darkroot
@@ -97,13 +122,43 @@ Areas:
 - Name: dlc_guardian
   Tags: boss
 - Name: dlc_sanctuary
+  To:
+  - Area: kiln
+    Cond: purple_cowards_crystal
+    Tags: hard
 - Name: dlc_forest
+  To:
+  - Area: kiln
+    Cond: purple_cowards_crystal
+    Tags: hard
 - Name: dlc_artorias
   Tags: boss
+- Name: dlc_hallway
+  To:
+  - Area: dlc_gough
+    Cond: AND crest_key dlc_artorias
+    Tags: door
+  - Area: kiln
+    Cond: purple_cowards_crystal
+    Tags: hard
 - Name: dlc_gough
 - Name: dlc_kalameet
+  Tags: trivial
+  To:
+  - Area: dlc_kalameetdeath
+    Cond: dlc_gough
+- Name: dlc_kalameetdeath
   Tags: boss
 - Name: dlc_township
+  To:
+  - Area: dlc_townshiphidden
+    Cond: cast_light
+    Tags: door
+  - Area: kiln
+    Cond: purple_cowards_crystal
+    Tags: hard
+- Name: dlc_townshiphidden
+  Tags: trivial
 - Name: dlc_manus
   Tags: boss
 - Name: dlc_top
@@ -155,8 +210,15 @@ Areas:
 - Name: blighttown_bell
   Tags: trivial
 - Name: demonruins
+  To:
+  - Area: demonruins_lava
+    Cond: orange_charred_ring
+  - Area: demonruins_ceaselesslava
+    Cond: OR orange_charred_ring demonruins_ceaseless
 - Name: demonruins_ceaseless
   Tags: boss
+- Name: demonruins_lava
+- Name: demonruins_ceaselesslava
 - Name: demonruins_lower
 - Name: demonruins_lordvessel
   Tags: trivial
@@ -171,8 +233,22 @@ Areas:
     Tags: shortcut
     Cond: demonruins_firesage
 - Name: demonruins_centipede
+  ScalingBase: dukes_prison
   Tags: boss
+- Name: demonruins_izalithprelava
+  Tags: trivial
+  To:
+  - Area: demonruins_izalithlava
+    Cond: orange_charred_ring
+- Name: demonruins_izalithlava
+  Tags: trivial
+  To:
+  - Area: demonruins_izalithprelava
+  - Area: demonruins_izalith
 - Name: demonruins_izalith
+  To:
+  - Area: demonruins_izalithlava
+    Cond: orange_charred_ring
 - Name: demonruins_bedofchaos
   Tags: boss
 - Name: sens
@@ -180,6 +256,11 @@ Areas:
   To:
   - Area: sens
     Tags: drop
+  - Area: sens_cage
+    Cond: cage_key
+    Tags: door
+- Name: sens_cage
+  Tags: trivial
 - Name: sens_upper
   To:
   - Area: sens_mid
@@ -196,6 +277,7 @@ Areas:
 - Name: anorlondo_rafters
 - Name: anorlondo_main
 - Name: anorlondo_darkmoon
+  Tags: trivial
 - Name: anorlondo_postrafters
   To:
   - Area: anorlondo_prerafters
@@ -207,6 +289,11 @@ Areas:
   - Area: anorlondo_painting
     Tags: shortcut
 - Name: anorlondo_painting
+  To:
+  - Area: anorlondo_chandelier
+    Cond: anorlondo_rafters
+- Name: anorlondo_chandelier
+  Tags: trivial
 - Name: anorlondo_building
 - Name: anorlondo_cathedral
   To:
@@ -217,7 +304,6 @@ Areas:
   To:
   - Area: anorlondo_blacksmith
     Tags: drop
-  To:
   - Area: anorlondo_main
     Tags: drop
 - Name: anorlondo_blacksmith
@@ -240,42 +326,83 @@ Areas:
     Cond: anorlondo_os
   - Area: anorlondo_elevator2
     Cond: anorlondo_os
-  - Area: firelink  # Default warp
+  # Can sometimes warp to firelink. But not if firekeeper is dead.
+  # - Area: firelink
 - Name: anorlondo_gwyndolin
+  ScalingBase: anorlondo_gwynevere
   Tags: boss
 - Name: newlondo  # Also door, which is fog gate
   To:
   - Area: newlondo_lower
     Tags: shortcut drop
-    Cond: newlondo_building
+    Cond: AND newlondo_building key_to_the_seal
+  - Area: newlondo_lowerskip
+    Tags: drop hard
+  - Area: newlondo_fourkings
+    Cond: covenant_of_artorias
+    Tags: drop hard
 - Name: newlondo_building
   ScalingBase: sens
   To:
   - Area: newlondo_lower
+    Cond: key_to_the_seal
     Tags: shortcut drop # Check this - can you activate elevator from below? If so, no drop required
   - Area: newlondo
     Tags: shortcut drop
-- Name: newlondo_lower  # Also to drakes. Write condition below TODO
+- Name: newlondo_lower
   ScalingBase: anorlondo_gwynevere
+  To:
+  - Area: newlondo_lowerskip
+- Name: newlondo_lowerskip
+  Tags: trivial
 - Name: newlondo_stairs
   To:
   - Area: newlondo_fourkings
     Tags: drop
-    Cond: darkroot_sif
+    Cond: covenant_of_artorias
 - Name: newlondo_fourkings
+  ScalingBase: dukes_seath2
   Tags: boss
 - Name: newlondo_drakes
-  # ScalingBase: depths_gaping
+  To:
+  - Area: newlondo_drakesbeatrice
+    Cond: newlondo_fourkings
+- Name: newlondo_drakesbeatrice
+  Tags: trivial
 - Name: dukes_start
 - Name: dukes_library
   To:
-  - Area: dukes_prison
+  - Area: dukes_library2
     Tags: drop hard
+  - Area: dukes_crystalgolem
+    Cond: darkroot
+- Name: dukes_crystalgolem
 - Name: dukes_hallway
+  Tags: trivial
 - Name: dukes_prison
   To:
+  - Area: dukes_library2
+    Cond: archive_tower_giant_door_key
+    Tags: door
+  - Area: dukes_extra
+    Cond: archive_prison_extra_key
+    Tags: door
+  - Area: dukes_giantcell
+    Cond: archive_tower_giant_cell_key
+    Tags: door
+- Name: dukes_extra
+- Name: dukes_giantcell
+- Name: dukes_library2
+  To:
+  - Area: dukes_machines
+    Tags: shortcut
   - Area: dukes_library
     Tags: drop shortcut
+  - Area: dukes_prison
+    Cond: dukes_seath2
+    Tags: door
+- Name: dukes_machines
+  Tags: trivial
 - Name: dukes_caves
 - Name: dukes_seath1 # should be post-seath
 - Name: dukes_seath2
@@ -285,7 +412,7 @@ Areas:
   To:
   - Area: kiln_stairs
     Tags: shortcut
-    Cond: AND dukes_seath2 demonruins_bedofchaos newlondo_fourkings totg_nito anorlondo_gwynevere
+    Cond: AND lordvessel lord_soul_shard_seath lord_soul_shard_four_kings lord_soul_bed_of_chaos lord_soul_nito
 - Name: kiln_stairs
 - Name: kiln_gwyn
   Tags: boss
@@ -296,26 +423,37 @@ Areas:
     Cond: AND asylum_balcony asylum_oscar
   - Area: asylum_outside
     Tags: temp
-    Cond: asylum_oscar
+    Cond: asylum_oscar  # This is not exactly correct, but it is temp anyway, so ignored for routing
   - Area: asylum_stray
-    Tags: drop
     # Condition for this is changed from base game, just do this and reload
+    Cond: AND asylum_balcony asylum_oscar
+    Tags: drop
+  - Area: asylum_doll
     Cond: AND asylum_balcony asylum_oscar
 - Name: asylum_outside
 - Name: asylum_oscar
+  Tags: trivial
   To:
   - Area: asylum
     Tags: shortcut
-  To:
   - Area: asylum_prebalcony
+    Tags: shortcut
 - Name: asylum_prebalcony
+  Tags: trivial
+  To:
+  - Area: asylum_f2west
+    Cond: undead_asylum_f2_west_key
+- Name: asylum_f2west
+  Tags: trivial
   To:
   - Area: asylum_oscar
-    Cond: OR asylum_oscar firelink_crow
+    Tags: drop
 - Name: asylum_balcony
   To:
   - Area: asylum
     Tags: drop
+- Name: asylum_doll
+  Tags: trivial
 - Name: asylum_stray
   ScalingBase: sens
 - Name: asylum_loop
@@ -323,6 +461,92 @@ Areas:
   To:
   - Area: asylum
     Tags: drop
+
+KeyItems:
+- Name: lordvessel
+  ID: 3:2510
+  Area: anorlondo_gwynevere
+- Name: key_to_the_seal
+  ID: 3:2013
+  Area: newlondo_building
+- Name: blighttown_key
+  ID: 3:2007
+  Area: depths_gaping
+- Name: key_to_depths
+  ID: 3:2014
+  Area: burg_capra
+- Name: covenant_of_artorias
+  ID: 2:138
+  Area: darkroot_sif
+- Name: orange_charred_ring
+  ID: 2:139
+  Area: demonruins_centipede
+- Name: basement_key
+  ID: 3:2001
+  Area: parish_church
+- Name: undead_asylum_f2_west_key
+  ID: 3:2016
+  Area: firelink_crow
+- Name: annex_key
+  ID: 3:2009
+  Area: paintedworld
+- Name: watchtower_basement_key
+  ID: 3:2019
+  Area: darkroot_postbutterfly
+- Name: darkmoon_seance_ring
+  ID: 2:149
+  Area: catacombs
+- Name: key_to_new_londo_ruins
+  ID: 3:2008
+  Area: blighttown
+- Name: cage_key
+  ID: 3:2003
+  Area: sens_upper
+- Name: archive_prison_extra_key
+  ID: 3:2020
+  Area: dukes_prison
+- Name: archive_tower_giant_cell_key
+  ID: 3:2006
+  Area: dukes_library2
+- Name: archive_tower_giant_door_key
+  ID: 3:2005
+  Area: dukes_prison
+- Name: peculiar_doll
+  ID: 3:384
+  Area: asylum_doll
+- Name: broken_pendant
+  ID: 3:2520
+  Area: dukes_crystalgolem
+- Name: crest_key
+  ID: 3:2022
+  Area: dlc_township
+- Name: crest_of_artorias
+  ID: 3:2002
+  Area: parish_andre
+- Name: residence_key
+  ID: 3:2021
+  Area: burg_upper
+- Name: cast_light
+  ID: 3:3500
+  Area: darkroot
+  Tags: randomonly
+- Name: lord_soul_shard_seath
+  ID: 3:2503
+  Area: dukes_seath2
+- Name: lord_soul_shard_four_kings
+  ID: 3:2502
+  Area: newlondo_fourkings
+- Name: lord_soul_bed_of_chaos
+  ID: 3:2501
+  Area: demonruins_bedofchaos
+- Name: lord_soul_nito
+  ID: 3:2500
+  Area: totg_nito
+- Name: purple_cowards_crystal
+  ID: 3:118
+  Area: dlc_hallway
+  Tags: hard randomonly
+
 Warps:
 - ID: 1812110
   Area: firelink
@@ -353,7 +577,7 @@ Warps:
   Tags: unique
   ASide:
     Area: darkroot
-    Cond: dukes_library
+    Cond: broken_pendant
     Cutscene: 120002
     WarpFlag: 5303
   BSide:
@@ -397,7 +621,7 @@ Warps:
   Tags: unique
   ASide:
     Area: anorlondo_painting
-    Cond: AND asylum_balcony asylum_oscar
+    Cond: peculiar_doll
     Cutscene: 150135
     WarpFlag: 5305
   BSide:
@@ -452,7 +676,7 @@ Warps:
   ASide:
     Area: newlondo_fourkings
     Cutscene: 160040
-    Cond: AND blighttown_bell parish_bell
+    Tags: temp
   BSide:
     Area: kiln_start
 - ID: 1022110
@@ -502,7 +726,7 @@ Entrances:
   Area: depths
   Text: Entrance to Depths
   Tags: pvp door
-  DoorCond: burg_capra
+  DoorCond: key_to_depths
   ASide:
     Area: burg_lower
   BSide:
@@ -512,7 +736,7 @@ Entrances:
   Area: depths
   Text: Depths exit to Blighttown
   Tags: pvp door
-  DoorCond: depths_gaping
+  DoorCond: blighttown_key
   ASide:
     Area: blighttown_upper
     Tags: dnofts
@@ -616,7 +840,7 @@ Entrances:
   Area: parish
   Text: To Darkroot Basin in Havel's tower
   Tags: pvp door
-  DoorCond: darkroot_postbutterfly
+  DoorCond: watchtower_basement_key
   ASide:
     Area: burg_upper
   BSide:
@@ -626,7 +850,7 @@ Entrances:
   Area: parish
   Text: Between Hellkite Bridge and Lower Burg
   Tags: pvp door
-  DoorCond: parish_church
+  DoorCond: basement_key
   ASide:
     Area: parish_hellkite
   BSide:
@@ -710,7 +934,7 @@ Entrances:
   ID: 1011972
   Area: parish
   Tags: pvp door
-  DoorCond: burg_capra
+  DoorCond: key_to_depths
   ASide:
     Area: burg_lower
   BSide:
@@ -772,7 +996,7 @@ Entrances:
   Area: darkroot
   Text: Between Darkroot and Havel's Tower
   Tags: pvp door
-  DoorCond: darkroot_postbutterfly
+  DoorCond: watchtower_basement_key
   ASide:
     Area: darkroot
   BSide:
@@ -834,7 +1058,7 @@ Entrances:
   Area: darkroot
   Text: In the spot of the Crest of Artorias door
   Tags: pvp door unique
-  DoorCond: parish_andre
+  DoorCond: crest_of_artorias
   ASide:
     Area: darkroot_forest
     Tags: dnofts
@@ -932,7 +1156,7 @@ Entrances:
   Text: Between Gough's stairway and Oolacile Township
   Tags: pvp
   ASide:
-    Area: dlc_gough
+    Area: dlc_hallway
   BSide:
     Area: dlc_township
 - Name: o2919_0000
@@ -955,12 +1179,12 @@ Entrances:
     Area: dlc_postartorias
     ExcludeIfRandomized: o2916_0000
   BSide:
-    Area: dlc_gough
+    Area: dlc_hallway
     Tags: main
 - Name: o2920_0001
   ID: 1211900
   Area: dlc
-  Text: Battle of Stoicism. Just cut it off probably.
+  Text: To Battle of Stoicism, removed in game
   Tags: unused
 - Name: o3951_0000
   ID: 1301994
@@ -1075,7 +1299,7 @@ Entrances:
   Area: blighttown
   Text: Between Blighttown and the Depths
   Tags: pvp door
-  DoorCond: depths_gaping
+  DoorCond: key_to_depths
   ASide:
     Area: blighttown_upper
     Tags: dnofts
@@ -1173,8 +1397,7 @@ Entrances:
     Area: demonruins_centipede
     Flag: 11410901
   BSide:
-    Area: demonruins_izalith
-    Cond: demonruins_centipede
+    Area: demonruins_izalithprelava
 - Name: o4966_0000
   ID: 1411994
   Area: demonruins
@@ -1196,14 +1419,13 @@ Entrances:
 - Name: o4968_0000
   ID: 1411998
   Area: demonruins
-  Text: Between the Demon Ruins lava area (drained by Ceaseless) and the cliffside path where Kirk invades
+  Text: In Demon Ruins next to the first Capra Demon
   Tags: pvp
   ASide:
     Area: demonruins_lower
-    # TODO: Is this not accessible for any reason from fog gate?
   BSide:
     Area: demonruins
-    Cond: OR demonruins_ceaseless demonruins_centipede
+    Cond: OR orange_charred_ring demonruins_ceaseless
 - Name: o4969_0000
   ID: 1411988
   Area: demonruins
@@ -1358,7 +1580,7 @@ Entrances:
     Area: anorlondo_gwyndolin
   BSide:
     Area: anorlondo_darkmoon
-    Cond: OR anorlondo_gwynevere catacombs
+    Cond: OR anorlondo_gwynevere darkmoon_seance_ring
 - Name: o5868_0000
   ID: 1511892
   Area: anorlondo
@@ -1413,7 +1635,7 @@ Entrances:
   Area: newlondo
   Text: On door between start of New Londo Ruins and Valley of Drakes near Blighttown
   Tags: pvp door
-  DoorCond: blighttown
+  DoorCond: key_to_new_londo_ruins
   ASide:
     Area: newlondo
   BSide:
@@ -1423,7 +1645,7 @@ Entrances:
   Area: newlondo
   Text: On door between lower New Londo Ruins and Valley of Drakes near RTSR
   Tags: pvp door
-  DoorCond: newlondo_building
+  DoorCond: AND newlondo_building key_to_the_seal
   ASide:
     Area: newlondo_drakes
   BSide:
@@ -1447,11 +1669,11 @@ Entrances:
   ASide:
     Area: newlondo_lower
     EntryFlag: 11600100
-    Cond: newlondo_building
+    Cond: AND newlondo_building key_to_the_seal
   BSide:
     Area: newlondo_lower
     EntryFlag: 11600100
-    Cond: newlondo_building
+    Cond: AND newlondo_building key_to_the_seal
 - Name: o6606_0000
   ID: 1601990
   Area: newlondo
@@ -1461,11 +1683,11 @@ Entrances:
   ASide:
     Area: newlondo_lower
     EntryFlag: 11600100
-    Cond: newlondo_building
+    Cond: AND newlondo_building key_to_the_seal
   BSide:
     Area: newlondo_stairs
     EntryFlag: 11600100
-    Cond: newlondo_building
+    Cond: AND newlondo_building key_to_the_seal
 - Name: o7900_0000
   ID: 1701990
   Area: dukes
@@ -1499,11 +1721,9 @@ Entrances:
   ID: 1701706
   Area: dukes
   Text: Between Duke's Archives and the field before Crystal Caves
-  Comment: Is ASide correct XX
   Tags: world
   ASide:
-    Area: dukes_prison
-    Cond: dukes_prison
+    Area: dukes_machines
   BSide:
     Area: dukes_caves
 - Name: o7907_0000
@@ -1579,111 +1799,184 @@ Entrances:
     ExcludeIfRandomized: o8953_0000
 DefaultCost:
   asylum: 0  # SL 10
-  asylum_oscar: 0.01886792  # SL 11
-  asylum_prebalcony: 0.03773585  # SL 12
-  asylum_balcony: 0.05660377  # SL 13
-  asylum_outside: 0.0754717  # SL 14
-  firelink_crow: 0.09433962  # SL 15
-  firelink: 0.1132075  # SL 16
-  burg_start: 0.1320755  # SL 17
-  newlondo: 0.1320755  # SL 17
-  burg_upper: 0.1320755  # SL 17
-  burg_taurus: 0.1509434  # SL 19
-  burg_bonfire: 0.1509434  # SL 19
-  burg_posttaurus: 0.2075472  # SL 22
-  parish_hellkite: 0.2075472  # SL 22
-  parish_church: 0.2264151  # SL 23
-  burg_above_bonfire: 0.2264151  # SL 23
-  burg_ladder: 0.245283  # SL 24
-  parish_gargoyles: 0.245283  # SL 24
-  parish_andre: 0.245283  # SL 24
-  firelink_elevator: 0.245283  # SL 24
-  burg_lower: 0.245283  # SL 24
-  darkroot: 0.2641509  # SL 25
-  burg_capra: 0.2641509  # SL 25
-  firelink_gate: 0.2641509  # SL 25
-  newlondo_drakes: 0.2830189  # SL 26
-  darkroot_stone: 0.2830189  # SL 26
-  parish_bell: 0.3018868  # SL 28
-  blighttown: 0.3018868  # SL 28
-  darkroot_butterfly: 0.3018868  # SL 28
-  depths: 0.3207547  # SL 29
-  blighttown_quelaag: 0.3207547  # SL 29
-  blighttown_upper: 0.3207547  # SL 29
-  greathollow: 0.3207547  # SL 29
-  depths_gaping: 0.3396226  # SL 30
-  greathollow_ashlake: 0.3396226  # SL 30
-  darkroot_postbutterfly: 0.3584906  # SL 31
-  blighttown_bell: 0.3773585  # SL 32
-  demonruins: 0.3773585  # SL 32
-  demonruins_ceaseless: 0.3962264  # SL 33
-  kiln_start: 0.4339623  # SL 36
-  sens: 0.4339623  # SL 36
-  darkroot_forest: 0.4339623  # SL 36
-  asylum_stray: 0.4339623  # SL 36
-  catacombs_start: 0.4339623  # SL 36
-  newlondo_building: 0.4339623  # SL 36
-  demonruins_lower: 0.4528302  # SL 37
-  sens_mid: 0.4528302  # SL 37
-  darkroot_sif: 0.4528302  # SL 37
-  catacombs: 0.4528302  # SL 37
-  newlondo_stairs: 0.4528302  # SL 37
-  sens_upper: 0.4716981  # SL 38
-  totg_coffin: 0.4716981  # SL 38
-  catacombs_prepinwheel: 0.4716981  # SL 38
-  catacombs_pinwheel: 0.4716981  # SL 38
-  sens_irongolem: 0.490566  # SL 39
-  totg: 0.5283019  # SL 41
-  anorlondo_start: 0.5471698  # SL 42
-  totg_lower: 0.5471698  # SL 42
-  anorlondo_prerafters: 0.5660377  # SL 43
-  anorlondo_rafters: 0.5849057  # SL 45
-  anorlondo_postrafters: 0.6037736  # SL 46
-  anorlondo_main: 0.6226415  # SL 47
-  anorlondo_darkmoon: 0.6226415  # SL 47
-  anorlondo_painting: 0.6226415  # SL 47
-  paintedworld: 0.6226415  # SL 47
-  anorlondo_building: 0.6415094  # SL 48
-  paintedworld_priscilla: 0.6415094  # SL 48
-  anorlondo_cathedral: 0.6603774  # SL 49
-  anorlondo_os: 0.6792453  # SL 50
-  anorlondo_blacksmith: 0.6792453  # SL 50
-  anorlondo_elevator1: 0.7358491  # SL 54
-  anorlondo_elevator2: 0.7358491  # SL 54
-  anorlondo_gwynevere: 0.7358491  # SL 54
-  newlondo_lower: 0.7358491  # SL 54
-  dukes_start: 0.7735849  # SL 56
-  dukes_library: 0.7924528  # SL 57
-  dlc_start: 0.8113208  # SL 58
-  dukes_hallway: 0.8113208  # SL 58
-  dlc_guardian: 0.8113208  # SL 58
-  newlondo_fourkings: 0.8301887  # SL 59
-  dukes_seath1: 0.8301887  # SL 59
-  demonruins_lordvessel: 0.8490566  # SL 60
-  demonruins_firesage: 0.8490566  # SL 60
-  dukes_prison: 0.8490566  # SL 60
-  dlc_sanctuary: 0.8679245  # SL 62
-  dukes_caves: 0.8679245  # SL 62
-  totg_lordvessel: 0.8679245  # SL 62
-  dlc_forest: 0.8867925  # SL 63
-  dukes_seath2: 0.8867925  # SL 63
-  totg_nito: 0.8867925  # SL 63
-  demonruins_stairs: 0.9056604  # SL 64
-  dlc_top: 0.9056604  # SL 64
-  dlc_artorias: 0.9056604  # SL 64
-  dlc_kalameet: 0.9056604  # SL 64
-  demonruins_centipede: 0.9245283  # SL 65
-  demonruins_elevator: 0.9245283  # SL 65
-  anorlondo_gwyndolin: 0.9622642  # SL 67
-  dlc_gough: 0.9622642  # SL 67
-  demonruins_izalith: 0.9811321  # SL 68
-  dlc_township: 0.9811321  # SL 68
-  demonruins_bedofchaos: 1  # SL 70
-  dlc_manus: 1  # SL 70
-  dlc_bottom: 1  # SL 70
+  asylum_oscar: 0.01538462  # SL 10
+  asylum_prebalcony: 0.01538462  # SL 10
+  asylum_balcony: 0.01538462  # SL 10
+  asylum_outside: 0.03076923  # SL 11
+  asylum_doll: 0.03076923  # SL 11
+  firelink_crow: 0.04615385  # SL 12
+  firelink: 0.06153846  # SL 13
+  burg_start: 0.07692308  # SL 14
+  newlondo: 0.07692308  # SL 14
+  burg_upper: 0.07692308  # SL 14
+  burg_taurus: 0.09230769  # SL 15
+  burg_bonfire: 0.09230769  # SL 15
+  burg_posttaurus: 0.1384615  # SL 18
+  parish_hellkite: 0.1384615  # SL 18
+  parish_church: 0.1538462  # SL 19
+  burg_above_bonfire: 0.1538462  # SL 19
+  parish_gargoyles: 0.1692308  # SL 20
+  parish_andre: 0.1692308  # SL 20
+  firelink_elevator: 0.1692308  # SL 20
+  darkroot: 0.1846154  # SL 21
+  newlondo_drakes: 0.2  # SL 22
+  darkroot_stone: 0.2  # SL 22
+  parish_bell: 0.2153846  # SL 22
+  blighttown: 0.2153846  # SL 22
+  darkroot_butterfly: 0.2153846  # SL 22
+  blighttown_quelaag: 0.2307692  # SL 23
+  blighttown_upper: 0.2307692  # SL 23
+  greathollow: 0.2307692  # SL 23
+  greathollow_ashlake: 0.2461538  # SL 24
+  darkroot_postbutterfly: 0.2615385  # SL 25
+  blighttown_bell: 0.2769231  # SL 26
+  demonruins: 0.2769231  # SL 26
+  demonruins_ceaseless: 0.2923077  # SL 27
+  kiln_start: 0.3230769  # SL 29
+  sens: 0.3230769  # SL 29
+  darkroot_forest: 0.3230769  # SL 29
+  asylum_stray: 0.3230769  # SL 29
+  catacombs_start: 0.3230769  # SL 29
+  newlondo_building: 0.3230769  # SL 29
+  demonruins_lower: 0.3384615  # SL 30
+  sens_mid: 0.3384615  # SL 30
+  darkroot_sif: 0.3384615  # SL 30
+  demonruins_ceaselesslava: 0.3384615  # SL 30
+  catacombs: 0.3384615  # SL 30
+  newlondo_stairs: 0.3384615  # SL 30
+  sens_upper: 0.3538462  # SL 31
+  totg_coffin: 0.3538462  # SL 31
+  catacombs_prepinwheel: 0.3538462  # SL 31
+  catacombs_pinwheel: 0.3538462  # SL 31
+  burg_ladder: 0.3692308  # SL 32
+  sens_irongolem: 0.3692308  # SL 32
+  burg_lower: 0.3692308  # SL 32
+  burg_capra: 0.3846154  # SL 33
+  firelink_gate: 0.3846154  # SL 33
+  totg: 0.4  # SL 34
+  anorlondo_start: 0.4153846  # SL 34
+  totg_lower: 0.4153846  # SL 34
+  anorlondo_prerafters: 0.4307692  # SL 35
+  anorlondo_rafters: 0.4461538  # SL 36
+  anorlondo_postrafters: 0.4615385  # SL 37
+  anorlondo_main: 0.4769231  # SL 38
+  anorlondo_darkmoon: 0.4769231  # SL 38
+  anorlondo_painting: 0.4769231  # SL 38
+  anorlondo_chandelier: 0.4769231  # SL 38
+  anorlondo_building: 0.4923077  # SL 39
+  anorlondo_cathedral: 0.5076923  # SL 40
+  anorlondo_os: 0.523077  # SL 41
+  anorlondo_blacksmith: 0.523077  # SL 41
+  paintedworld: 0.5538462  # SL 43
+  paintedworld_annex: 0.5538462  # SL 43
+  sens_cage: 0.5692308  # SL 44
+  paintedworld_priscilla: 0.5692308  # SL 44
+  anorlondo_elevator1: 0.5692308  # SL 44
+  anorlondo_elevator2: 0.5692308  # SL 44
+  anorlondo_gwynevere: 0.5692308  # SL 44
+  newlondo_lower: 0.5692308  # SL 44
+  anorlondo_gwyndolin: 0.5692308  # SL 44
+  newlondo_lowerskip: 0.5846154  # SL 45
+  depths: 0.6153846  # SL 46
+  dukes_start: 0.6307693  # SL 47
+  asylum_f2west: 0.6307693  # SL 47
+  depths_gaping: 0.6307693  # SL 47
+  dukes_library: 0.6461539  # SL 48
+  dukes_crystalgolem: 0.6461539  # SL 48
+  dukes_hallway: 0.6615385  # SL 49
+  dukes_seath1: 0.6615385  # SL 49
+  burg_upperresidence: 0.6769231  # SL 50
+  burg_lowerresidence: 0.6769231  # SL 50
+  dukes_prison: 0.6769231  # SL 50
+  demonruins_centipede: 0.6769231  # SL 50
+  demonruins_lordvessel: 0.6923077  # SL 51
+  demonruins_firesage: 0.6923077  # SL 51
+  dukes_library2: 0.6923077  # SL 51
+  dukes_extra: 0.6923077  # SL 51
+  demonruins_lava: 0.7076923  # SL 52
+  dukes_machines: 0.7076923  # SL 52
+  dukes_caves: 0.7076923  # SL 52
+  totg_lordvessel: 0.7076923  # SL 52
+  demonruins_izalithprelava: 0.7230769  # SL 53
+  dukes_seath2: 0.7230769  # SL 53
+  newlondo_fourkings: 0.7230769  # SL 53
+  totg_nito: 0.7230769  # SL 53
+  demonruins_stairs: 0.7384616  # SL 54
+  demonruins_elevator: 0.7538462  # SL 55
+  dlc_start: 0.7692308  # SL 56
+  newlondo_drakesbeatrice: 0.7692308  # SL 56
+  dlc_guardian: 0.7692308  # SL 56
+  demonruins_izalithlava: 0.8  # SL 58
+  demonruins_izalith: 0.8  # SL 58
+  demonruins_bedofchaos: 0.8153846  # SL 58
+  dlc_sanctuary: 0.8153846  # SL 58
+  dlc_forest: 0.8307692  # SL 59
+  dlc_top: 0.8461539  # SL 60
+  dlc_artorias: 0.8461539  # SL 60
+  dlc_kalameet: 0.8461539  # SL 60
+  dlc_hallway: 0.8923077  # SL 63
+  dlc_township: 0.9076923  # SL 64
+  dlc_townshiphidden: 0.9076923  # SL 64
+  dlc_manus: 0.9230769  # SL 65
+  dlc_bottom: 0.9230769  # SL 65
+  dukes_giantcell: 0.9692308  # SL 68
+  dlc_gough: 0.9846154  # SL 69
+  dlc_kalameetdeath: 1  # SL 70
   kiln_stairs: 1  # SL 70
   kiln: 1  # SL 70
   kiln_gwyn: 1  # SL 70
+CustomStarts:
+- Name: Firelink Shrine
+  Area: firelink
+  Respawn: firelink 1022960
+- Name: Undead Parish
+  Area: parish_andre
+  Respawn: parish 1012964
+- Name: Darkroot Garden
+  Area: darkroot
+  Respawn: darkroot 1202961
+- Name: Blighttown
+  Area: blighttown
+  Respawn: blighttown 1402961
+# In this case, also remove objact param for the door. Needs traversable/boss fogs randomized
+- Name: Depths
+  Area: depths
+  Respawn: depths 1002960
+- Name: Demon Ruins
+  Area: demonruins
+  Respawn: demonruins 1412961
+# Sens and Anor Londo and Dukes and Painted World and DLC need traversable/boss fogs randomized to get back to main map
+- Name: Sen's Fortress
+  Area: sens_mid
+  Respawn: sens 1502961
+- Name: Anor Londo
+  Area: anorlondo_start
+  Respawn: anorlondo 1512960
+- Name: Anor Londo  # in building
+  Area: anorlondo_building
+  Respawn: anorlondo 1512961
+- Name: Painted World
+  Area: paintedworld
+  Respawn: paintedworld 1102960
+- Name: Tomb of the Giants
+  Area: totg
+  Respawn: totg 1312960
+- Name: Catacombs  # hidden one
+  Area: catacombs
+  Respawn: catacombs 1302961
+- Name: Duke's Archives
+  Area: dukes_library2
+  Respawn: dukes 1702960
+- Name: Lost Izalith
+  Area: demonruins_izalithprelava
+  Respawn: demonruins 1412964
+- Name: Oolacile Sanctuary
+  Area: dlc_sanctuary
+  Respawn: dlc 1212961
+- Name: Oolacile Township
+  Area: dlc_township
+  Respawn: dlc 1212962
+
 Enemies:
 - Col: depths
   Area: depths
@@ -2596,19 +2889,19 @@ Enemies:
   Includes:
   - c4190_0003 (Attack Dog (DLC)). NPC 419000
 - Col: dlc h0066B1
-  Area: dlc_kalameet
+  Area: dlc_kalameetdeath
   Includes:
   - c4510_0000 (Black Dragon Kalameet). NPC 451000 @1210400
 - Col: dlc h0019B1
-  Area: dlc_kalameet
+  Area: dlc_kalameetdeath
   Includes:
   - c4510_0001 (Black Dragon Kalameet). NPC 451001 @1210401
 - Col: dlc h0014B1
-  Area: dlc_kalameet
+  Area: dlc_kalameetdeath
   Includes:
   - c4510_0002 (Black Dragon Kalameet). NPC 451000 @1210402
 - Col: dlc h0015B1
-  Area: dlc_kalameet
+  Area: dlc_kalameetdeath
   Includes:
   - c4511_0000 (Kalameet's Tail). NPC 451100 @1210410
 - Col: catacombs
@@ -2974,7 +3267,7 @@ Enemies:
   - c3390_0006 (Burrowing Rockworm). NPC 339003 @1410306
   - c3490_0001 (Good Vagrant). NPC 349012 @1413910
 - Col: demonruins h1008B1
-  Area: demonruins
+  Area: demonruins_ceaselesslava
   Includes:
   - c2250_0003 (Taurus Demon). NPC 225002 @1410450
   - c2250_0004 (Taurus Demon). NPC 225002 @1410451
@@ -3041,12 +3334,12 @@ Enemies:
   - c3491_0004 (Evil Vagrant). NPC 349112 @1413931
   - c3491_0007 (Evil Vagrant). NPC 349212 @1413932
 - Col: demonruins h2801B1
-  Area: demonruins_izalith
+  Area: demonruins_izalithlava
   Includes:
   - c2430_0027 (Demonic Statue). NPC 243001
   - c2430_0028 (Demonic Statue). NPC 243001
 - Col: demonruins h2900B1
-  Area: demonruins_izalith
+  Area: demonruins_izalithlava
   Includes:
   - c2430_0029 (Demonic Statue). NPC 243001
   - c2430_0030 (Demonic Statue). NPC 243001
@@ -3169,7 +3462,7 @@ Enemies:
   Includes:
   - c3390_0007 (Burrowing Rockworm). NPC 339002 @1410307
 - Col: demonruins h0027B1
-  Area: demonruins_izalith
+  Area: demonruins_izalithlava
   Includes:
   - c3421_0000 (Bounding Demon). NPC 342101 @1410350
   - c3421_0001 (Bounding Demon). NPC 342101 @1410351
@@ -3181,7 +3474,7 @@ Enemies:
   - c3421_0014 (Bounding Demon). NPC 342101 @1410364
   - c3421_0015 (Bounding Demon). NPC 342101 @1410365
 - Col: demonruins h2800B1
-  Area: demonruins_izalith
+  Area: demonruins_izalithlava
   Includes:
   - c3421_0002 (Bounding Demon). NPC 342101 @1410352
   - c3421_0003 (Bounding Demon). NPC 342101 @1410353
@@ -3191,7 +3484,7 @@ Enemies:
   - c3421_0017 (Bounding Demon). NPC 342101 @1410367
   - c3421_0018 (Bounding Demon). NPC 342101 @1410368
 - Col: demonruins h0029B1
-  Area: demonruins_izalith
+  Area: demonruins_izalithlava
   Includes:
   - c3421_0004 (Bounding Demon). NPC 342101 @1410354
   - c3421_0009 (Bounding Demon). NPC 342101 @1410359
@@ -3206,7 +3499,7 @@ Enemies:
   - c3421_0027 (Bounding Demon). NPC 342101 @1410377
   - c3421_0028 (Bounding Demon). NPC 342101 @1410378
 - Col: demonruins h0028B1
-  Area: demonruins_izalith
+  Area: demonruins_izalithlava
   Includes:
   - c3421_0006 (Bounding Demon). NPC 342101 @1410356
 - Col: demonruins h0022B1
@@ -3823,26 +4116,26 @@ Enemies:
   - c2800_0012 (Undead Crystal Soldier). NPC 280000
   - c2800_0019 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0017B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2370_0001 (Channeler). NPC 237001 @1700301
   - c2800_0027 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0049B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2370_0002 (Channeler). NPC 237003 @1700900
   - c2800_0020 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0008B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2370_0003 (Channeler). NPC 237003 @1700901
   - c2800_0036 (Undead Crystal Soldier). NPC 280001
 - Col: dukes h0041B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2370_0004 (Channeler). NPC 237003 @1700902
 - Col: dukes h0014B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2370_0005 (Channeler). NPC 237003 @1700903
   - c2370_0006 (Channeler). NPC 237001 @1700302
@@ -3898,7 +4191,7 @@ Enemies:
   - c3491_0002 (Evil Vagrant). NPC 349113 @1703911
   - c3491_0003 (Evil Vagrant). NPC 349213 @1703912
 - Col: dukes h0044B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2780_0000 (Mimic). NPC 278020 @1700400
 - Col: dukes h0006B0
@@ -3931,25 +4224,25 @@ Enemies:
   Includes:
   - c2800_0024 (Undead Crystal Soldier). NPC 280001
 - Col: dukes h0092B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0025 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0091B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0026 (Undead Crystal Soldier). NPC 280001
   - c2800_0044 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0016B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0028 (Undead Crystal Soldier). NPC 280000
   - c2800_0029 (Undead Crystal Soldier). NPC 280001
 - Col: dukes h0012B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0030 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0011B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0031 (Undead Crystal Soldier). NPC 280000
   - c2800_0032 (Undead Crystal Soldier). NPC 280000
@@ -3958,23 +4251,23 @@ Enemies:
   - c3491_0000 (Evil Vagrant). NPC 349213 @1703902
   - c3491_0001 (Evil Vagrant). NPC 349113 @1703901
 - Col: dukes h0007B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0034 (Undead Crystal Soldier). NPC 280000
   - c2800_0035 (Undead Crystal Soldier). NPC 280001
 - Col: dukes h0004B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0037 (Undead Crystal Soldier). NPC 280001
   - c2800_0038 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0018B0
-  Area: dukes_prison
+  Area: dukes_library2
   Includes:
   - c2800_0039 (Undead Crystal Soldier). NPC 280001
   - c2800_0042 (Undead Crystal Soldier). NPC 280001
   - c2800_0045 (Undead Crystal Soldier). NPC 280001
 - Col: dukes h0040B0
-  Area: dukes_prison
+  Area: dukes_machines
   Includes:
   - c2800_0043 (Undead Crystal Soldier). NPC 280000
 - Col: dukes h0072B0
@@ -4150,3 +4443,444 @@ Enemies:
   Area: asylum_oscar
   Includes:
   - c3490_0000 (Good Vagrant). NPC 349006 @1813900
+LotLocations:
+  1090: anorlondo_gwynevere
+  1100: newlondo_building
+  2500: depths_gaping
+  2510: burg_capra
+  2520: paintedworld_priscilla
+  2530: darkroot_butterfly
+  2540: darkroot_sif
+  2550: catacombs_pinwheel
+  2560: totg_nito
+  2570: blighttown_quelaag
+  2580: demonruins_bedofchaos
+  2590: sens_irongolem
+  2600: anorlondo_gwyndolin
+  2610: anorlondo_os
+  2620: anorlondo_os
+  2630: newlondo_fourkings
+  2640: dukes_seath2
+  2650: kiln_gwyn
+  2670: demonruins_centipede
+  2680: dlc_guardian
+  2690: dlc_artorias
+  2700: dlc_manus
+  2710: dlc_kalameetdeath
+  6190: parish_andre
+  6230: burg_upper
+  9010: newlondo_fourkings
+  9040: dlc_manus
+  1000000: depths
+  1000010: depths
+  1000020: depths
+  1000030: depths
+  1000040: depths
+  1000050: depths
+  1000090: depths
+  1000100: depths
+  1000120: depths
+  1000140: depths
+  1000170: depths
+  1000180: depths
+  1000190: depths
+  1000210: depths_gaping
+  1000240: depths
+  1000500: depths
+  1010000: parish_hellkite
+  1010020: burg_lower
+  1010040: parish_church
+  1010050: parish_church
+  1010070: burg_start
+  1010080: burg_start
+  1010090: burg_upper
+  1010100: burg_start
+  1010120: burg_upper
+  1010130: burg_upper
+  1010140: parish_church
+  1010160: burg_upper
+  1010210: parish_hellkite
+  1010220: parish_hellkite
+  1010260: parish_church
+  1010280: parish_hellkite
+  1010300: parish_church
+  1010370: burg_lower
+  1010380: burg_lower
+  1010400: burg_start
+  1010430: burg_lower
+  1010440: burg_upper
+  1010450: burg_upper
+  1010460: burg_upperresidence
+  1010470: burg_upper
+  1010480: burg_posttaurus
+  1010490: burg_lower
+  1010500: parish_church
+  1010510: burg_lowerresidence
+  1010520: parish_church
+  1020000: firelink
+  1020010: firelink
+  1020020: firelink
+  1020030: firelink
+  1020040: firelink
+  1020050: firelink
+  1020060: firelink
+  1020070: firelink
+  1020090: firelink
+  1020110: firelink
+  1020120: firelink
+  1020130: firelink
+  1020140: firelink
+  1020150: firelink
+  1020160: firelink
+  1020170: firelink
+  1020180: firelink
+  1020190: firelink
+  1020200: firelink
+  1020210: firelink_crow
+  1100010: paintedworld
+  1100020: paintedworld
+  1100030: paintedworld
+  1100040: paintedworld
+  1100050: paintedworld
+  1100060: paintedworld_annex
+  1100070: paintedworld
+  1100090: paintedworld_annex
+  1100100: paintedworld_annex
+  1100120: paintedworld
+  1100130: paintedworld
+  1100140: paintedworld
+  1100150: paintedworld
+  1100160: paintedworld
+  1100170: paintedworld
+  1100190: paintedworld
+  1100200: paintedworld
+  1100210: paintedworld
+  1100230: paintedworld
+  1100240: paintedworld
+  1100250: paintedworld
+  1100260: paintedworld
+  1100280: paintedworld
+  1100290: paintedworld
+  1100300: paintedworld
+  1100310: paintedworld
+  1100320: paintedworld_annex
+  1100330: paintedworld
+  1100340: paintedworld_annex
+  1100350: paintedworld
+  1100370: paintedworld_annex
+  1100500: paintedworld
+  1200010: darkroot_stone
+  1200020: darkroot_forest
+  1200030: darkroot
+  1200040: darkroot
+  1200060: darkroot_stone
+  1200070: darkroot_stone
+  1200080: darkroot #_garden
+  1200120: darkroot #_garden
+  1200140: darkroot_postbutterfly
+  1200150: darkroot
+  1200160: darkroot_sif
+  1200170: darkroot
+  1200180: darkroot_stone
+  1200190: darkroot #_garden
+  1200200: darkroot
+  1200210: darkroot
+  1200500: darkroot #_garden
+  1200510: darkroot #_garden
+  1210010: dlc_sanctuary
+  1210020: dlc_forest
+  1210030: dlc_forest
+  1210040: dlc_forest
+  1210050: dlc_forest
+  1210060: dlc_forest
+  1210070: dlc_forest
+  1210080: dlc_forest
+  1210090: dlc_forest
+  1210110: dlc_township
+  1210160: dlc_township
+  1210190: dlc_township
+  1210210: dlc_township
+  1210220: dlc_kalameet
+  1210230: dlc_kalameet
+  1210240: dlc_kalameet
+  1210250: dlc_kalameetdeath
+  1210260: dlc_township
+  1210270: dlc_township
+  1210280: dlc_township
+  1210290: dlc_township
+  1210300: dlc_township
+  1210330: dlc_township
+  1210340: dlc_township
+  1210350: dlc_forest
+  1210390: dlc_forest
+  1210400: dlc_forest
+  1210430: dlc_township
+  1210440: dlc_township
+  1210450: dlc_hallway
+  1210460: dlc_township
+  1210470: dlc_forest
+  1210500: dlc_forest
+  1210510: dlc_township
+  1210520: dlc_townshiphidden
+  1210540: dlc_township
+  1210550: dlc_kalameet
+  1211000: dlc_township
+  1300000: catacombs
+  1300010: catacombs
+  1300020: catacombs
+  1300030: catacombs
+  1300070: catacombs
+  1300100: catacombs
+  1300110: catacombs
+  1300140: catacombs
+  1300150: catacombs
+  1300190: catacombs
+  1300210: catacombs_pinwheel
+  1300220: catacombs
+  1300230: catacombs
+  1300240: catacombs
+  1300250: catacombs
+  1310000: totg
+  1310010: totg
+  1310020: totg
+  1310030: totg
+  1310040: totg
+  1310050: totg
+  1310070: totg
+  1310080: totg
+  1310090: totg
+  1310100: totg
+  1310110: totg_lower
+  1310120: totg_lower
+  1310140: totg_lower
+  1310160: totg_lower
+  1310180: totg_lower
+  1310200: totg_lordvessel
+  1310220: totg_lordvessel
+  1310230: totg_lordvessel
+  1310240: totg_nito
+  1310290: totg_lordvessel
+  1310300: totg
+  1310500: totg
+  1320000: greathollow
+  1320020: greathollow
+  1320040: greathollow
+  1320050: greathollow
+  1320060: greathollow
+  1320070: greathollow
+  1320080: greathollow
+  1320090: greathollow
+  1320100: greathollow
+  1320110: greathollow
+  1320120: greathollow
+  1320140: greathollow_ashlake
+  1320150: greathollow_ashlake
+  1320160: greathollow_ashlake
+  1320170: greathollow_ashlake
+  1320180: greathollow
+  1320190: greathollow
+  1400020: blighttown_upper
+  1400040: blighttown_upper
+  1400050: blighttown_upper
+  1400060: blighttown_upper
+  1400080: blighttown_upper
+  1400090: blighttown_upper
+  1400100: blighttown_upper
+  1400130: blighttown_upper
+  1400140: blighttown_upper
+  1400150: blighttown_upper
+  1400160: blighttown_upper
+  1400180: blighttown_upper
+  1400190: blighttown
+  1400210: blighttown
+  1400230: blighttown
+  1400250: blighttown
+  1400260: blighttown
+  1400270: blighttown
+  1400280: blighttown
+  1400290: blighttown
+  1400300: blighttown
+  1400310: blighttown
+  1400320: blighttown
+  1400340: blighttown_upper
+  1400350: blighttown
+  1400360: blighttown
+  1400370: blighttown_bell
+  1400500: blighttown
+  1400510: blighttown
+  1400520: blighttown
+  1410000: demonruins_izalith
+  1410010: demonruins_izalith
+  1410020: demonruins_izalith
+  1410030: demonruins_izalith
+  1410050: demonruins_ceaselesslava
+  1410060: demonruins_lava
+  1410080: demonruins_lower
+  1410090: demonruins_lower
+  1410100: demonruins_lower
+  1410140: demonruins_lower
+  1410160: demonruins_lordvessel
+  1410180: demonruins_ceaseless
+  1410230: demonruins_stairs
+  1410250: demonruins_stairs
+  1410270: demonruins_centipede
+  1410310: demonruins_izalithlava
+  1410320: demonruins_izalithlava
+  1410330: demonruins_izalithlava
+  1410340: demonruins_izalithlava
+  1410360: demonruins_izalithlava
+  1410380: demonruins_izalith
+  1410390: demonruins_izalith
+  1410400: demonruins_izalith
+  1410410: demonruins_izalith
+  1410500: demonruins_izalith
+  1410510: demonruins_lower
+  1410520: demonruins_izalith
+  1410530: demonruins_lava
+  1500000: sens
+  1500010: sens
+  1500020: sens
+  1500040: sens_upper
+  1500060: sens_mid
+  1500070: sens_mid
+  1500080: sens_mid
+  1500090: sens_upper
+  1500100: sens_upper
+  1500150: sens_upper
+  1500300: sens
+  1500310: sens_mid
+  1500320: sens_mid
+  1500330: sens
+  1500350: sens
+  1500360: sens
+  1500400: sens_upper
+  1500410: sens_upper
+  1500420: sens_cage
+  1500440: sens_upper
+  1510000: anorlondo_chandelier
+  1510030: anorlondo_darkmoon
+  1510040: anorlondo_blacksmith
+  1510050: anorlondo_main
+  1510060: anorlondo_cathedral  # should be anorlondo_balcony/front
+  1510070: anorlondo_painting
+  1510080: anorlondo_gwynevere
+  1510510: anorlondo_prerafters
+  1510520: anorlondo_rafters
+  1510530: anorlondo_building
+  1510540: anorlondo_building
+  1510560: anorlondo_building
+  1510570: anorlondo_building
+  1510580: anorlondo_building
+  1510590: anorlondo_building
+  1510600: anorlondo_building
+  1510610: anorlondo_blacksmith
+  1510620: anorlondo_gwyndolin
+  1510650: anorlondo_gwyndolin
+  1510660: anorlondo_gwyndolin
+  1510670: anorlondo_start
+  1510680: anorlondo_start
+  1510690: anorlondo_building
+  1510700: anorlondo_building
+  1600000: newlondo
+  1600020: newlondo
+  1600030: newlondo
+  1600040: newlondo
+  1600060: newlondo
+  1600070: newlondo
+  1600090: newlondo_building
+  1600100: newlondo_building
+  1600110: newlondo_building
+  1600120: newlondo
+  1600130: newlondo_building
+  1600140: newlondo_building
+  1600150: newlondo_building
+  1600160: newlondo_building
+  1600170: newlondo_drakes
+  1600180: newlondo_drakes
+  1600190: newlondo_drakes
+  1600200: newlondo_drakes
+  1600210: newlondo_drakes
+  1600220: newlondo_drakes
+  1600250: newlondo_lower
+  1600260: newlondo_lower
+  1600270: newlondo_lower
+  1600280: newlondo_lower
+  1600290: newlondo_lowerskip
+  1600310: newlondo_lower
+  1600330: newlondo_lower
+  1600360: newlondo_drakesbeatrice
+  1600370: newlondo_lower
+  1600380: newlondo_drakes
+  1600500: newlondo_lower
+  1600510: newlondo_lower
+  1600520: newlondo
+  1700000: dukes_library
+  1700010: dukes_library
+  1700020: dukes_library2
+  1700040: dukes_seath1
+  1700050: dukes_machines
+  1700060: dukes_extra
+  1700070: dukes_prison
+  1700080: dukes_extra
+  1700120: dukes_caves
+  1700150: dukes_caves
+  1700160: dukes_caves
+  1700170: dukes_caves
+  1700180: dukes_caves
+  1700200: dukes_giantcell
+  1700210: dukes_prison
+  1700510: dukes_library
+  1700520: dukes_library2
+  1700530: dukes_seath1
+  1700540: dukes_library2
+  1700560: dukes_library2
+  1700580: dukes_library2
+  1700590: dukes_library2
+  1700600: dukes_library2
+  1700630: dukes_prison
+  1700640: dukes_library2
+  1700650: dukes_caves
+  1800050: kiln
+  1810060: asylum_f2west
+  1810070: asylum_outside
+  1810080: asylum_doll
+  1810100: asylum
+  1810110: asylum
+  1810120: asylum
+  1810130: asylum
+  1810140: asylum
+  1810150: asylum
+  1810160: asylum
+  1810170: asylum
+  1810180: asylum
+  1810190: asylum
+  1810200: asylum
+  1810210: asylum
+  1810220: asylum
+  1810230: asylum
+  1810240: asylum
+  1810250: asylum
+  1810260: asylum
+  1810270: asylum
+  1810280: asylum
+  1810290: asylum
+  1810300: asylum
+  1810310: asylum
+  1810320: asylum
+  1810330: asylum
+  27100200: dukes_crystalgolem
+  27803001: dlc_township
+  27803101: dlc_township
+  27900000: burg_upper
+  27900100: parish_hellkite
+  27901000: darkroot
+  27902000: catacombs
+  27903000: totg_lower
+  27907000: asylum_doll
+  34200200: newlondo_drakes
+  34510000: greathollow_ashlake
+  35300000: greathollow_ashlake
+  35300100: darkroot
+  41601000: dlc_township
+  60001100: burg_upper
+  60001400: parish_andre

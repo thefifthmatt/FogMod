@@ -66,6 +66,7 @@
     <Compile Include="Graph.cs" />
     <Compile Include="GraphChecker.cs" />
     <Compile Include="GraphConnector.cs" />
+    <Compile Include="ItemReader.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -18,9 +18,11 @@ It is configurable which types of entrances are randomized and which behave like
 - Minor PvP fog gates
 - Lordvessel gates
 
-No new fog gates are added. PvP fog gates are ones you normally only see when you are invaded. When included in randomization, they add more fun ways for areas to be connected.
+No new fog gates are added. PvP fog gates are ones you normally only see when you are invaded.
 
-By default, warps are bidirectional, meaning you can explore the world like it is a cut up and reassembled version of the base game. If you instead enable the "Disconnected fog gates" option, warps become points of no return. This is similar to ALttP Insanity Entrance Shuffle or OoT BetaQuest. The plan is for more 'gimmick' mechanics along these lines to be added in the future.
+By default, warps are bidirectional, meaning you can explore the world like it is a cut up and reassembled version of the base game. If you instead enable the "Disconnected fog gates" option, warps become points of no return. This is similar to ALttP Insanity Entrance Shuffle or OoT BetaQuest.
+
+Runs usually take 4-8 hours, assuming "Require Lord Souls", no key item randomization, and bidirectional fog gates. Usually, the fewer fog gates are randomized, the less time it takes to learn the route. Randomized boss fog gates, preexisting warps, and major PvP fog gates are usually easy to backtrack from, and don't that add much time. Traversable fog gates and minor PvP fog gates make it more difficult to backtrack, because you often have to check both sides. Item randomization and disconnected fog gates can make runs take longer, depending on your luck.
 
 There are a few other differences from the base game:
 
@@ -28,20 +30,20 @@ There are a few other differences from the base game:
 - All bonfires have an option to return to the start of the game, in case you get stuck after using a bonfire. This is like save & quit in Zelda entrance randomizers.
 - You can't save & quit to escape a boss fight, because positions before warps are always discarded by the game. Use Pacifist Mode for more mobility options.
 - The trigger for Undead Asylum #2 is using the Big Pilgrim's Key, rather than traveling to Firelink.
-- Seath's scripted player death has been replaced with an object you can use to warp always
+- Seath's scripted player death has been replaced with an object you can use to warp always (to a random place, if warps are randomized)
 - NPC invasions removed for now, they are messy to clean up after
 
 ### How to win
-By defeating Gwyn. If the "Require Lord Souls" option is enabled then opening the Firelink Altar door is the only way to get to Gwyn. Warps to the Firelink Altar are not randomized, mainly because they are tied to serpent loyalty.
+By defeating Gwyn. If the "Require Lord Souls" option is enabled then opening the Firelink Altar door (or PCC warp) is the only way to get to Gwyn. Warps to the Firelink Altar are not randomized, mainly because they are tied to serpent loyalty. If this is disabled, Gwyn can potentially be among the first few fog gates.
 
 Taking notes can be helpful to remember how to get to different important places. Alternatively, have a good memory, or rely on chat to have good memory.
 
 Starting with or using the master key is never required. If you have it, it can be used to access areas early, but there may be significant scaling differences on the other side of those doors.
 
 ### Scaling
-This is an optional feature of the mod to scale up or down enemy health and damage based on estimated SL. The goal is to make it more enjoyable to actually fight enemies, rather than only run past them. Note that it scales health and damage uniformly, so it is possible for enemies to deal more or less damage than you'd expect.
+This is an optional feature of the mod to scale up and down enemy health and damage based on estimated SL. The goal is to make it more enjoyable to actually fight enemies, rather than only run past them.
 
-The randomizer checks what is the shortest path for you to access a blacksmith who sells titanite shards (Andre, Giant Blacksmith, or Vamos), and ensures that bosses on that path are scaled within reason for a +0 weapon. On the other hand, areas which appear earlier in the base game are never scaled down.
+The randomizer checks what is the shortest path for you to access a blacksmith who sells titanite shards (Andre, Giant Blacksmith, or Vamos), and ensures that bosses on that path are scaled within reason for a +0 weapon. On the other hand, areas which appear earlier in the base game are never scaled down. Gwyn is never scaled down.
 
 ## Installation
 For PTDE only, you must first unpack Dark Souls for modding. (https://www.nexusmods.com/darksouls/mods/1304)
@@ -53,16 +55,18 @@ When randomizing with scaling enabled, try not to access existing save files tha
 To uninstall, click "Restore backups". This replaces the game files with whatever they were before the first randomization. To be completely sure all mods are gone, in Remastered only, select Properties → Local Files → Verify Integrity Of Game Files in Steam.
 
 ### With DS1 item randomizer
-This mod is compatible with DS1 item randomizer (https://www.nexusmods.com/darksouls/mods/1305/ or https://www.nexusmods.com/darksoulsremastered/mods/86)
+This mod is compatible with DS1 Item Randomizer (https://www.nexusmods.com/darksouls/mods/1305/ or https://www.nexusmods.com/darksoulsremastered/mods/86)
 
-DS1 item randomizer's "Key Placement" option should be set to "Not Shuffled". After you run fog gate randomizer, run DS1 item randomizer from the same game directory. This has the effect of shuffling around weapons, armor, upgrade items, etc. while keeping fog gate connections. (If you like living dangerously, you can shuffle key items, but you may need obscure glitches to beat the run, if it is even beatable.)
+In Fog Gate Randomizer v0.2, first run item randomizer in the game's directory, and then run fog gate randomizer. (This is a different order from v0.1!) Fog gate randomizer will use the new key item locations to do its randomization. This functionality is thanks to HotPocketRemix for classifying key item locations in a way fog gate randomizer can understand!
+
+If you use Race Mode+ in item randomizer, you should also use Glitched Logic in fog gate randomizer. This will work the vast majority of the time. If it doesn't, try a different seed in item randomizer.
+
+All other randomizers should run after fog gate randomizer.
 
 ### Compatibility with other mods
-Fog Gate Randomizer is *not* compatible with game-file-based mods which make event-based changes to game progression, like Daughters of Ash or Scorched Contract or Enemy Randomizer.
+Fog Gate Randomizer is *not* compatible with game-file-based mods which make event-based changes to game progression, like Daughters of Ash or Scorched Contract or Enemy Randomizer. This is the case if the other mod requires modifications to files in event\ or script\talk.
 
-If the other mod requires modifications to files in event\ or script\talk, it is not compatible. The randomizer uses a custom version of these files which cannot be merged with other mods.
-
-If the other mod contains files in map\MapStudio, msg\ENGLISH, or param\GameParam, merging may be possible. Whenever Fog Gate Randomizer runs, it always does its randomization based on game files in the "dist\DS1" or "dist\DS1R" directory under FogMod.exe, modifies them, and copies those into the actual game. Any other mods to params, MSBs, or messages can override the vanilla version in dist, and if the changes aren't actually incompatible then running the randomizer will use them as source files instead.
+If the other mod contains its own map files or param files, merging may be possible. Whenever Fog Gate Randomizer runs, it does its randomization based on game files in the "dist\DS1" or "dist\DS1R" directory under FogMod.exe, modifies them, and copies those into the actual game. It copies all MSB files and copies NpcParam and GameAreaParam from params before modifying them.
 
 If the other mod has game files in locations other than event\, map\MapStudio, msg\ENGLISH, param\GameParam, or script\talk, then the mods should be independent, and you can follow the other mod's installation steps for those files.
 

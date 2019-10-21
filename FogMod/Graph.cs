@@ -8,11 +8,21 @@ namespace FogMod
 {
     public class Graph
     {
+        // All areas from config
         public Dictionary<string, Area> areas;
-        public List<(string, string)> ignore;
-        public Dictionary<string, Node> graph;
-        public Dictionary<string, float> areaRatios;
+        // All entrances from config
         public Dictionary<string, Entrance> entranceIds;
+        // Item areas - either from config or from param lookup
+        public Dictionary<string, string> itemAreas;
+
+        // All nodes in the constructed graph
+        public Dictionary<string, Node> graph;
+        // Start point, or asylum if unspecified
+        public CustomStart start;
+        // All sides (entrance id, area name) to skip outputting, if an optional area is inaccessible
+        public List<(string, string)> ignore;
+        // Filled in after connecting the graph, used by scaling
+        public Dictionary<string, (float, float)> areaRatios;
 
         public (Edge, Edge) addNode(Side side, Entrance e, bool from, bool to)
         {
@@ -84,14 +94,27 @@ namespace FogMod
 
         public void Construct(RandomizerOptions opt, Annotations ann)
         {
+            // Collect areas and items
             areas = ann.Areas.ToDictionary(a => a.Name, a => a);
+            itemAreas = ann.KeyItems.ToDictionary(item => item.Name, item => (string)null);
+            // Some validation
+            Expr getExpr(string cond)
+            {
+                Expr expr = ParseExpr(cond);
+                if (expr == null) return null;
+                foreach (string free in expr.FreeVars())
+                {
+                    if (!areas.ContainsKey(free) && !itemAreas.ContainsKey(free)) throw new Exception($"Condition {cond} has unknown variable {free}");
+                }
+                return expr;
+            }
             foreach (Area area in ann.Areas)
             {
                 if (area.To == null) continue;
                 foreach (Side side in area.To)
                 {
                     if (!areas.ContainsKey(side.Area)) throw new Exception($"{area.Name} goes to nonexistent {side.Area}");
-                    side.Expr = ParseExpr(side.Cond);
+                    side.Expr = getExpr(side.Cond);
                 }
             }
             // Collect named entrances           
@@ -116,7 +139,7 @@ namespace FogMod
                 if (!opt["lordvessel"] && e.HasTag("lordvessel"))
                 {
                     e.Tags += " door";
-                    e.DoorCond = "AND anorlondo_gwynevere kiln_start";
+                    e.DoorCond = "AND lordvessel kiln_start";
                     if (opt["dumptext"]) AddMulti(allText, "lordvessel", e.Text);
                 }
                 if (e.HasTag("door"))
@@ -180,7 +203,7 @@ namespace FogMod
                 foreach (Side side in e.Sides())
                 {
                     if (!areas.ContainsKey(side.Area)) throw new Exception($"{e.Name} goes to nonexistent {side.Area}");
-                    side.Expr = ParseExpr(side.Cond);
+                    side.Expr = getExpr(side.Cond);
                     // Condition: if entrance is randomized, then don't include the unwarpable side
                     if (!e.IsFixed && side.ExcludeIfRandomized != null && !entranceIds[side.ExcludeIfRandomized].IsFixed)
                     {
@@ -193,7 +216,7 @@ namespace FogMod
             {
                 Area = e.Key,
                 Cost = e.Value.HasTag("trivial") ? 0 : (e.Value.HasTag("boss") ? 3 : 1),
-                ScalingBase = opt["dumpdist"] ? e.Value.ScalingBase : null,
+                ScalingBase = (opt["dumpdist"] || opt["scalingbase"]) ? e.Value.ScalingBase : null,
             });
             foreach (Area area in ann.Areas)
             {
@@ -270,7 +293,7 @@ namespace FogMod
                         Connection con = new Connection(from.Area, to.Area);
                         if (doorConds.Contains(con)) continue;
                         doorConds.Add(con);
-                        Expr doorExpr = ParseExpr(e.DoorCond);
+                        Expr doorExpr = getExpr(e.DoorCond);
                         if (from.Expr != null || to.Expr != null) throw new Exception($"Door cond {doorExpr} and cond {from.Expr} {to.Expr} together for {e.Name}");
                         from.Expr = from.HasTag("dnofts") ? (doorExpr == null ? Expr.Named(to.Area) : new Expr(new List<Expr> { doorExpr, Expr.Named(to.Area) }, true).Simplify()) : doorExpr;
                         to.Expr = to.HasTag("dnofts") ? (doorExpr == null ? Expr.Named(from.Area) : new Expr(new List<Expr> { doorExpr, Expr.Named(from.Area) }, true).Simplify()) : doorExpr;
@@ -335,6 +358,7 @@ namespace FogMod
             public string Area { get; set; }
             public int Cost { get; set; }
             public string ScalingBase { get; set; }
+            public List<string> Items = new List<string>();
             // To mostly other nodes
             public List<Edge> To = new List<Edge>();
             // All edges leading here.

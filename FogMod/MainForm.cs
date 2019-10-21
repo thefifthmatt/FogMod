@@ -15,9 +15,17 @@ namespace FogMod
         private static string defaultPath2 = @"C:\Program Files (x86)\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\DARKSOULS.exe";
         private RandomizerOptions options = new RandomizerOptions();
         private FromGame game = FromGame.UNKNOWN;
+        private string languageToSet = null;
+        private static List<string> defaultLang = new List<string> { "ENGLISH" };
+        private static List<string> ptdeLang = new List<string> { "ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "JAPANESE", "KOREAN", "POLISH", "RUSSIAN", "SPANISH", "TCHINESE" };
+        private static List<string> ds1rLang = new List<string> { "ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "JAPANESE", "KOREAN", "NSPANISH", "POLISH", "PORTUGUESE", "RUSSIAN", "SCHINESE", "SPANISH", "TCHINESE" };
 
         public MainForm()
         {
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
+            {
+                languageToSet = Properties.Settings.Default.Language;
+            }
             InitializeComponent();
             string defaultExe = Properties.Settings.Default.Exe;
             if (!string.IsNullOrWhiteSpace(defaultExe))
@@ -78,10 +86,20 @@ namespace FogMod
                 game = FromGame.UNKNOWN;
                 restoreButton.Enabled = false;
                 restoreL.Text = "";
+                language.DataSource = defaultLang;
+                language.Enabled = false;
                 return;
             }
             Properties.Settings.Default.Exe = exe.Text;
             Properties.Settings.Default.Save();
+            List<string> languages = game == FromGame.DS1R ? ds1rLang : ptdeLang;
+            language.DataSource = languages;
+            language.Enabled = true;
+            if (languageToSet != null && languages.Contains(languageToSet))
+            {
+                language.SelectedIndex = languages.IndexOf(languageToSet);
+                languageToSet = null;
+            }
             List<string> files = GameDataWriter.GetAllBaseFiles(game);
             if (files.Count == 0)
             {
@@ -151,6 +169,23 @@ namespace FogMod
             if (working) return;
             ReadControlFlags(this);
             RandomizerOptions rand = options.Copy();
+            rand.Language = (string)language.SelectedValue ?? "ENGLISH";
+            if (!File.Exists(exe.Text) || game == FromGame.UNKNOWN)
+            {
+                setStatus("Game exe not set", true);
+                return;
+            }
+            string gameDir = Path.GetDirectoryName(exe.Text);
+            if (!File.Exists($@"{gameDir}\map\MapStudio\m10_02_00_00.msb"))
+            {
+                setStatus("Did not find unpacked installation at game path", true);
+                return;
+            }
+            if (rand["start"] && !rand["boss"] && !rand["world"])
+            {
+                setStatus("Cannot start outside of Asylum if no Asylum fog gates are randomized", true);
+                return;
+            }
             if (fixedseed.Text.Trim() != "")
             {
                 if (uint.TryParse(fixedseed.Text.Trim(), out uint seed))
@@ -167,17 +202,6 @@ namespace FogMod
             {
                 rand.Seed = new Random().Next();
             }
-            if (!File.Exists(exe.Text) || game == FromGame.UNKNOWN)
-            {
-                setStatus("Game exe not set", true);
-                return;
-            }
-            string gameDir = Path.GetDirectoryName(exe.Text);
-            if (!File.Exists($@"{gameDir}\map\MapStudio\m10_02_00_00.msb"))
-            {
-                setStatus("Did not find unpacked installation at game path", true);
-                return;
-            }
             working = true;
             randomizeL.Text = $"Seed: {rand.Seed}";
             randb.Text = $"Randomizing...";
@@ -192,8 +216,8 @@ namespace FogMod
                 Console.SetOut(log);
                 try
                 {
-                    randomizer.Randomize(rand, game, gameDir);
-                    setStatus($"Done. Info in {runId}");
+                    ItemReader.Result itemInfo = randomizer.Randomize(rand, game, gameDir);
+                    setStatus($"Done. Info in {runId}" + (itemInfo.Randomized ? $" | Key item hash: {itemInfo.ItemHash}" : ""));
                 }
                 catch (Exception ex)
                 {
@@ -222,6 +246,12 @@ namespace FogMod
         {
             ReadControlFlags(this);
             Properties.Settings.Default.Options = string.Join(" ", options.GetEnabled());
+            Properties.Settings.Default.Save();
+        }
+
+        private void UpdateLanguage(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Language = (string)language.SelectedValue;
             Properties.Settings.Default.Save();
         }
 
