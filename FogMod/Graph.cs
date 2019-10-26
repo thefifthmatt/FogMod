@@ -27,7 +27,7 @@ namespace FogMod
         public (Edge, Edge) addNode(Side side, Entrance e, bool from, bool to)
         {
             string name = e?.EdgeName;
-            string text = (e == null ? (side.HasTag("hard") ? "hard jump" : "in map") : e.Text);
+            string text = (e == null ? (side.HasTag("hard") ? "hard skip" : "in map") : e.Text);
             bool isFixed = e == null ? true : e.IsFixed;
             Edge exit = from ? new Edge { Expr = side.Expr, From = side.Area, Name = name, Text = text, IsFixed = isFixed, Side = side, Type = EdgeType.Exit } : null;
             Edge entrance = to ? new Edge { Expr = side.Expr, To = side.Area, Name = name, Text = text, IsFixed = isFixed, Side = side, Type = EdgeType.Entrance } : null;

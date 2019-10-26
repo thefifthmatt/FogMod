@@ -594,15 +594,16 @@ namespace FogMod
                         }
                     }
                 }
+                // Misc map changes
                 if (map == "demonruins")
                 {
                     msb.Parts.Collisions = msb.Parts.Collisions.Where(c => c.Name != "h9950B1").ToList();
                 }
-                if (map == "dlc")
+                else if (map == "dlc")
                 {
                     msb.Parts.Collisions = msb.Parts.Collisions.Where(c => c.Name != "h7800B1").ToList();
                 }
-                if (map == "totg")
+                else if (map == "totg")
                 {
                     // Nudge the outside fog gate region to be inside & detect boss battle mode
                     MSB1.Region r = msb.Regions.Regions.Find(c => c.EntityID == 1312998);
@@ -611,7 +612,7 @@ namespace FogMod
                     box.Width = 10;
                     box.Height = 5;
                 }
-                if (map == "kiln")
+                else if (map == "kiln")
                 {
                     if (opt["patchkiln"])
                     {
@@ -620,7 +621,7 @@ namespace FogMod
                         player.Rotation = new Vector3(0, -105, 0);
                     }
                 }
-                if (map == "anorlondo")
+                else if (map == "anorlondo")
                 {
                     // Use this unless the area after the broken window becomes its own unique area
                     if (!g.entranceIds["o5869_0000"].IsFixed)
@@ -632,8 +633,21 @@ namespace FogMod
                         obj.UnkT0C = 50; // initial animation
                     }
                 }
-                if (map == "asylum")
+                else if (map == "depths")
                 {
+                    if (g.start.Area == "depths")
+                    {
+                        MSB1.Event.ObjAct oa = msb.Events.ObjActs.Find(o => o.ObjActEntityID == 11000120);
+                        // No key required if starting at bonfire
+                        oa.ObjActParamID = -1;
+                    }
+                }
+                else if (map == "asylum")
+                {
+                    // Move asylum demon trigger region
+                    MSB1.Region r = msb.Regions.Regions.Find(e => e.EntityID == 1812998);
+                    r.Position = new Vector3(3.2f, 209f, -33.089f);
+                    // Move starter objects
                     HashSet<int> secondary = new HashSet<int> { 1811613, 1811616, 1811619, 1811622 };
                     MSB1.Part.Object trBase = null;
                     foreach (MSB1.Part.Object e in msb.Parts.Objects)
@@ -663,7 +677,7 @@ namespace FogMod
                     t.Name = "New Estus";
                     msb.Events.Treasures.Add(t);
                 }
-                if (map == "dukes")
+                else if (map == "dukes")
                 {
                     MSB1.Part.Object crystal = msb.Parts.Objects.Find(e => e.EntityID == 1701800);
                     MSB1.Part.Object warpC = new MSB1.Part.Object();

@@ -31,8 +31,6 @@ Areas:
     Tags: door
   - Area: burg_lower
     Tags: drop hard
-  - Area: burg_capra
-    Tags: drop hard
   - Area: depths
     Tags: drop hard
 - Name: burg_upperresidence
@@ -95,6 +93,8 @@ Areas:
   - Area: paintedworld_annex
     Cond: annex_key
     Tags: door
+  - Area: paintedworld_annex
+    Tags: hard
 - Name: paintedworld_annex
 - Name: paintedworld_priscilla
   Tags: boss
@@ -124,12 +124,12 @@ Areas:
 - Name: dlc_sanctuary
   To:
   - Area: kiln
-    Cond: purple_cowards_crystal
+    Cond: AND kiln_start lordvessel purple_cowards_crystal
     Tags: hard
 - Name: dlc_forest
   To:
   - Area: kiln
-    Cond: purple_cowards_crystal
+    Cond: AND kiln_start lordvessel purple_cowards_crystal
     Tags: hard
 - Name: dlc_artorias
   Tags: boss
@@ -139,7 +139,7 @@ Areas:
     Cond: AND crest_key dlc_artorias
     Tags: door
   - Area: kiln
-    Cond: purple_cowards_crystal
+    Cond: AND kiln_start lordvessel purple_cowards_crystal
     Tags: hard
 - Name: dlc_gough
 - Name: dlc_kalameet
@@ -155,7 +155,7 @@ Areas:
     Cond: cast_light
     Tags: door
   - Area: kiln
-    Cond: purple_cowards_crystal
+    Cond: AND kiln_start lordvessel purple_cowards_crystal
     Tags: hard
 - Name: dlc_townshiphidden
   Tags: trivial
@@ -1753,7 +1753,7 @@ Entrances:
     Area: kiln
   BSide:
     Area: kiln_gwyn
-    Flag: 15
+    # Flag: 15
 - Name: o8051_0000
   ID: 1801994
   Area: kiln

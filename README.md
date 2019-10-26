@@ -188,3 +188,17 @@ Lordvessel gates
 - Golden fog gate in Tomb of the Giants
 - Golden fog gate in Demon Ruins
 - Golden fog gate leading to Duke's Archives
+
+## Appendix: Glitched logic
+
+Glitched logic includes the following skips:
+
+- Gaping Dragon fog gate skip: jump from balcony near channeler into Gaping arena
+- Lower Undead Burg skip: jump from Upper Burg (before or after first fog gate) into Lower Burg
+- Capra skip: jump from Upper Burg (after first fog gate) into Depths
+- Annex Key skip: jump in Painted World into Annex area
+- PCC item swap in Darkroot: warp from Darkroot Garden to Battle of Stoicism entrance with PCC
+- PCC kiln wrong warp in DLC: warp from Oolacile (in Royal Woods, Township, Chasm, or stairs near Gough) to Kiln interior with PCC, if Firelink Altar has been rested at
+- Tomb of the Giants fog gate skip: jump around fog gate, used in All Bosses
+- Seal Skip: jump from the start of New Londo Ruins to the chest behind an illusory wall, and into Four Kings fight if Covenant of Artorias has been obtained
+- Duke Skip: use the elevator to go from the first half of the Duke's Archives library to the second half

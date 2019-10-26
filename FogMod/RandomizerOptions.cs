@@ -6,7 +6,7 @@ namespace FogMod
 {
     public class RandomizerOptions
     {
-        private SortedDictionary<string, bool> opt = new SortedDictionary<string, bool> { { "v3", true } };
+        private SortedDictionary<string, bool> opt = new SortedDictionary<string, bool> { { "v4", true } };
 
         public RandomizerOptions Copy()
         {
