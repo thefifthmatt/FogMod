@@ -214,7 +214,7 @@ Areas:
   - Area: demonruins_lava
     Cond: orange_charred_ring
   - Area: demonruins_ceaselesslava
-    Cond: OR orange_charred_ring demonruins_ceaseless
+    Cond: demonruins_ceaseless
 - Name: demonruins_ceaseless
   Tags: boss
 - Name: demonruins_lava
@@ -1733,6 +1733,7 @@ Entrances:
   Tags: lordvessel
   ASide:
     Area: anorlondo_start
+    DestinationMap: anorlondo
   BSide:
     Area: dukes_start
 - Name: o7908_0000
@@ -1960,7 +1961,7 @@ CustomStarts:
   Respawn: paintedworld 1102960
 - Name: Tomb of the Giants
   Area: totg
-  Respawn: totg 1312960
+  Respawn: totg 1312961
 - Name: Catacombs  # hidden one
   Area: catacombs
   Respawn: catacombs 1302961

@@ -41,7 +41,7 @@ Taking notes can be helpful to remember how to get to different important places
 Starting with or using the master key is never required. If you have it, it can be used to access areas early, but there may be significant scaling differences on the other side of those doors.
 
 ### Scaling
-This is an optional feature of the mod to scale up and down enemy health and damage based on estimated SL. The goal is to make it more enjoyable to actually fight enemies, rather than only run past them.
+This is an optional feature of the mod to scale up and down enemy health and damage based on distance from the start. This is done statically when the randomizer is run, not during the playthrough. The goal is to make it more enjoyable to actually fight enemies, rather than only run past them.
 
 The randomizer checks what is the shortest path for you to access a blacksmith who sells titanite shards (Andre, Giant Blacksmith, or Vamos), and ensures that bosses on that path are scaled within reason for a +0 weapon. On the other hand, areas which appear earlier in the base game are never scaled down. Gwyn is never scaled down.
 

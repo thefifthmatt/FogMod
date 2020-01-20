@@ -112,8 +112,6 @@
             // minor
             // 
             this.minor.AutoSize = true;
-            this.minor.Checked = true;
-            this.minor.CheckState = System.Windows.Forms.CheckState.Checked;
             this.minor.Location = new System.Drawing.Point(7, 173);
             this.minor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.minor.Name = "minor";
@@ -136,8 +134,6 @@
             // major
             // 
             this.major.AutoSize = true;
-            this.major.Checked = true;
-            this.major.CheckState = System.Windows.Forms.CheckState.Checked;
             this.major.Location = new System.Drawing.Point(7, 136);
             this.major.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.major.Name = "major";
@@ -373,9 +369,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label8.Location = new System.Drawing.Point(24, 43);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(346, 13);
+            this.label8.Size = new System.Drawing.Size(371, 13);
             this.label8.TabIndex = 13;
-            this.label8.Text = "Increase or decrease enemy health and damage based on estimated SL";
+            this.label8.Text = "Increase or decrease enemy health and damage based on distance from start";
             // 
             // label6
             // 
@@ -584,7 +580,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "DS1 Fog Gate Randomizer v0.2.1";
+            this.Text = "DS1 Fog Gate Randomizer v0.2.2";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
