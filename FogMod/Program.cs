@@ -18,6 +18,7 @@ namespace FogMod
         {
             if (args.Length > 0 && !args.Contains("/gui"))
             {
+                AttachConsole(-1);
                 RandomizerOptions opt = new RandomizerOptions { Seed = new Random().Next() };
                 foreach (string arg in args)
                 {

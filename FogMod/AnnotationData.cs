@@ -20,6 +20,7 @@ namespace FogMod
             public Dictionary<string, float> DefaultCost { get; set; }
             public List<Enemies> Enemies { get; set; }
             public Dictionary<int, string> LotLocations { get; set; }
+            public Dictionary<string, int> DefaultFlagCols { get; set; }
         }
         public class ConfigAnnotation
         {

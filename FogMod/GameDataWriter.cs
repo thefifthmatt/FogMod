@@ -18,17 +18,43 @@ namespace FogMod
     public class GameDataWriter
     {
         private int tempColEventBase = 5350; // or 5900 might also work
+        // These events are automatically (and manually, in the case of the last 4) added by enemy randomizer, so preserve them.
+        private HashSet<int> enemyRandoEvents = new HashSet<int>(new[] {
+            11009000,
+            11019000,
+            11029000,
+            11109000,
+            11209000,
+            11219000,
+            11309000,
+            11319000,
+            11329000,
+            11409000,
+            11419000,
+            11509000,
+            11519000,
+            11609000,
+            11709000,
+            11809000,
+            11819000,
+        }.SelectMany(i => new[] { i - 200, i, i + 200 }).Concat(new[] {
+            11211600,
+            11505600,
+            11515600,
+            11700800,
+        }));
         public void Write(RandomizerOptions opt, Annotations ann, Graph g, string gameDir, FromGame game)
         {
             GameEditor editor = new GameEditor(game);
             bool remastered = game == FromGame.DS1R;
             string distBase = $@"dist\{game}";
             editor.Spec.GameDir = distBase;
-            Dictionary<string, MSB1> maps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
+            Dictionary<string, MSB1> baseMaps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
             Dictionary<string, PARAM.Layout> layouts = editor.LoadLayouts();
             Dictionary<string, PARAM> baseParams = editor.LoadParams(layouts);
 
             editor.Spec.GameDir = gameDir;
+            Dictionary<string, MSB1> maps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
             Dictionary<string, PARAM> Params = editor.LoadParams(layouts);
             string dcxExt = remastered ? ".dcx" : "";
             string fmgEvent = remastered ? "Event_text_" : "イベントテキスト";
@@ -48,8 +74,29 @@ namespace FogMod
             foreach (KeyValuePair<string, MSB1> entry in maps)
             {
                 if (!specs.TryGetValue(entry.Key, out MapSpec spec)) continue;
-                msbs[spec.Name] = entry.Value;
-                players[spec.Name] = 0;
+                MSB1 msb = entry.Value;
+                string name = spec.Name;
+                msbs[name] = msb;
+                players[name] = 0;
+                // Preprocess them to remove any changes made by previous runs
+                msb.Regions.Regions.RemoveAll(r =>
+                {
+                    if (r.Name.StartsWith("Boss start for ") || r.Name.StartsWith("FR: ") || r.Name.StartsWith("BR: ") || r.Name.StartsWith("Region for "))
+                    {
+                        if (opt["msbinfo"]) Console.WriteLine($"Removing region in {name}: {r.Name} #{r.EntityID}");
+                        return true;
+                    }
+                    return false;
+                });
+                msb.Parts.Players.RemoveAll(p =>
+                {
+                    if (p.Name.StartsWith("c0000_") && int.TryParse(p.Name.Substring(6), out int res) && res >= 50)
+                    {
+                        if (opt["msbinfo"]) Console.WriteLine($"Removing player in {name}: {p.Name} #{p.EntityID}");
+                        return true;
+                    }
+                    return false;
+                });
             }
 
             // Do scaling
@@ -108,12 +155,50 @@ namespace FogMod
 
             // Clear out previous values
             Params["SpEffectParam"].Rows = Params["SpEffectParam"].Rows.Where(r => r.ID < 7200 || r.ID >= 7400).ToList();
-            // In lieu of a better way to do this, just copy the params here. They could be different if there was a better way to clear out scaling.
-            Params["NpcParam"] = baseParams["NpcParam"];
+            // We want to undo our previous work, if we need to change/remove scaling. However, don't also undo the clone bosses from enemy rando.
+            HashSet<int> enemyRandoBossCopies = new HashSet<int>(new[] {
+                223000, 223100, 223200, 224000, 225000, 232000, 236000, 236001, 273000, 323000, 332000, 343000, 347100, 410000,
+                450000, 451000, 520000, 521000, 522000, 525000, 526000, 527000, 527100, 528000, 529000, 532000, 535000, 537000, 539001
+            }.Select(c => c + 50));
+            Dictionary<int, PARAM.Row> baseNpcs = baseParams["NpcParam"].Rows.ToDictionary(r => (int)r.ID, r => r);
             Params["GameAreaParam"] = baseParams["GameAreaParam"];
+            foreach (KeyValuePair<string, MSB1> entry in msbs)
+            {
+                string map = entry.Key;
+                MSB1 msb = entry.Value;
+                foreach (MSB1.Part.Enemy e in msb.Parts.Enemies)
+                {
+                    int npc = e.NPCParamID;
+                    if (npc >= 1000 && !baseNpcs.ContainsKey(npc) && !enemyRandoBossCopies.Contains(npc))
+                    {
+                        // If the NPC doesn't exist anymore, try to find what the original value was
+                        // We leave ourselves a hint in a probably unused field.
+                        PARAM.Row original = Params["NpcParam"][npc];
+                        if (original != null && (byte)original["pcAttrB"].Value != 0)
+                        {
+                            int attempt = BitConverter.ToInt32("BWLR".Select(c => (byte)original[$"pcAttr{c}"].Value).ToArray(), 0);
+                            if (baseNpcs.ContainsKey(attempt))
+                            {
+                                e.NPCParamID = attempt;
+                                continue;
+                            }
+                        }
+                        // Or if the enemy isn't randomized, we can try to use the value from the original map
+                        MSB1.Part.Enemy enemy = baseMaps[nameSpecs[map].Map].Parts.Enemies.Find(c => c.Name == e.Name);
+                        if (enemy != null && e.ModelName == enemy.ModelName)
+                        {
+                            e.NPCParamID = enemy.NPCParamID;
+                            continue;
+                        }
+                        // Otherwise, just leave it buggy, probably.
+                        // It could work to decrement until we find a valid value, but that may produce weird variants of the enemy, or a different one entirely.
+                    }
+                }
+            }
+            Params["NpcParam"].Rows.RemoveAll(r => !baseNpcs.ContainsKey((int)r.ID) && !enemyRandoBossCopies.Contains((int)r.ID));
+
             if (opt["scale"])
             {
-                Dictionary<int, PARAM.Row> baseNpcs = baseParams["NpcParam"].Rows.ToDictionary(r => (int)r.ID, r => r);
                 Dictionary<int, PARAM.Row> newNpcs = Params["NpcParam"].Rows.ToDictionary(r => (int)r.ID, r => r);
                 // Add new scalings
                 HashSet<string> rankCells = new HashSet<string>(
@@ -228,9 +313,14 @@ namespace FogMod
                         if (Math.Abs(ratio - 1) < 0.01f) continue;
                         float initialRatio = 1;
                         int baseSp = -1;
+                        // If it's not from the base game, don't otherwise touch it
+                        if (!baseNpcs.TryGetValue(npcID, out PARAM.Row baseNpc))
+                        {
+                            continue;
+                        }
                         if (npcID >= 120000)
                         {
-                            baseSp = (int)baseNpcs[npcID]["spEffectID4"].Value;
+                            baseSp = (int)baseNpc["spEffectID4"].Value;
                             if (baseRanks.TryGetValue(baseSp, out PARAM.Row spRow))
                             {
                                 initialRatio = (float)spRow["physicsAttackPowerRate"].Value;
@@ -238,7 +328,6 @@ namespace FogMod
                         }
                         float ratioFromBase = ratio * initialRatio;
                         int sp = findSpEffect(ratioFromBase);
-                        PARAM.Row baseNpc = baseNpcs[npcID];
                         PARAM.Row newNpc;
                         // Quelaag broked under certain circumstances
                         if (npcID == 528000 && sp < 7200 + middle)
@@ -282,6 +371,12 @@ namespace FogMod
                                 cell.Value = baseNpc[cell.Name].Value;
                             }
                             newNpcs[newID] = newNpc;
+                            // Use an unused field to refer to the original value
+                            byte[] o = BitConverter.GetBytes(npcID);
+                            for (int i = 0; i < o.Length; i++)
+                            {
+                                newNpc[$"pcAttr{"BWLR"[i]}"].Value = o[i];
+                            }
                             Params["NpcParam"].Rows.Add(newNpc);
                             foreach (MSB1.Part.Enemy enemy in npcArea.Value)
                             {
@@ -328,6 +423,33 @@ namespace FogMod
                         {
                             Console.WriteLine($"Change for {npcID} {area}: {ratio} * {initialRatio} = {ratio * initialRatio}, dmg ratio {dmgRatio / ratio}, sp {baseSp} -> {sp}. "
                                 + $"Souls {souls} -> {newSouls}. {(npcType.Value.Count == 1 ? " UNIQUE" : "")} {(newSouls > 50000 ? "BIG" : "")}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // If not scaling, undo all scales
+                foreach (PARAM.Row row in Params["NpcParam"].Rows)
+                {
+                    if (baseNpcs.TryGetValue((int)row.ID, out PARAM.Row baseNpc))
+                    {
+                        row["getSoul"].Value = baseNpc["getSoul"].Value;
+                        // Replace our hacky speffect with the real one
+                        if (row.ID >= 120000)
+                        {
+                            row[$"spEffectID4"].Value = baseNpc[$"spEffectID4"].Value;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
+                                int sp = (int)row[$"spEffectID{i}"].Value;
+                                if (sp >= 7200 && sp < 7400)
+                                {
+                                    row[$"spEffectID{i}"].Value = baseNpc[$"spEffectID{i}"].Value;
+                                }
+                            }
                         }
                     }
                 }
@@ -554,6 +676,7 @@ namespace FogMod
             }
             // Various MSB edits. Lots of making collisions behave nicely on save+quit.
             List<int> playRegions = new List<int>();
+            Dictionary<string, string> colNames = new Dictionary<string, string>();
             foreach (KeyValuePair<string, MSB1> entry in msbs)
             {
                 string map = entry.Key;
@@ -562,6 +685,7 @@ namespace FogMod
                 {
                     if (col.PlayRegionID < 10)
                     {
+                        // Editing some play regions. Not sure which of these are still needed, but some prevent unstable ground after warps.
                         if (map == "firelink" && col.Name == "h0017B2_0000")
                         {
                             col.PlayRegionID = -69696968 - 10;
@@ -570,9 +694,12 @@ namespace FogMod
                         {
                             col.PlayRegionID = 141000;
                         }
-                        else if (col.PlayRegionID < -10)
+                        else if (map == "firelink" && (col.Name == "h0017B2_0000" || col.Name == "h0015B2_0000"))
                         {
-                            int bossFlag = -col.PlayRegionID - 10;
+                            col.PlayRegionID = -2;
+                        }
+                        else if (ann.DefaultFlagCols.TryGetValue($"{map}_{col.Name}", out int bossFlag))
+                        {
                             int colFlag = playRegions.IndexOf(bossFlag);
                             if (colFlag == -1)
                             {
@@ -581,16 +708,10 @@ namespace FogMod
                             }
                             col.PlayRegionID = -(tempColEventBase + colFlag) - 10;
                         }
-                        else
+                        else if (col.PlayRegionID < -10)
                         {
-                            if (map == "firelink" && (col.Name == "h0017B2_0000" || col.Name == "h0015B2_0000"))
-                            {
-                                col.PlayRegionID = -2;
-                            }
-                            if (map == "demonruins" && (col.Name == "h9950B1"))
-                            {
-                                col.PlayRegionID = 141000;
-                            }
+                            // If this is not a region we know about, leave it alone and hope it doesn't cause trouble.
+                            // In all cases I've tried, all of the above cases cover it.
                         }
                     }
                 }
@@ -614,6 +735,7 @@ namespace FogMod
                 }
                 else if (map == "kiln")
                 {
+                    // This option does not get enabled from anywhere currently
                     if (opt["patchkiln"])
                     {
                         MSB1.Part.Player player = msb.Parts.Players.Find(p => p.Name == "c0000_0000");
@@ -623,10 +745,18 @@ namespace FogMod
                 }
                 else if (map == "anorlondo")
                 {
-                    // Use this unless the area after the broken window becomes its own unique area
-                    if (!g.entranceIds["o5869_0000"].IsFixed)
+                    MSB1.Part.Object obj = msb.Parts.Objects.Find(e => e.Name == "o0500_0006");
+                    // If the area after the broken window is part of logic, use it, otherwise move it back
+                    if (g.entranceIds["o5869_0000"].IsFixed)
                     {
-                        MSB1.Part.Object obj = msb.Parts.Objects.Find(e => e.Name == "o0500_0006");
+                        // Default properties
+                        obj.Position = new Vector3(448.490f, 144.110f, 269.420f);
+                        obj.Rotation = new Vector3(11, 83, -4);
+                        obj.CollisionName = "h0111B1_0000";
+                        obj.UnkT0C = 33; // initial animation
+                    }
+                    else
+                    {
                         obj.Position = new Vector3(444.106f, 160.258f, 255.887f);
                         obj.Rotation = new Vector3(-3, -90, 0);
                         obj.CollisionName = "h0025B1_0000";
@@ -635,11 +765,16 @@ namespace FogMod
                 }
                 else if (map == "depths")
                 {
+                    MSB1.Event.ObjAct oa = msb.Events.ObjActs.Find(o => o.ObjActEntityID == 11000120);
                     if (g.start.Area == "depths")
                     {
-                        MSB1.Event.ObjAct oa = msb.Events.ObjActs.Find(o => o.ObjActEntityID == 11000120);
                         // No key required if starting at bonfire
                         oa.ObjActParamID = -1;
+                    }
+                    else
+                    {
+                        // Default value
+                        oa.ObjActParamID = 11315;
                     }
                 }
                 else if (map == "asylum")
@@ -660,36 +795,43 @@ namespace FogMod
                         }
                     }
                     if (trBase == null) throw new Exception("Can't find asylum treasure to base estus treasure on");
-                    MSB1.Part.Object es = new MSB1.Part.Object();
-                    CopyAll(trBase, es);
-                    es.Name = "o0500_0050";
-                    es.ModelName = "o0500";
-                    es.UnkT0C = 50; // initial animation
-                    es.Position = new Vector3(13.279f, 202.015f, 20.8f);
-                    es.Rotation = new Vector3(0, 0, 0);
-                    es.EntityID = -1;
-                    msb.Parts.Objects.Add(es);
-                    MSB1.Event.Treasure t = new MSB1.Event.Treasure();
-                    t.EventID = 69;
-                    t.EntityID = -1;
-                    t.ItemLots[0] = 1082;  // estus flask
-                    t.TreasurePartName = "o0500_0050";
-                    t.Name = "New Estus";
-                    msb.Events.Treasures.Add(t);
+                    // Add estus treasure if it does not exist
+                    if (!msb.Parts.Objects.Any(p => p.Name == "o0500_0050"))
+                    {
+                        MSB1.Part.Object es = new MSB1.Part.Object();
+                        CopyAll(trBase, es);
+                        es.Name = "o0500_0050";
+                        es.ModelName = "o0500";
+                        es.UnkT0C = 50; // initial animation
+                        es.Position = new Vector3(13.279f, 202.015f, 20.8f);
+                        es.Rotation = new Vector3(0, 0, 0);
+                        es.EntityID = -1;
+                        msb.Parts.Objects.Add(es);
+                        MSB1.Event.Treasure t = new MSB1.Event.Treasure();
+                        t.EventID = 69;
+                        t.EntityID = -1;
+                        t.ItemLots[0] = 1082;  // estus flask
+                        t.TreasurePartName = "o0500_0050";
+                        t.Name = "New Estus";
+                        msb.Events.Treasures.Add(t);
+                    }
                 }
                 else if (map == "dukes")
                 {
-                    MSB1.Part.Object crystal = msb.Parts.Objects.Find(e => e.EntityID == 1701800);
-                    MSB1.Part.Object warpC = new MSB1.Part.Object();
-                    CopyAll(crystal, warpC);
-                    warpC.Name = "o7500_0001";
-                    warpC.Position = new Vector3(284.108f, 388.313f, 520.228f);
-                    warpC.EntityID = 1701801;
-                    warpC.DrawGroups[0] = 2147483648;
-                    warpC.DrawGroups[1] = 15;
-                    warpC.DrawGroups[2] = 0;
-                    warpC.DrawGroups[3] = 0;
-                    msb.Parts.Objects.Insert(0, warpC);
+                    if (!msb.Parts.Objects.Any(p => p.Name == "o7500_0001"))
+                    {
+                        MSB1.Part.Object crystal = msb.Parts.Objects.Find(e => e.EntityID == 1701800);
+                        MSB1.Part.Object warpC = new MSB1.Part.Object();
+                        CopyAll(crystal, warpC);
+                        warpC.Name = "o7500_0001";
+                        warpC.Position = new Vector3(284.108f, 388.313f, 520.228f);
+                        warpC.EntityID = 1701801;
+                        warpC.DrawGroups[0] = 2147483648;
+                        warpC.DrawGroups[1] = 15;
+                        warpC.DrawGroups[2] = 0;
+                        warpC.DrawGroups[3] = 0;
+                        msb.Parts.Objects.Insert(0, warpC);
+                    }
 
                     MSB1.Region spawnRegion = msb.Regions.Regions.Find(r => r.Name == "復活ポイント（一時用）");
                     spawnRegion.EntityID = 1702901;
@@ -778,12 +920,98 @@ namespace FogMod
             }
 
             if (events.Count > 400) throw new Exception("Internal error: too many warps");
+            // Enemy randomizer changes
+            // Add gravity to undead dragon (done in fog emevd)
+            // Remove move/force animation from 11810310, when not present there
+            // 11205382, 11015382, 11015396 have no modifications in fog rando, so they can be copied over, as they are conditionally applied there.
+            // Other events are changes in the dkscript map files.
+            List<int> copyRandoEvents = new List<int> {
+                // Moonlight butterfly start
+                11205382,
+                // Gargoyle 2
+                11015382,
+                11015396,
+                // Seath invincibility
+                11705396,
+                // Bed of chaos start
+                11415392,
+                // Bed of chaos part invincibility
+                11415397,
+                // Bed of chaos object invulnerabilities
+                11410250,
+                // Skeleton respawning in catacombs. Parameterized
+                11305100,
+            };
             foreach (string path in Directory.GetFiles($@"{distBase}\event", "*.emevd*"))
             {
                 string name = GameEditor.BaseName(path);
                 EMEVD evd = EMEVD.Read(path);
+                string evPath = $@"{editor.Spec.GameDir}\event\{Path.GetFileName(path)}";
+                EMEVD gameEvd = EMEVD.Read(evPath);
+                List<EMEVD.Instruction> inits = new List<EMEVD.Instruction>();
+                Dictionary<int, EMEVD.Event> eventsToCopy = new Dictionary<int, EMEVD.Event>();
+                bool asylumDemonRandomized = false;
+                // Preprocess things from enemy randomizer. This should be idempotent.
+                foreach (EMEVD.Event evt in gameEvd.Events)
+                {
+                    if (enemyRandoEvents.Contains((int)evt.ID))
+                    {
+                        evd.Events.Add(evt);
+                    }
+                    else if (copyRandoEvents.Contains((int)evt.ID))
+                    {
+                        eventsToCopy[(int)evt.ID] = evt;
+                    }
+                    else if (evt.ID == 11810310)
+                    {
+                        asylumDemonRandomized = !evt.Instructions.Any(instr => instr.Bank == 2003 && instr.ID == 18);
+                    }
+                    else if (evt.ID == 0)
+                    {
+                        for (int i = evt.Instructions.Count - 1; i >= 0; i--)
+                        {
+                            EMEVD.Instruction instr = evt.Instructions[i];
+                            if (instr.Bank == 2004 && instr.ID == 2)
+                            {
+                                inits.Add(instr);
+                            }
+                            else if (instr.Bank == 2000 && instr.ID == 0)
+                            {
+                                List<object> initArgs = instr.UnpackArgs(Enumerable.Repeat(ArgType.Int32, instr.ArgData.Length / 4));
+                                if (enemyRandoEvents.Contains((int)initArgs[1]))
+                                {
+                                    inits.Add(instr);
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
                 foreach (EMEVD.Event evt in evd.Events)
                 {
+                    // Copy stuff from enemy randomizer
+                    if (evt.ID == 0)
+                    {
+                        inits.Reverse();
+                        evt.Instructions.AddRange(inits);
+                    }
+                    if (eventsToCopy.TryGetValue((int)evt.ID, out EMEVD.Event other))
+                    {
+                        evt.Instructions = other.Instructions;
+                        evt.Parameters = other.Parameters;
+                    }
+                    if (evt.ID == 11810310 && asylumDemonRandomized)
+                    {
+                        evt.Instructions.RemoveAll(instr => (instr.Bank == 2003 && instr.ID == 18) || (instr.Bank == 2004 && instr.ID == 41));
+                    }
+                    // Add our own stuff
                     if (evt.ID == 0 && name == "common")
                     {
                         foreach (List<object> init in events)
@@ -842,7 +1070,6 @@ namespace FogMod
                         }
                     }
                 }
-                string evPath = $@"{editor.Spec.GameDir}\event\{Path.GetFileName(path)}";
                 Console.WriteLine("Writing " + evPath);
                 evd.Write(evPath);
             }

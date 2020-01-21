@@ -22,21 +22,33 @@ No new fog gates are added. PvP fog gates are ones you normally only see when yo
 
 By default, warps are bidirectional, meaning you can explore the world like it is a cut up and reassembled version of the base game. If you instead enable the "Disconnected fog gates" option, warps become points of no return. This is similar to ALttP Insanity Entrance Shuffle or OoT BetaQuest.
 
-Runs usually take 4-8 hours, assuming "Require Lord Souls", no key item randomization, and bidirectional fog gates. Usually, the fewer fog gates are randomized, the less time it takes to learn the route. Randomized boss fog gates, preexisting warps, and major PvP fog gates are usually easy to backtrack from, and don't that add much time. Traversable fog gates and minor PvP fog gates make it more difficult to backtrack, because you often have to check both sides. Item randomization and disconnected fog gates can make runs take longer, depending on your luck.
+Usually more randomized entrances = longer run. Randomized boss fog gates, preexisting warps, and major PvP fog gates are usually easy to backtrack from. Traversable fog gates and minor PvP fog gates make it more difficult to backtrack, because you often have to check both sides and drop down to do so. Other randomizers and disconnected fog gates both result in more to explore.
+
+- For an insane completionist run, you can enable all fog gates (with or without lordvessel gates, which are also interesting with their vanilla behavior), and this takes about 8 hours to find all areas. With key item randomization, it can take around 12 hours (less with Race Mode).
+- For a more bite-sized or race-friendly run - if you don't want to go hollow, or are streaming it and want to fit it into one stream - enable only boss fog gates and area warps. This takes about 4 hours to find all areas. With key item randomization, it can take around 8 hours (less with Race Mode).
+
+These estimates are from people who have played the mod. If you have more data, I can add it here!
 
 There are a few other differences from the base game:
 
 - Estus and starting items are available before any fog gates
 - All bonfires have an option to return to the start of the game, in case you get stuck after using a bonfire. This is like save & quit in Zelda entrance randomizers.
 - You can't save & quit to escape a boss fight, because positions before warps are always discarded by the game. Use Pacifist Mode for more mobility options.
-- The trigger for Undead Asylum #2 is using the Big Pilgrim's Key, rather than traveling to Firelink.
+- The trigger for Undead Asylum #2 is using the Big Pilgrim's Key and warping away and back, rather than traveling to Firelink.
 - Seath's scripted player death has been replaced with an object you can use to warp always (to a random place, if warps are randomized)
 - NPC invasions removed for now, they are messy to clean up after
+
+Also, some things which are in the base game you may need to know about:
+
+- The elevator above Demon Firesage automatically activates after you defeat Demon Firesage, even if you're coming from Daughter of Chaos
+- You can drop down from Darkroot Forest to Darkroot Basin by starting after the Crest of Artorias door and following the wall to the left
+- You can drop down into the Phalanx courtyard in Painted World from the bridge above it
+- It's possible to go backwards up Crystal Caves using an invisible path
 
 ### How to win
 By defeating Gwyn. If the "Require Lord Souls" option is enabled then opening the Firelink Altar door (or PCC warp) is the only way to get to Gwyn. Warps to the Firelink Altar are not randomized, mainly because they are tied to serpent loyalty. If this is disabled, Gwyn can potentially be among the first few fog gates.
 
-Taking notes can be helpful to remember how to get to different important places. Alternatively, have a good memory, or rely on chat to have good memory.
+Taking notes can be helpful to remember how to get to different important places. One possible strategy is to list out routes you *didn't* take when going deeper along one particular branch. If you reach a place you need to come back to later, make sure you know how to get there.
 
 Starting with or using the master key is never required. If you have it, it can be used to access areas early, but there may be significant scaling differences on the other side of those doors.
 
@@ -48,27 +60,35 @@ The randomizer checks what is the shortest path for you to access a blacksmith w
 ## Installation
 For PTDE only, you must first unpack Dark Souls for modding. (https://www.nexusmods.com/darksouls/mods/1304)
 
-To install the mod, unzip FogMod.zip anywhere. It should contain FogMod.exe along with a dist subdirectory used by the randomizer. Run FogMod.exe, select your options, and click "Randomize!" to randomize. This automatically creates backups. You must select the game exe manually if you have a non-standard DS1 install location. You can also enter a seed (any number between 0 and 4294967295). For all changes to take effect, restart the game, and start a new save file.
+To install the mod, unzip FogMod.zip anywhere. It should contain FogMod.exe along with a dist subdirectory used by the randomizer. Run FogMod.exe, select your options, and click "Randomize!" to randomize. This automatically creates backups, and also creates a "runs" folder that has logs, including the seed and spoilers. You must select the game exe manually if you have a non-standard DS1 install location. You can also enter a seed (any number between 0 and 4294967295). For all changes to take effect, restart the game, and start a new save file.
 
 When randomizing with scaling enabled, try not to access existing save files that have been previously accessed with different scaling (different seed or options) or no scaling. If you quit out of a save file with enemies loaded into the area, and the scaling changes too much on reload, the game will crash to desktop. The save file is not corrupted, but can't be opened anymore unless you return to the previous enemy scaling.
 
-To uninstall, click "Restore backups". This replaces the game files with whatever they were before the first randomization. To be completely sure all mods are gone, in Remastered only, select Properties → Local Files → Verify Integrity Of Game Files in Steam.
+To uninstall, click "Restore backups". This replaces the game files with whatever they were before the first randomization. To be completely sure all mods are gone, in Remastered only, select Properties → Local Files → Verify Integrity Of Game Files in Steam. In PTDE, it will work to re-run UDSFM.
 
-### With DS1 item randomizer
-This mod is compatible with DS1 Item Randomizer (https://www.nexusmods.com/darksouls/mods/1305/ or https://www.nexusmods.com/darksoulsremastered/mods/86)
+### Installing with other randomizers
+This mod is compatible with DS1 Item Randomizer starting from v0.2 (https://www.nexusmods.com/darksouls/mods/1305/ or https://www.nexusmods.com/darksoulsremastered/mods/86) and DS1 Enemy Randomizer (https://www.nexusmods.com/darksouls/mods/1407) starting from v0.3. You can also try it with orthogonal randomizers like Paramdomizer (misc param randomizer) and ClusterFXR (visual effects randomizer).
 
-In Fog Gate Randomizer v0.2, first run item randomizer in the game's directory, and then run fog gate randomizer. (This is a different order from v0.1!) Fog gate randomizer will use the new key item locations to do its randomization. This functionality is thanks to HotPocketRemix for classifying key item locations in a way fog gate randomizer can understand!
+This order works well for running them:
+1. Item Randomizer
+2. Enemy Randomizer
+3. Paramdomizer
+4. Fog Gate Randomizer
 
-If you use Race Mode+ in item randomizer, you should also use Glitched Logic in fog gate randomizer. This will work the vast majority of the time. If it doesn't, try a different seed in item randomizer.
+Sometimes, Item Randomizer will produce an item configuration that Fog Gate Randomizer says it can't solve, or Enemy Randomizer will produce invalid MSB files. When this happens, just re-run those respective randomizers with different seeds. Incidentally, doing "Restore backups" in Fog Gate Randomizer seems to undo most of the effects of the above randomizers, since they all backup to the same locations.
 
-All other randomizers should run after fog gate randomizer.
+If you want to re-run Enemy Randomizer during a playthrough, you need to re-run Fog Gate Randomizer afterwards with the last used seed as the fixed seed. The last used seed can be found under the "Randomize!" button, and also in the newest file in the "runs" directory. If you get any errors re-running Enemy Randomizer, try clicking "Revert to normal" and then trying again.
+
+Item Randomizer compatibility is thanks to HotPocketRemix for classifying key item locations in a way fog gate randomizer can understand. If you use Race Mode+ in Item Randomizer, you should also use Glitched Logic in Fog Gate Randomizer. This will work the vast majority of the time. If it doesn't, try a different seed in Item Randomizer.
+
+Also, if you're using "fully random" enemy randomization (rather than "difficulty curve"), it may be better to avoid Fog Gate Randomizer scaling, since it is possible for difficult enemies in early areas to be scaled up even further.
 
 ### Compatibility with other mods
-Fog Gate Randomizer is *not* compatible with game-file-based mods which make event-based changes to game progression, like Daughters of Ash or Scorched Contract or Enemy Randomizer. This is the case if the other mod requires modifications to files in event\ or script\talk.
+Fog Gate Randomizer is *not* compatible with game-file-based mods which make event-based changes to game progression, like Daughters of Ash or Scorched Contract. Mods like these require changes to files in event\ or script\talk.
 
-If the other mod contains its own map files or param files, merging may be possible. Whenever Fog Gate Randomizer runs, it does its randomization based on game files in the "dist\DS1" or "dist\DS1R" directory under FogMod.exe, modifies them, and copies those into the actual game. It copies all MSB files and copies NpcParam and GameAreaParam from params before modifying them.
+If the other mod has game files in map\MapStudio, msg\ENGLISH, or param\GameParam, then you can try installing it before Fog Gate Randomizer, but there is no guarantee they will work well together.
 
-If the other mod has game files in locations other than event\, map\MapStudio, msg\ENGLISH, param\GameParam, or script\talk, then the mods should be independent, and you can follow the other mod's installation steps for those files.
+Otherwise, the mods should be independent.
 
 ## Appendix: Randomizable entrances
 Traversable fog gates (non-boss)
