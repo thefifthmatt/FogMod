@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static SoulsIds.GameSpec;
 
 namespace FogMod
 {
@@ -8,11 +9,14 @@ namespace FogMod
     {
         private SortedDictionary<string, bool> opt = new SortedDictionary<string, bool> { { "v4", true } };
 
+        // TODO: Make this work
         public RandomizerOptions Copy()
         {
             return new RandomizerOptions
             {
-                opt = new SortedDictionary<string, bool>(opt)
+                opt = new SortedDictionary<string, bool>(opt),
+                Seed = Seed,
+                Game = Game,
             };
         }
 
@@ -23,6 +27,7 @@ namespace FogMod
         }
         public string Language = "ENGLISH";
         public int Seed { get; set; }
+        public FromGame Game { get; set; }
         public uint DisplaySeed => (uint)Seed;
         public SortedSet<string> GetEnabled()
         {

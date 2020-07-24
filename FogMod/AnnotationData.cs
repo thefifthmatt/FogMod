@@ -2,26 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using YamlDotNet.Serialization;
-using static FogMod.Util;
 using static FogMod.Graph;
+using static SoulsIds.GameSpec;
 
 namespace FogMod
 {
     public class AnnotationData
     {
-        public class Annotations
+        public List<ConfigAnnotation> Options { get; set; }
+        public float HealthScaling { get; set; }
+        public float DamageScaling { get; set; }
+        public List<Area> Areas { get; set; }
+        public List<Item> KeyItems { get; set; }
+        public List<Entrance> Warps { get; set; }
+        public List<Entrance> Entrances { get; set; }
+        public List<GameObject> Objects { get; set; }
+        public List<CustomStart> CustomStarts { get; set; }
+        public Dictionary<string, float> DefaultCost { get; set; }
+        public List<EnemyCol> Enemies { get; set; }
+        public Dictionary<int, string> LotLocations { get; set; }
+        public Dictionary<string, int> DefaultFlagCols { get; set; }
+        [YamlIgnore]
+        public FogLocations Locations { get; set; }
+
+        [YamlIgnore]
+        public Dictionary<string, MapSpec> Specs { get; set; }
+        [YamlIgnore]
+        public Dictionary<string, MapSpec> NameSpecs { get; set; }
+
+        public void SetGame(FromGame game)
         {
-            public List<ConfigAnnotation> Options { get; set; }
-            public List<Area> Areas { get; set; }
-            public List<Item> KeyItems { get; set; }
-            public List<Entrance> Warps { get; set; }
-            public List<Entrance> Entrances { get; set; }
-            public List<CustomStart> CustomStarts { get; set; }
-            public Dictionary<string, float> DefaultCost { get; set; }
-            public List<Enemies> Enemies { get; set; }
-            public Dictionary<int, string> LotLocations { get; set; }
-            public Dictionary<string, int> DefaultFlagCols { get; set; }
+            List<MapSpec> allSpecs = game == FromGame.DS3 ? DS3Specs : DS1Specs;
+            Specs = allSpecs.ToDictionary(s => s.Map, s => s);
+            NameSpecs = allSpecs.ToDictionary(s => s.Name, s => s);
         }
+
         public class ConfigAnnotation
         {
             // Not used rn... currently just for informational purposes
@@ -65,11 +80,15 @@ namespace FogMod
         }
         public class Area : Taggable
         {
-            public string Name { get; set; }            
+            public string Name { get; set; }
+            public string Text { get; set; }
             public string ScalingBase { get; set; }
+            public int BossTrigger { get; set; }
+            public int DefeatFlag { get; set; }
+            public int TrapFlag { get; set; }
             public List<Side> To { get; set; }
         }
-        public class Enemies
+        public class EnemyCol
         {
             public string Col { get; set; }
             public string Area { get; set; }
@@ -89,18 +108,27 @@ namespace FogMod
         }
         public class Entrance : Taggable
         {
+            // Part name
             public string Name { get; set; }
+            // Entity id
             public int ID { get; set; }
+            // Map
             public string Area { get; set; }
+            // Display text
             public string Text { get; set; }
+            // Internal comment
             public string Comment { get; set; }
+            // If tagged as a door, the condition for opening the door
             public string DoorCond { get; set; }
+            // How much to raise the fog gate's y coordinate to make it level with the ground, for warp points and trigger regions
+            public float AdjustHeight { get; set; }
+            // Sides
             public Side ASide { get; set; }
             public Side BSide { get; set; }
             [YamlIgnore]
             public bool IsFixed { get; set; }
             [YamlIgnore]
-            public string EdgeName => Name ?? ID.ToString();
+            public string FullName => Area + "_" + ID.ToString();  // Name == null ? ID.ToString() : Area + "_" + Name;
             public List<Side> Sides()
             {
                 List<Side> sides = new List<Side>();
@@ -112,42 +140,57 @@ namespace FogMod
         public class Side : Taggable
         {
             public string Area { get; set; }
-            // Flag to escape
+            // Documentation, usually lowercase gerund or noun
+            public string Text { get; set; }
+            // In DS1, flag to escape
             public int Flag { get; set; }
-            // If escape flag is set, ignore until this flag normally traps the player in the arena
+            // In DS1, if escape flag is set, ignore until this flag normally traps the player in the arena
             public int TrapFlag { get; set; }
-            // Flag required to enter, if region is currently inaccessible
+            // In DS1, flag required to enter, if region is currently inaccessible
             public int EntryFlag { get; set; }
             // To set before warping
             public int BeforeWarpFlag { get; set; }
-            // Region to trigger a boss fight, if needs to be applied to other fog gate entrances as well
+            // In DS1, region to trigger a boss fight, if needs to be applied to other fog gate entrances as well
             public int BossTrigger { get; set; }
-            // An additional trigger region to add
+            // In DS1, an additional trigger region to add
             public string BossTriggerArea { get; set; }
-            // Flag to use to initiate the warp
+            // In DS1, flag to use to initiate the warp
             public int WarpFlag { get; set; }
-            // Cutscene to play, if the destination is a warp region
+            // DS3 variants of Flag/TrapFlag/BossTrigger, but applied to the names of areas with these flags defined, not the ids themselves.
+            public string BossDefeatName { get; set; }
+            public string BossTrapName { get; set; }
+            public string BossTriggerName { get; set; }
+            // Cutscene to play, if the destination is a warp region. This is unused, mainly for information.
             public int Cutscene { get; set; }
             // Condition for traversing to/from this point and the given area
             public string Cond { get; set; }
             // A custom location to put the warp instead of calculated from the entrance id
             public string CustomWarp { get; set; }
-            // Custom fog gate width, for wider fog gates
+            // In DS1, custom fog gate width, for wider fog gates
             public int CustomActionWidth { get; set; }
             // The last col stepped on before warping. Used for connect cols (currently not used)
             public string Col { get; set; }
-            // Pre-existing trigger region, if the automatic one doesn't work
+            // In DS1, pre-existing trigger region, if the automatic one doesn't work
             public int ActionRegion { get; set; }
             // Don't include the side as a random entrance/exit if the given entrance is not randomized either
             public string ExcludeIfRandomized { get; set; }
             // The map to add the warp into, if different from the entrance's map
             public string DestinationMap { get; set; }
+            // Height adjust on only this side
+            public float AdjustHeight { get; set; }
             [YamlIgnore]
             public Expr Expr { get; set; }
             [YamlIgnore]
             public WarpPoint Warp { get; set; }
         }
-        private static List<MapSpec> allSpecs = new List<MapSpec>
+        public class GameObject : Taggable
+        {
+            public string Area { get; set; }
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        public static readonly List<MapSpec> DS1Specs = new List<MapSpec>
         {
             MapSpec.Of("m10_00_00_00", "depths", 1400, 1420),
             MapSpec.Of("m10_01_00_00", "parish", 1403, 1421),
@@ -167,8 +210,26 @@ namespace FogMod
             MapSpec.Of("m18_00_00_00", "kiln", 8050, 8051),
             MapSpec.Of("m18_01_00_00", "asylum", 8950, 8953),
         };
-        public static Dictionary<string, MapSpec> specs = allSpecs.ToDictionary(s => s.Map, s => s);
-        public static Dictionary<string, MapSpec> nameSpecs = allSpecs.ToDictionary(s => s.Name, s => s);
+        public static readonly List<MapSpec> DS3Specs = new List<MapSpec>
+        {
+            MapSpec.Of("m30_00_00_00", "highwall", 400, 402),
+            MapSpec.Of("m30_01_00_00", "lothric", 400, 402),
+            MapSpec.Of("m31_00_00_00", "settlement", 400, 402),
+            MapSpec.Of("m32_00_00_00", "archdragon", 400, 402),
+            MapSpec.Of("m33_00_00_00", "farronkeep", 400, 402),
+            MapSpec.Of("m34_01_00_00", "archives", 400, 402),
+            MapSpec.Of("m35_00_00_00", "cathedral", 400, 402),
+            MapSpec.Of("m37_00_00_00", "irithyll", 400, 402),
+            MapSpec.Of("m38_00_00_00", "catacombs", 400, 402),
+            MapSpec.Of("m39_00_00_00", "dungeon", 400, 402),
+            MapSpec.Of("m40_00_00_00", "firelink", 400, 402),
+            MapSpec.Of("m41_00_00_00", "kiln", 400, 402),
+            MapSpec.Of("m45_00_00_00", "ariandel", 400, 402),
+            MapSpec.Of("m50_00_00_00", "dregheap", 400, 402),
+            MapSpec.Of("m51_00_00_00", "ringedcity", 400, 402),
+            MapSpec.Of("m51_01_00_00", "filianore", 400, 402),
+        };
+
         public class MapSpec
         {
             public static MapSpec Of(string Map, string Name, int Start, int End) => new MapSpec { Map = Map, Name = Name, Start = Start, End = End };
@@ -336,6 +397,33 @@ namespace FogMod
                     return "(" + string.Join(" OR ", exprs) + ")";
                 }
             }
+        }
+
+        // Separate config for locations of items/enemies other than fog gates
+        public class FogLocations
+        {
+            public List<KeyItemLoc> Items = new List<KeyItemLoc>();
+            public List<EnemyLoc> Enemies = new List<EnemyLoc>();
+        }
+        public class KeyItemLoc
+        {
+            // Item randomizer key for this location, just for use in generating it
+            public string Key { get; set; }
+            // Explanatory info
+            public List<string> DebugText { get; set; }
+            // The area the item appears. May include other areas or dependent items, which are space-separated.
+            public string Area { get; set; }
+            // Space-separated list of base lot ids.
+            public string Lots { get; set; }
+            // Space-separated list of shop ids.
+            public string Shops { get; set; }
+        }
+        public class EnemyLoc
+        {
+            // 
+            public string ID { get; set; }
+            public string DebugText { get; set; }
+            public string Area { get; set; }
         }
     }
 }

@@ -1,0 +1,2313 @@
+HealthScaling: 4
+DamageScaling: 2.5
+Areas:
+- Name: firelink_cemetery
+  Text: Cemetery of Ash
+  Tags: small
+  To:
+  - Area: firelink
+    Text: using easier start
+    Tags: instawarp
+- Name: firelink_iudexgundyr
+  Text: Iudex Gundyr
+  Tags: boss
+  DefeatFlag: 14000800
+  TrapFlag: 14000801
+  To:
+  - Area: firelink_front
+    Text: opening the door
+    Tags: shortcut
+- Name: firelink_front
+  Text: before Firelink Shrine
+  Tags: small
+- Name: firelink
+  Text: Firelink Shrine
+  Tags: trivial
+  To:
+  - Area: firelink_coiledsword
+    Text: embedding Coiled Sword
+    Cond: coiledsword
+- Name: firelink_coiledsword
+  Text: Firelink Shrine with Coiled Sword
+  Tags: trivial
+- Name: firelink_bellfront
+  Text: before Firelink Bell Tower
+  Tags: trivial
+  To:
+  - Area: firelink_front
+    Text: dropping down
+    Tags: drop
+  - Area: firelink_roof
+    Text: tree skip
+    Tags: treeskip
+  - Area: firelink_belltower
+    Text: using Tower Key
+    Cond: towerkey
+- Name: firelink_roof
+  Text: Firelink Shrine Roof
+  Tags: trivial
+  To:
+  - Area: firelink_front
+    Text: dropping down
+    Tags: drop
+  - Area: firelink
+    Text: dropping down past the illusory wall
+    Tags: drop
+- Name: firelink_belltower
+  Text: Firelink Bell Tower
+  Tags: trivial
+  To:
+  - Area: firelink_roof
+    Text: dropping down
+    Tags: drop
+- Name: highwall
+  Text: High Wall
+  To:
+  - Area: highwall_darkwraith
+    Text: using Lift Chamber Key
+    Cond: liftchamberkey
+  - Area: highwall_greirat
+    Text: using Cell Key
+    Cond: cellkey
+- Name: highwall_emma
+  Text: Emma's Cathedral
+  Tags: trivial
+  To:
+  - Area: highwall_dancer
+    Text: attempting to use Basin of Vows
+    Cond: basinofvows
+- Name: highwall_darkwraith
+  Text: High Wall Lift Cell
+  Tags: small
+- Name: highwall_greirat
+  Text: Greirat's Cell
+  Tags: trivial
+- Name: highwall_vordt
+  Text: Vordt of the Boreal Valley
+  Tags: boss
+  DefeatFlag: 13000800
+  TrapFlag: 13000801
+- Name: settlement
+  Text: Undead Settlement
+- Name: settlement_greatwood
+  Text: Curse-Rotted Greatwood
+  Tags: boss
+  DefeatFlag: 13100800
+  TrapFlag: 13100801
+  To:
+  - Area: settlement_pit
+    Text: floor collapsing
+    Tags: drop
+- Name: settlement_pit
+  Text: Pit of Hollows
+  Tags: trivial
+- Name: settlement_tower
+  Text: Undead Settlement Tower
+  To:
+  - Area: settlement
+    Text: dropping down with Siegward
+    Tags: drop
+  - Area: farronkeep_start
+    Text: past the outrider knight
+- Name: farronkeep_start
+  Text: Road of Sacrifices start
+  Tags: small
+  # The door doesn't open the other way
+- Name: farronkeep_road
+  Text: Road of Sacrifices
+  To:
+  - Area: farronkeep
+    Text: descending into Farron Keep
+- Name: farronkeep_crystalsage
+  Text: Crystal Sage
+  Tags: boss
+  BossTrigger: 13305855
+  DefeatFlag: 13300850
+- Name: farronkeep
+  Text: Farron Keep
+  To:
+  - Area: farronkeep_road
+    Text: ascending from Farron Keep
+  - Area: farronkeep_prewatchers
+    Text: opening the door
+- Name: farronkeep_prewatchers
+  Text: before Abyss Watchers
+  Tags: small
+- Name: farronkeep_abysswatchers
+  Text: Abyss Watchers
+  Tags: boss
+  DefeatFlag: 13300800
+  To:
+  - Area: farronkeep_postwatchers
+    Text: defeating Abyss Watchers
+- Name: farronkeep_postwatchers
+  Text: after Abyss Watchers
+  Tags: trivial
+- Name: cathedral_start
+  Text: Cathedral of the Deep Start
+  Tags: small
+- Name: cathedral
+  Text: Cathedral of the Deep
+- Name: cathedral_rosaria
+  Text: Rosaria's Room
+  Tags: trivial
+- Name: cathedral_deacons
+  Text: Deacons of the Deep
+  Tags: boss
+  DefeatFlag: 13500800
+- Name: catacombs
+  Text: Catacombs of Carthus
+  To:
+  - Area: catacombs_prelake
+    Text: cutting down the bridge
+- Name: catacombs_wolnirroom
+  Text: Catacombs Wolnir Room
+  Tags: trivial
+  # TODO: Can it work like this? The door opens after Wolnir
+  To:
+  - Area: irithyll_start
+    Text: after Wolnir
+    Cond: catacombs_wolnir
+- Name: catacombs_wolnir
+  Text: High Lord Wolnir
+  Tags: boss
+- Name: catacombs_prelake
+  Text: before Smouldering Lake
+  Tags: small
+  To:
+  - Area: catacombs
+    Text: destroying the bridge from below
+- Name: catacombs_lake
+  Text: Smouldering Lake
+- Name: catacombs_olddemonking
+  Text: Old Demon King
+  Tags: boss
+  DefeatFlag: 13800830
+
+- Name: irithyll_start
+  Tags: trivial
+  Text: before the bridge into Irithyll
+  To:
+  - Area: catacombs_wolnirroom
+    Text: going back to Wolnir
+    Cond: catacombs_wolnir
+- Name: irithyll_bridge
+  Text: the bridge into Irithyll
+  Tags: small
+- Name: irithyll
+  Text: Central Irithyll
+- Name: irithyll_abovedorhys
+  Text: above Dorhys in Irithyll
+  Tags: trivial
+  To:
+  - Area: irithyll_dorhys
+    Text: dropping down
+    Tags: drop
+- Name: irithyll_dorhys
+  Text: Dorhys in Irithyll
+  Tags: trivial
+- Name: irithyll_manor
+  Text: Irithyll Distant Manor
+  Tags: small
+- Name: irithyll_pontiff
+  Text: Pontiff Sulyvahn
+  Tags: boss
+  BossTrigger: 13705855
+  DefeatFlag: 13700850
+- Name: irithyll_yorshka
+  Text: Yorshka's Prison Tower in Irithyll
+  Tags: trivial
+  To:
+  - Area: irithyll
+    Text: dropping down the tower
+    Tags: drop
+- Name: irithyll_postpontiff
+  Text: immediately after Pontiff Sulyvahn
+  Tags: trivial
+- Name: irithyll_anorlondo
+  Text: Anor Londo
+- Name: irithyll_abovepontiff
+  Text: above Pontiff
+  Tags: trivial
+  # TODO: Can be fight be triggered with this?
+  To:
+  - Area: irithyll_pontiff
+    Text: taking the elevator shortcut down
+- Name: irithyll_aldrich
+  Text: Aldrich, Devourer of Gods
+  Tags: boss
+  BossTrigger: 13705805
+  DefeatFlag: 13700800
+- Name: irithyll_abovealdrich
+  Text: above Aldrich
+  Tags: trivial
+- Name: irithyll_aldrichleft
+  Text: left elevator after Aldrich
+  Tags: trivial
+- Name: irithyll_aldrichright
+  Text: right elevator after Aldrich
+  Tags: trivial
+
+- Name: dungeon
+  Text: Irithyll Dungeon
+  To:
+  - Area: dungeon_profaned
+    Text: crossing the bridge
+  - Area: dungeon_jailbreak
+    Text: using Jailbreaker's Key
+    Cond: jailbreakerskey
+  - Area: dungeon_jailerscell
+    Text: using Jailer's Key Ring
+    Cond: jailerskeyring
+- Name: dungeon_jailbreak
+  Text: Irithyll Dungeon with Jailbreaker's Key
+  Tags: trivial
+- Name: dungeon_jailerscell
+  Text: Irithyll Dungeon Jailer's Cells
+  Tags: trivial
+- Name: dungeon_profaned
+  Text: Profaned Capital
+  To:
+  - Area: dungeon
+    Text: crossing the bridge
+  - Area: dungeon_oldcell
+    Text: using Old Cell Key
+    Cond: oldcellkey
+- Name: dungeon_oldcell
+  Text: Irithyll Dungeon Old Cell
+  Tags: trivial
+- Name: dungeon_yhorm
+  Text: Yhorm the Giant
+  Tags: boss
+  DefeatFlag: 13900800
+
+- Name: highwall_dancer
+  Text: Dancer of the Boreal Valley
+  ScalingBase: irithyll_aldrich
+  Tags: boss
+  DefeatFlag: 13000890
+  TrapFlag: 13000896
+  To:
+  - Area: highwall_postdancer
+    Text: using Basin of Vows
+- Name: highwall_postdancer
+  Text: above Emma
+  Tags: trivial
+  To:
+  - Area: highwall_emma
+    Text: dropping down
+    Tags: drop
+- Name: highwall_abovedancer
+  Text: above Emma from Lothric Castle bonfire
+  Tags: trivial
+  To:
+  - Area: highwall_postdancer
+    Text: dropping down
+    Tags: drop
+- Name: lothric
+  Text: Lothric Castle
+- Name: lothric_dragonslayerarmour
+  Text: Dragonslayer Armour
+  Tags: boss
+  BossTrigger: 13015805
+  DefeatFlag: 13010800
+- Name: lothric_postarmour
+  Text: after Dragonslayer Armour
+  Tags: trivial
+- Name: archives_start
+  Text: Grand Archives Bonfire
+  Tags: trivial
+  To:
+  - Area: lothric_gotthard
+    Text: searching Gotthard's corpse
+    Cond: AND dungeon_yhorm irithyll_aldrich
+    # Tags: itemspawn
+  # TODO: can key be used backwards? Doesn't matter without shortcut reversal, but that probably won't happen, since it changes logic
+  - Area: archives
+    Text: using Grand Archives Key
+    Cond: grandarchiveskey
+- Name: lothric_gotthard
+  Text: Grand Archives Bonfire after Yhorm and Aldrich
+  Tags: trivial
+- Name: archives
+  Text: Grand Archives
+  To:
+  - Area: archives_start
+    Text: using the shortcut elevator
+    Tags: shortcut
+  - Area: archives_preprinces
+    Text: opening the doors
+    Tags: shortcut
+- Name: archives_shortcutbottom
+  Text: Twin Princes shortcut elevator bottom
+  Tags: trivial
+- Name: archives_shortcuttop
+  Text: Twin Princes shortcut elevator top
+  Tags: trivial
+  To:
+  - Area: archives_shortcutbottom
+    Text: using the elevator
+    Tags: shortcut
+- Name: archives_preprinces
+  Text: before Twin Princes
+  Tags: trivial
+- Name: archives_twinprinces
+  Text: Twin Princes
+  Tags: boss
+  DefeatFlag: 13410830
+  TrapFlag: 13410831
+
+- Name: highwall_garden
+  Text: Consumed King's Gardens
+- Name: highwall_oceiros
+  Text: Oceiros the Consumed King
+  Tags: boss
+  DefeatFlag: 13000830
+  To:
+  - Area: highwall_postoceiros
+    Text: defeating Oceiros
+- Name: highwall_postoceiros
+  Text: after Oceiros
+  Tags: trivial
+  To:
+  - Area: untended
+    Text: dropping down past the illusory wall
+    Tags: drop
+- Name: untended
+  Text: Untended Graves
+  Tags: small
+- Name: untended_championgundyr
+  Text: Champion Gundyr
+  Tags: boss
+  DefeatFlag: 14000830
+  To:
+  - Area: untended_postgundyr
+    Text: opening the door
+    Tags: shortcut
+- Name: untended_postgundyr
+  Text: after Champion Gundyr
+  Tags: small
+  To:
+  - Area: untended_farron
+    Text: item added in map
+    Cond: farronkeep_abysswatchers
+    Tags: itemspawn
+- Name: untended_farron
+  Text: after Champion Gundyr, also defeating Abyss Watchers
+  Tags: trivial
+
+- Name: archdragon_start
+  Text: Archdragon Peak Start
+  Tags: small
+  To:
+  - Area: archdragon_prewyvern
+    Text: opening the gate
+    Tags: shortcut
+# TODO: The levers for these elevators are outside... may need to change their position
+- Name: archdragon_shortcuttop
+  Text: Archdragon Peak Elevator Top
+  Tags: trivial optional
+  To:
+  - Area: archdragon_shortcutbottom
+    Text: using the elevator
+    Tags: shortcut
+- Name: archdragon_shortcutbottom
+  Text: Archdragon Peak Elevator Bottom
+  Tags: trivial optional
+- Name: archdragon_prewyvern
+  Text: gate before Ancient Wyvern
+  Tags: trivial
+- Name: archdragon_ancientwyvern
+  Text: Ancient Wyvern Arena
+  Tags: boss
+  BossTrigger: 13205805
+  DefeatFlag: 13200800
+  # There is also a trap flag here, but we want to trigger the fight instead of allowing passing through, I guess
+- Name: archdragon_wyverndoor
+  Text: door to Ancient Wyvern Arena
+  Tags: trivial
+# TODO: Make sure this dropdown works too
+- Name: archdragon_abovewyvern
+  Text: above Ancient Wyvern Arena
+  Tags: trivial
+  To:
+  - Area: archdragon_ancientwyvern
+    Text: dropping down
+    Tags: drop
+- Name: archdragon
+  Text: Central Archdragon Peak
+  To:
+  - Area: archdragon_beforenameless
+    Text: dropping down past the bell
+    Tags: drop
+  - Area: archdragon_pathofthedragon
+    Text: using Path of the Dragon
+    Tags: itemspawn
+- Name: archdragon_pathofthedragon
+  Text: Central Archdragon Peak using Path of the Dragon
+  Tags: trivial
+- Name: archdragon_beforenameless
+  Text: before Nameless King
+  Tags: trivial
+- Name: archdragon_namelessking
+  Text: Nameless King
+  Tags: boss
+  DefeatFlag: 13200850
+  TrapFlag: 13200445
+- Name: archdragon_belownameless
+  Text: below Nameless King
+  Tags: trivial
+
+- Name: ariandel
+  Text: pre-Contraption Ariandel
+  ScalingBase: lothric
+  Tags: dlc1
+  To:
+  - Area: ariandel_vilhelm
+    Text: using Contraption Key
+    Cond: contraptionkey
+- Name: ariandel_gravetender
+  Text: Champion's Gravetender
+  Tags: dlc1 boss
+  DefeatFlag: 14500860
+- Name: ariandel_vilhelm
+  Text: post-Contraption Ariandel
+  Tags: dlc1
+  To:
+  - Area: ariandel
+    Text: unlocking the shortcut
+    Tags: shortcut
+- Name: ariandel_dunnel
+  Text: Ariandel dropping down to Dunnel
+  Tags: dlc1 trivial
+- Name: ariandel_friede
+  Text: Sister Friede
+  Tags: dlc1 boss
+  DefeatFlag: 14500800
+  TrapFlag: 14500801
+
+- Name: dregheap_start
+  Text: Dreg Heap Start
+  ScalingBase: kiln
+  Tags: dlc2
+  To:
+  - Area: dregheap
+    Text: taking the plunge
+    Tags: drop
+- Name: dregheap
+  Text: Dreg Heap Earthen Peak
+  Tags: dlc2
+- Name: dregheap_predemon
+  Text: before Demon Prince
+  Tags: dlc2 trivial
+  To:
+  - Area: dregheap_demonprince
+    Text: taking the plunge
+    Tags: drop
+- Name: dregheap_demonprince
+  Text: Demon Prince
+  Tags: dlc2 boss
+  DefeatFlag: 15000800
+- Name: dregheap_postdemon
+  Text: after Demon Prince
+  Tags: dlc2 trivial
+- Name: ringedcity
+  Text: Ringed City
+  To:
+  - Area: ringedcity_prehalflight
+    Text: opening the door
+- Name: ringedcity_prehalflight
+  Text: before Halflight
+  Tags: dlc2 trivial
+- Name: ringedcity_halflight
+  Text: Halflight, Spear of the Church
+  Tags: dlc2 boss
+  BossTrigger: 15105805
+  DefeatFlag: 15100800
+- Name: ringedcity_posthalflight
+  Text: after Halflight
+  Tags: dlc2 trivial
+# TODO: Has no event in item randomizer
+- Name: ringedcity_premidir
+  Text: before Darkeater Midir
+  Tags: dlc2 trivial
+  To:
+  - Area: ringedcity_midir
+    Text: dropping down
+    Tags: drop
+- Name: ringedcity_midir
+  Text: Darkeater Midir
+  Tags: boss dlc2
+  DefeatFlag: 15100850
+- Name: filianore
+  Text: Filianore's Rest Bonfire
+  Tags: dlc2 trivial
+- Name: filianore_gael
+  Text: Slave Knight Gael
+  Tags: dlc2 boss
+  BossTrigger: 15115805
+  DefeatFlag: 15110800
+  TrapFlag: 15110801
+- Name: filianore_shira
+  Text: Shira at Filianore's Rest
+  Tags: dlc2 small
+
+- Name: kiln_start
+  Text: Flameless Shrine
+  Tags: trivial
+- Name: kiln
+  Text: Kiln of the First Flame
+  Tags: trivial
+- Name: kiln_soulofcinder
+  Text: Soul of Cinder
+  Tags: boss end
+  DefeatFlag: 14100800
+  TrapFlag: 14100801
+
+KeyItems:
+- Name: liftchamberkey
+  ID: 3:2001
+  Area: firelink
+  Tags: randomonly
+- Name: smalldoll
+  ID: 3:2005
+  Area: cathedral_deacons
+- Name: jailbreakerskey
+  ID: 3:2007
+  Area: dungeon
+- Name: jailerskeyring
+  ID: 3:2008
+  Area: dungeon_profaned
+- Name: cellkey
+  ID: 3:2010
+  Area: highwall
+- Name: oldcellkey
+  ID: 3:2012
+  Area: dungeon
+- Name: towerkey
+  ID: 3:2013
+  Area: firelink
+- Name: grandarchiveskey
+  ID: 3:2014
+  Area: lothric_gotthard
+- Name: smalllothricbanner
+  ID: 3:2102
+  Area: highwall_emma
+- Name: basinofvows
+  ID: 3:2117
+  Area: highwall_emma
+- Name: cinder1
+  ID: 3:2123
+  Area: farronkeep_abysswatchers
+- Name: cinder2
+  ID: 3:2124
+  Area: irithyll_aldrich
+- Name: cinder3
+  ID: 3:2125
+  Area: dungeon_yhorm
+- Name: cinder4
+  ID: 3:2126
+  Area: archives_twinprinces
+- Name: coiledsword
+  ID: 3:2137
+  Area: firelink_iudexgundyr
+- Name: contraptionkey
+  ID: 3:2155
+  Area: ariandel
+  Tags: dlc1
+- Name: smallenvoybanner
+  ID: 3:2156
+  Area: dregheap_postdemon
+  Tags: dlc2
+- Name: pathofthedragon
+  ID: 3:9030
+  Area: highwall_postoceiros
+  Tags: randomonly  # TODO... do something about this
+# Ashes
+- Name: morticiansashes
+  ID: 3:2107
+  Area: settlement
+- Name: paladinsashes
+  ID: 3:2109
+  Area: cathedral_start
+- Name: gravewardensashes
+  ID: 3:2110
+  Area: catacombs
+- Name: prisonerchiefsashes
+  ID: 3:2147
+  Area: dungeon_jailerscell
+- Name: xanthousashes
+  ID: 3:2148
+  Area: dungeon
+- Name: dragonchasersashes
+  ID: 3:2151
+  Area: archdragon
+- Name: easternersashes
+  ID: 3:2152
+  Area: irithyll_anorlondo
+- Name: captainsashes
+  ID: 3:2154
+  Area: ariandel
+
+# TODO: Add Aldrich and Yhorm warp to Emma's Cathedral (to 3002100)
+Warps:
+# TODO: How does this work
+- ID: 3000980
+  Area: firelink
+  Text: warp location added after Coiled Sword
+  Tags: highwall
+  ASide:
+    Area: firelink
+    Cond: coiledsword
+  BSide:
+    Area: highwall
+    DestinationMap: highwall
+- ID: 3100974
+  # Cutscene point: 3102515
+  Area: highwall
+  Text: transport after Vordt
+  Tags: unique
+  ASide:
+    Area: highwall_vordt
+    Cond: smalllothricbanner
+    Cutscene: 31000010
+  BSide:
+    Area: settlement
+    DestinationMap: settlement
+    Tags: player
+- ID: 3102270
+  Area: settlement
+  Text: examining the Hollow Manservant
+  Tags: unique
+  ASide:
+    Area: settlement
+    Cutscene: 31000000
+  BSide:
+    Area: settlement_pit
+    DestinationMap: settlement
+- ID: 3202809
+  Area: archdragon
+  Text: warp after defeating Ancient Wyvern
+  Tags: unique
+  ASide:
+    Area: archdragon_ancientwyvern
+    Cutscene: 32000030
+  BSide:
+    Area: archdragon
+    DestinationMap: archdragon
+- ID: 4502100
+  Area: cathedral
+  Text: warp to Ariandel
+  Tags: dlc1 unique
+  ASide:
+    Area: cathedral
+    Cutscene: 35000050  # 35000051 if Gael dead probably
+  BSide:
+    Area: ariandel
+    DestinationMap: ariandel
+- ID: 3802802  # Alternatively with multiplayer state: 3802803
+  Area: catacombs
+  Text: warp to Wolnir
+  ASide:
+    Area: catacombs_wolnirroom
+    Cutscene: 38000020
+  BSide:
+    Area: catacombs_wolnir
+    DestinationMap: catacombs
+- ID: 3802804
+  Area: catacombs
+  Text: warp after Wolnir
+  ASide:
+    Area: catacombs_wolnir
+    Cutscene: 38000020
+  BSide:
+    Area: catacombs_wolnirroom
+    DestinationMap: catacombs
+- ID: 3202900
+  Area: dungeon
+  Text: warp to Archdragon Peak
+  Tags: unique
+  ASide:
+    Area: dungeon
+    Cond: pathofthedragon
+    Cutscene: 39000010
+  BSide:
+    Area: archdragon_start
+    DestinationMap: archdragon
+- ID: 4102100
+  Area: firelink
+  Text: warp from Firelink Shrine after placing all Cinders of a Lord
+  Tags: kiln unique
+  ASide:
+    Area: firelink
+    Cond: AND cinder1 cinder2 cinder3 cinder4
+    Cutscene: 40000020  # or 40000021 if bad
+  BSide:
+    Area: kiln_start
+    DestinationMap: kiln
+- ID: 4100120
+  Area: kiln
+  Text: from Flameless Shrine to Kiln
+  Tags: unique kiln
+  ASide:
+    Area: kiln_start
+  BSide:
+    Area: kiln
+    DestinationMap: kiln
+    Tags: player
+- ID: 5002110
+  Area: kiln
+  Text: from Kiln to Dreg Heap
+  Tags: unique
+  ASide:
+    Area: kiln
+  BSide:
+    Area: dregheap_start
+    DestinationMap: dregheap
+    Tags: player
+# Note: This is duplicate. ... make sure this works.
+- ID: 5002110
+  Area: ariandel
+  Text: warp after Friede fight
+  Tags: dlc1 dlc2 unique
+  ASide:
+    Area: ariandel_friede
+  BSide:
+    Area: dregheap_start
+    DestinationMap: dregheap
+    Tags: player
+- ID: 5102110
+  Area: dregheap
+  Text: transport after Demon Prince
+  Tags: unique
+  ASide:
+    Area: dregheap_postdemon
+    Cond: AND smallenvoybanner dregheap_demonprince
+    Cutscene: 51000000
+  BSide:
+    Area: ringedcity
+    DestinationMap: ringedcity
+- ID: 5112110
+  Area: ringedcity
+  Text: waking up Filianore
+  Tags: unique
+  ASide:
+    Area: ringedcity_posthalflight
+    Cutscene: 51010000
+  BSide:
+    Area: filianore
+    DestinationMap: filianore
+
+Entrances:
+- Name: o000400_0000
+  ID: 3001780
+  Area: highwall
+  Text: between above Emma's room and Consumed King's Gardens
+  ASide:
+    Area: highwall_postdancer
+  BSide:
+    Area: highwall_garden
+  Tags: pvp
+- Name: o000401_2000
+  ID: 3001800
+  Area: highwall
+  Text: between Vordt and High Wall
+  ASide:
+    Area: highwall_vordt
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: highwall
+  Tags: boss
+- Name: o000401_4000
+  ID: 3001890
+  Area: highwall
+  Text: between Emma's Room and High Wall
+  ASide:
+    Area: highwall_emma
+    BossDefeatName: highwall_dancer
+    BossTrapName: highwall_dancer
+  BSide:
+    Area: highwall
+  Tags: boss
+- Name: o000401_5000
+  ID: 3001830
+  Area: highwall
+  Text: between Oceiros and Consumed King's Gardens
+  ASide:
+    Area: highwall_oceiros
+    BossDefeatName: area
+  BSide:
+    Area: highwall_garden
+  Tags: boss
+- Name: o000401_0000
+  ID: 3011751
+  Area: lothric
+  Text: between bottom of Twin Princes shortcut elevator and Lothric Castle
+  ASide:
+    Area: archives_shortcutbottom
+  BSide:
+    Area: lothric
+  Tags: pvp
+  AdjustHeight: 3
+# TODO: This has a dropdown
+- Name: o000401_0002
+  ID: 3011750
+  Area: lothric
+  Text: between a ledge above Emma's room and Lothric Castle bonfire
+  ASide:
+    Area: highwall_abovedancer
+    DestinationMap: highwall
+  BSide:
+    Area: lothric
+    # h900400 seems to be responsible for some nonsense here
+  Tags: pvp
+  AdjustHeight: 0.9
+- Name: o000401_0003
+  ID: 3011753
+  Area: lothric
+  Text: between Lothric Castle entrance and above Emma's room
+  ASide:
+    Area: lothric
+  BSide:
+    Area: highwall_postdancer
+  Tags: pvp
+  AdjustHeight: 1.8
+- Name: o000401_4000
+  ID: 3011800
+  Area: lothric
+  Text: between Dragonslayer Armour and Lothric Castle
+  ASide:
+    Area: lothric_dragonslayerarmour
+    BossDefeatName: area
+  BSide:
+    Area: lothric
+  Tags: boss
+- Name: o000401_4001
+  ID: 3011801
+  Area: lothric
+  Text: between right after Dragonslayer Armour and Dragonslayer Armour
+  ASide:
+    Area: lothric_postarmour
+  BSide:
+    Area: lothric_dragonslayerarmour
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss
+- Name: o000401_0000
+  ID: 3101780
+  Area: settlement
+  Text: between Undead Settlement and the Giant's Tower
+  ASide:
+    Area: settlement
+  BSide:
+    Area: settlement_tower
+  Tags: pvp
+  AdjustHeight: 1.25
+- Name: o000402_1000
+  ID: 3101800
+  Area: settlement
+  Text: between Cursed-rotted Greatwood and Undead Settlement
+  ASide:
+    Area: settlement_greatwood
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: settlement
+  Tags: boss
+- Name: o000400_0000
+  ID: 3201780
+  Area: archdragon
+  Text: the door between the Ancient Wyvern chain axe serpent and Dragonkin Mausoleum
+  ASide:
+    Area: archdragon_wyverndoor
+  BSide:
+    Area: archdragon
+  Tags: door
+  DoorCond: archdragon_ancientwyvern
+- Name: o000400_0001
+  ID: 3201781
+  Area: archdragon
+  Text: between top of Archdragon shortcut elevator and Dragonkin Mausoleum
+  ASide:
+    Area: archdragon_shortcuttop
+    ExcludeIfRandomized: archdragon_3201784
+  BSide:
+    Area: archdragon
+  Tags: pvp
+- Name: o000400_0002
+  ID: 3201782
+  Area: archdragon
+  Text: between area overlooking Ancient Wyvern Arena and stairs around Dragonkin Mausoleum
+  ASide:
+    Area: archdragon_abovewyvern
+    BossTriggerName: archdragon_ancientwyvern
+  BSide:
+    Area: archdragon
+  Tags: boss unique   # Technically pvp, but need to enable boss
+  AdjustHeight: 0.4
+- Name: o000400_0003
+  ID: 3201783
+  Area: archdragon
+  Text: between area overlooking Ancient Wyvern Arena and Dragonkin Mausoleum
+  ASide:
+    Area: archdragon_abovewyvern
+    BossTriggerName: archdragon_ancientwyvern
+  BSide:
+    Area: archdragon
+  Tags: boss unique  # Technically pvp, but need to enable boss
+- Name: o000400_0004
+  ID: 3201784
+  Area: archdragon
+  Text: between shortcut elevator and the start of Archdragon Peak
+  ASide:
+    Area: archdragon_shortcutbottom
+    ExcludeIfRandomized: archdragon_3201781
+  BSide:
+    Area: archdragon_start
+  Tags: pvp
+# TODO: Can this be entered? Can use the same warps as the other gate?
+- Name: o000400_0005
+  ID: 3201785
+  Area: archdragon
+  Text: between below Nameless King and below the bell
+  ASide:
+    Area: archdragon_belownameless
+    Cond: AND archdragon archdragon_namelessking
+    BossDefeatName: archdragon_namelessking
+    # The ideal behavior would be allowing you come out the way you came in. But do this later... it requires switching flags back and forth and perhaps a custom trap flag.
+  BSide:
+    Area: archdragon
+  Tags: pvp unique
+- Name: o000400_5000
+  ID: 3201801
+  Area: archdragon
+  Text: between Dragonkin Mausoleum and the Ancient Wyvern chain axe serpent
+  ASide:
+    Area: archdragon_wyverndoor
+  BSide:
+    Area: archdragon_ancientwyvern
+    BossDefeatName: area
+    # BossTrapName: area
+    BossTriggerName: area
+  Tags: boss
+- Name: o000401_0001
+  ID: 3201786
+  Area: archdragon
+  Text: between below Nameless King and Dragonkin Mausoleum
+  Tags: unique
+  ASide:
+    Area: archdragon_belownameless
+    Cond: AND archdragon archdragon_namelessking
+    BossDefeatName: archdragon_namelessking
+  BSide:
+    Area: archdragon
+  Tags: pvp unique
+- Name: o000402_1000
+  ID: 3201800
+  Area: archdragon
+  Text: between Ancient Wyvern and the gate from Archdragon Peak Start
+  ASide:
+    Area: archdragon_ancientwyvern
+    BossDefeatName: area
+    # BossTrapName: area
+  BSide:
+    Area: archdragon_prewyvern
+  Tags: boss
+- Name: o320400_2000
+  ID: 3201850
+  Area: archdragon
+  Text: between Nameless King arena and the bell area
+  ASide:
+    Area: archdragon_namelessking
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: archdragon_beforenameless
+  Tags: boss
+  AdjustHeight: 3.8
+- Name: o000401_5000
+  ID: 3301800
+  Area: farronkeep
+  Text: between Abyss Watchers and Farron Keep
+  ASide:
+    Area: farronkeep_abysswatchers
+    BossDefeatName: area
+  BSide:
+    Area: farronkeep_prewatchers
+  Tags: boss
+- Name: o000401_6000
+  ID: 3301851
+  Area: farronkeep
+  Text: between the path to Cathedral and Crystal Sage
+  ASide:
+    Area: cathedral_start
+  BSide:
+    Area: farronkeep_crystalsage
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss
+- Name: o000401_6001
+  ID: 3301850
+  Area: farronkeep
+  Text: between Crystal Sage and Road of Sacrifices
+  ASide:
+    Area: farronkeep_crystalsage
+    BossDefeatName: area
+  BSide:
+    Area: farronkeep_road
+  Tags: boss
+- Name: o000402_0000
+  ID: 3301570
+  Area: farronkeep
+  Text: between the start of Road of Sacrifices and Halfway Fortress
+  ASide:
+    Area: farronkeep_start
+  BSide:
+    Area: farronkeep_road
+  Tags: pvp
+# This is unused, and unfortunately clips into world on catacombs side
+- Name: o000402_5001
+  ID: 3301801
+  Area: farronkeep
+  Text: between stairs leading to Catacombs and Abyss Watchers arena
+  ASide:
+    Area: farronkeep_postwatchers
+  BSide:
+    Area: farronkeep_abysswatchers
+  Tags: unused
+  AdjustHeight: 2.1
+- Name: o000400_0000
+  ID: 3411750
+  Area: archives
+  Text: at the top of the shortcut elevator right outside Twin Princes
+  ASide:
+    Area: archives_shortcuttop
+  BSide:
+    Area: archives
+  Tags: pvp
+- Name: o000401_0000
+  ID: 3411751
+  Area: archives
+  Text: between right after Dragonslayer Armour and the start of Grand Archives
+  ASide:
+    Area: lothric_postarmour
+  BSide:
+    Area: archives_start
+  Tags: pvp
+# TODO: Can access Grand Archives from here with key, with the door direction?
+- Name: o000401_0001
+  ID: 3411830
+  Area: archives
+  Text: between Twin Princes and Grand Archives
+  ASide:
+    Area: archives_twinprinces
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: archives_preprinces
+  Tags: boss
+- Name: o000400_9000
+  ID: 3501800
+  Area: cathedral
+  Text: between Deacons of the Deep and Cathedral
+  ASide:
+    Area: cathedral_deacons
+    BossDefeatName: area
+  BSide:
+    Area: cathedral
+  Tags: boss
+- Name: o000401_0000
+  ID: 3501780
+  Area: cathedral
+  Text: between the start of Cathedral and the chapel, on the right doorway
+  ASide:
+    Area: cathedral_start
+  BSide:
+    Area: cathedral
+  Tags: pvp unique
+- Name: o000401_0001
+  ID: 3501781
+  Area: cathedral
+  Text: between the start of Cathedral and the chapel, on the left doorway
+  ASide:
+    Area: cathedral_start
+  BSide:
+    Area: cathedral
+  Tags: pvp unique
+- Name: o000401_1000
+  ID: 3501850
+  Area: cathedral
+  Text: between Rosaria's room and the rest of the Cathedral
+  ASide:
+    Area: cathedral_rosaria
+  BSide:
+    Area: cathedral
+  Tags: pvp
+# TODO: Possible to drop down from aldrich? Or cheese him with a bow?
+- Name: o000400_3000
+  ID: 3701157
+  Area: irithyll
+  Text: between above Aldrich and the left elevator
+  ASide:
+    Area: irithyll_abovealdrich
+  BSide:
+    Area: irithyll_aldrichleft
+    Cond: irithyll_aldrich
+  # Can't teleport onto elevator side
+  Tags: norandom
+- Name: o000401_0000
+  ID: 3701780
+  Area: irithyll
+  Text: on the close end of the starting bridge
+  ASide:
+    Area: irithyll_bridge
+  BSide:
+    Area: irithyll_start
+  Tags: pvp
+- Name: o000401_0001
+  ID: 3701782
+  Area: irithyll
+  Text: on the far end of the starting bridge. Unused
+  ASide:
+    Area: irithyll
+  BSide:
+    Area: irithyll_bridge
+  Tags: unused
+- Name: o000401_0002
+  ID: 3701785
+  Area: irithyll
+  Text: between Yorshka and the Anor Londo spinning staircase
+  ASide:
+    Area: irithyll_yorshka
+  BSide:
+    Area: irithyll_anorlondo
+    AdjustHeight: 3.2
+    # -173.360
+    # CustomWarp: irithyll 489.958 -170.159 -1029.191 88.200
+  Tags: pvp
+- Name: o000401_0003
+  ID: 3701783
+  Area: irithyll
+  Text: between the hallway immediately after Pontiff and Anor Londo
+  ASide:
+    Area: irithyll_postpontiff
+  BSide:
+    Area: irithyll_anorlondo
+  Tags: pvp
+- Name: o000401_0004
+  ID: 3701781
+  Area: irithyll
+  Text: between Distant Manor and Irithyll
+  ASide:
+    Area: irithyll_manor
+  BSide:
+    Area: irithyll
+  Tags: pvp
+- Name: o000401_0005
+  ID: 3701784
+  Area: irithyll
+  Text: between above Pontiff and Anor Londo
+  ASide:
+    Area: irithyll_abovepontiff
+    BossDefeatName: irithyll_pontiff
+    BossTrapName: 13705860  # Trap only if the fight starts each time
+  BSide:
+    Area: irithyll_anorlondo
+  Tags: boss  # Technically pvp, but need to enable boss
+- Name: o000401_0006
+  ID: 3701786
+  Area: irithyll
+  Text: between the area above Dorhys' Gnawing and the illusory railing
+  ASide:
+    Area: irithyll_abovedorhys
+  BSide:
+    Area: irithyll
+  Tags: pvp
+- Name: o000401_3001
+  ID: 3701851
+  Area: irithyll
+  Text: between the hallway immediately after Pontiff and Pontiff's arena
+  ASide:
+    Area: irithyll_postpontiff
+  BSide:
+    Area: irithyll_pontiff
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss
+- Name: o000401_3003
+  ID: 3701800
+  Area: irithyll
+  Text: between Aldrich and Anor Londo
+  ASide:
+    Area: irithyll_aldrich
+    BossDefeatName: area
+  BSide:
+    Area: irithyll_anorlondo
+  Tags: boss
+- Name: o000401_3004
+  ID: 3701801
+  Area: irithyll
+  Text: between the right elevator after Aldrich and Aldrich
+  ASide:
+    Area: irithyll_aldrichright
+    Cond: irithyll_aldrich
+  BSide:
+    Area: irithyll_aldrich
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss
+- Name: o000401_3005
+  ID: 3701156
+  Area: irithyll
+  Text: between the right elevator after Aldrich and above Aldrich
+  ASide:
+    Area: irithyll_aldrichright
+    Cond: irithyll_aldrich
+  BSide:
+    Area: irithyll_abovealdrich
+  # Can't teleport to elevator
+  Tags: norandom
+- Name: o000402_0000
+  ID: 3701540
+  Area: irithyll
+  Text: on the far side of the starting bridge, locked by Small Doll
+  ASide:
+    Area: irithyll
+    Cond: smalldoll
+  BSide:
+    Area: irithyll_bridge
+    Cond: smalldoll
+  Tags: norandom
+- Name: o000402_1000
+  ID: 3701787
+  Area: irithyll
+  Text: between the area with Dorhys' Gnawing and Central Irithyll
+  ASide:
+    Area: irithyll_dorhys
+  BSide:
+    Area: irithyll
+    Tags: dnofts
+  Tags: pvp door
+- Name: o000402_3001
+  ID: 3701850
+  Area: irithyll
+  Text: between Pontiff and Central Irithyll
+  ASide:
+    Area: irithyll_pontiff
+    BossDefeatName: area
+  BSide:
+    Area: irithyll
+  Tags: boss
+- Name: o370600_3000
+  ID: 3701802
+  Area: irithyll
+  Text: between the left elevator after Aldrich and Aldrich
+  ASide:
+    Area: irithyll_aldrichleft
+    Cond: irithyll_aldrich
+  BSide:
+    Area: irithyll_aldrich
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss
+- Name: o000400_5000
+  ID: 3801830
+  Area: catacombs
+  Text: between Old Demon King and Smouldering Lake
+  ASide:
+    Area: catacombs_olddemonking
+    BossDefeatName: area
+  BSide:
+    Area: catacombs_lake
+  Tags: boss
+- Name: o000400_7000
+  ID: 3801800
+  Area: catacombs
+  Text: between Wolnir's Room and Catacombs
+  ASide:
+    Area: catacombs_wolnirroom
+  BSide:
+    Area: catacombs
+  Tags: boss
+- Name: o000401_0000
+  ID: 3801974
+  Area: catacombs
+  Text: between the stairs after Abyss Watchers and Catacombs
+  ASide:
+    Area: farronkeep_postwatchers
+  BSide:
+    Area: catacombs
+  Tags: pvp
+- Name: o000401_0001
+  ID: 3801975
+  Area: catacombs
+  Text: between Smouldering Lake and Catacombs
+  ASide:
+    Area: catacombs_lake
+  BSide:
+    Area: catacombs_prelake
+  Tags: pvp
+- Name: o000401_0000
+  ID: 3901800
+  Area: dungeon
+  Text: between Yhorm and Profaned Capital
+  ASide:
+    Area: dungeon_yhorm
+    BossDefeatName: area
+  BSide:
+    Area: dungeon_profaned
+  Tags: boss
+- Name: o000401_0001
+  ID: 3901780
+  Area: dungeon
+  Text: between Distant Manor and Irithyll Dungeon
+  ASide:
+    Area: irithyll_manor
+    DestinationMap: irithyll
+  BSide:
+    Area: dungeon
+  Tags: pvp
+# TODO: Not quite a misc gate
+- Name: o000401_0000
+  ID: 4001101
+  Area: firelink
+  Text: between Firelink Shrine and front
+  ASide:
+    Area: firelink
+  BSide:
+    Area: firelink_front
+  Tags: pvp
+- Name: o000401_1000
+  ID: 4001800
+  Area: firelink
+  Text: between Iudex Gundyr and Cemetery of Ash
+  ASide:
+    Area: firelink_iudexgundyr
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: firelink_cemetery
+  Tags: boss
+- Name: o000401_1000
+  ID: 4001800
+  Area: untended
+  Text: between Champion Gundyr and Untended Graves start
+  ASide:
+    Area: untended_championgundyr
+    BossDefeatName: area
+  BSide:
+    Area: untended
+  Tags: boss
+# TODO: Unused in base game. Also, add cond for defeating Gundyr? Does that matter really?
+# TODO: Not in event config. Disabled in constructor.
+- Name: o000401_1001
+  ID: 4001801
+  Area: firelink
+  Text: between Firelink Shrine front and Iudex Gundyr
+  ASide:
+    Area: firelink_front
+  BSide:
+    Area: firelink_iudexgundyr
+  Tags: unused
+  AdjustHeight: 1.8
+- Name: o000401_1001
+  ID: 4001801
+  Area: untended
+  Text: between after Champion Gundyr and Champion Gundyr
+  ASide:
+    Area: untended_postgundyr
+  BSide:
+    Area: untended_championgundyr
+  Tags: unused
+  AdjustHeight: 1.8
+- Name: o000402_0000
+  ID: 4001102
+  Area: firelink
+  Text: between the entrance to Bell Tower and Firelink Shrine
+  ASide:
+    Area: firelink_bellfront
+  BSide:
+    Area: firelink
+  Tags: pvp
+- Name: o000402_3000
+  ID: 4101800
+  Area: kiln
+  Text: between Soul of Cinder and Kiln Entrance
+  ASide:
+    Area: kiln_soulofcinder
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: kiln
+  Tags: boss kiln
+- Name: o000400_9500
+  ID: 4501690
+  Area: ariandel
+  Text: between the Ariandel Chapel basement and the dropdown to Dunnel
+  ASide:
+    Area: ariandel_vilhelm
+  BSide:
+    Area: ariandel_dunnel
+  Tags: pvp
+- Name: o000401_8000
+  ID: 4501800
+  Area: ariandel
+  Text: between Sister Friede and Ariandel Chapel  # can be traversed
+  ASide:
+    Area: ariandel_friede
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: ariandel
+    Cond: ariandel_vilhelm
+  Tags: boss
+- Name: o459051_9500
+  ID: 4501801
+  Area: ariandel
+  Text: between Sister Friede and Ariandel Chapel  # cannot be interacted with
+  ASide:
+    Area: ariandel_friede
+    ExcludeIfRandomized: ariandel_4501800
+  BSide:
+    Area: ariandel
+    Cond: ariandel_vilhelm
+    ExcludeIfRandomized: ariandel_4501800
+  Tags: boss
+- Name: o000402_9500
+  ID: 4501860
+  Area: ariandel
+  Text: between Gravetender and Depths of Ariandel
+  ASide:
+    Area: ariandel_gravetender
+    AdjustHeight: -4.355
+    BossDefeatName: area
+  BSide:
+    Area: ariandel
+  Tags: boss
+- Name: o000400_9000
+  ID: 5001801
+  Area: dregheap
+  Text: between transport to Ringed City and Demon Prince arena
+  ASide:
+    Area: dregheap_postdemon
+  BSide:
+    Area: dregheap_demonprince
+    BossDefeatName: area
+  Tags: boss
+- Name: o000402_9000
+  ID: 5001800
+  Area: dregheap
+  Text: between dropdown before Demon Prince and Dreg Heap
+  ASide:
+    Area: dregheap_predemon
+    # Be merciful and don't trap player
+  BSide:
+    Area: dregheap
+  Tags: boss
+- Name: o000400_9500
+  ID: 5101801
+  Area: ringedcity
+  Text: between after Halflight on the left side and Halflight
+  ASide:
+    Area: ringedcity_posthalflight
+  BSide:
+    Area: ringedcity_halflight
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss unique
+- Name: o000400_9501
+  ID: 5101802
+  Area: ringedcity
+  Text: between after Halflight on the right side and Halflight
+  ASide:
+    Area: ringedcity_posthalflight
+  BSide:
+    Area: ringedcity_halflight
+    BossDefeatName: area
+    BossTriggerName: area
+  Tags: boss unique
+# TODO: Can this be operated? Until Midir is defeated on the bridge? Probably remove that restriction.
+- Name: o000401_9502
+  ID: 5101850
+  Area: ringedcity
+  Text: between the dropdown to Midir and Ringed City
+  ASide:
+    Area: ringedcity_premidir
+    CustomWarp: ringedcity -481.970 -272.150 -393.640 180
+  BSide:
+    Area: ringedcity
+  Tags: boss
+- Name: o000402_9500
+  ID: 5101800
+  Area: ringedcity
+  Text: between Halflight and Ringed City
+  ASide:
+    Area: ringedcity_halflight
+    BossDefeatName: area
+  BSide:
+    Area: ringedcity_prehalflight
+  Tags: boss
+- Name: o000400_1000
+  ID: 5111800
+  Area: filianore
+  Text: between Gael's arena and Filianore's Rest
+  ASide:
+    Area: filianore_gael
+    BossDefeatName: area
+    BossTrapName: area
+  BSide:
+    Area: filianore
+  Tags: boss
+- Name: o000400_1001
+  ID: 5111850
+  Area: filianore
+  Text: between Shira's invasion area and Gael's arena
+  ASide:
+    Area: filianore_shira
+  BSide:
+    Area: filianore_gael
+    BossDefeatName: area
+    BossTrapName: area
+    BossTriggerName: area
+  Tags: boss
+
+Objects:
+# For elevator, also include levers...
+# Very start door. Vordt shortcut gate. Tower on Wall bonfire shortcut. Beheading statue. Opening the emma door? Door after Vordt, door after Oceiros. Oceiros elevator 1 and 2 and Oceiros shortcut door.
+- Area: highwall
+  ID: o300301_1000
+  Text: door at High Wall start
+- Area: highwall
+  ID: 3001411
+  Text: the door under the High Wall wyvern
+- Area: highwall
+  ID: 3001412
+  Text: the door after the High Wall wyvern
+- Area: highwall
+  ID: 3001200
+  Text: the Vordt shortcut elevator
+- Area: highwall
+  ID: 3001202
+  Text: the bottom lever of the Vordt shortcut elevator
+- Area: highwall
+  ID: 3001201
+  Text: the top lever of the Vordt shortcut elevator
+- Area: highwall
+  ID: 3001414
+  Text: the top door of the Vordt shortcut elevator
+- Area: highwall
+  ID: 3001815
+  Text: the door after Vordt
+- Area: highwall
+  ID: 3001230
+  Text: the Darkwraith elevator
+- Area: highwall
+  ID: 3001231
+  Text: the bottom lever of the Darkwraith elevator
+- Area: highwall
+  ID: 3001232
+  Text: the top lever of the Darkwraith elevator
+- Area: highwall
+  ID: 3001895
+  Text: the door to Emma
+- Area: highwall
+  ID: 3001896
+  Text: the beheading statue
+- Area: highwall
+  ID: 3001087
+  Text: the ladder after Dancer
+- Area: highwall
+  ID: 3001220
+  Text: the first Oceiros elevator
+- Area: highwall
+  ID: 3001221
+  Text: the top lever of the first Oceiros elevator
+- Area: highwall
+  ID: 3001222
+  Text: the bottom lever of the first Oceiros elevator
+- Area: highwall
+  ID: 3001210
+  Text: the second Oceiros elevator
+- Area: highwall
+  ID: 3001212
+  Text: the bottom lever of the second Oceiros elevator
+- Area: highwall
+  ID: 3001211
+  Text: the top lever of the second Oceiros elevator
+- Area: highwall
+  ID: 3001400
+  Text: the Oceiros shortcut door
+- Area: highwall
+  ID: 3001813
+  Text: the door after Oceiros
+- Area: highwall
+  ID: 3001550
+  Text: the Oceiros illusory wall
+
+# Elevator to Dragonslayer. Opening the gate (note: maybe be challenging both ways anyway). Sunlight altar door. Also, twin princes elevator.
+- Area: lothric
+  ID: 3011491
+  Text: the Lothric shortcut gate
+- Area: lothric
+  ID: 3011490
+  Text: the Lothric shortcut gate lever
+- Area: lothric
+  ID: 3011400
+  Text: the Dragonslayer elevator
+- Area: lothric
+  ID: 3011401
+  Text: the Dragonslayer elevator top lever
+- Area: lothric
+  ID: 3011402
+  Text: the Dragonslayer elevator bottom lever
+- Area: lothric
+  ID: 3011410
+  Text: the Lothric twin princes elevator
+- Area: lothric
+  ID: 3011411
+  Text: the Lothric twin princes elevator top lever
+- Area: lothric
+  ID: 3011412
+  Text: the Lothric twin princes elevator middle lever
+- Area: lothric
+  ID: 3011413
+  Text: the Lothric twin princes elevator bottom lever
+- Area: lothric
+  ID: 3011420
+  Text: the Sunlight Altar door
+
+# Greatwood door. Sewer door. Door to road. Door to cliff underside.
+- Area: settlement
+  ID: 3101282
+  Text: the gate at the start of settlement
+- Area: settlement
+  ID: 3101281
+  Text: the first lever of the settlement gate
+- Area: settlement
+  ID: 3101280
+  Text: the second lever of the settlement gate
+- Area: settlement
+  ID: 3101253
+  Text: the door after the big settlement bonfire
+- Area: settlement
+  ID: 3101240
+  Text: the door to the Warrior of Sunlight and Estus Soup room
+- Area: settlement
+  ID: 3101301
+  Text: the big door leading to Greatwood
+- Area: settlement
+  ID: 3101801
+  Text: the floor under Greatwood
+- Area: settlement
+  ID: 3101251
+  Text: the shortcut gate after Irina
+- Area: settlement
+  ID: 3101252
+  Text: the shortcut from sewers to dilapidated bridge
+- Area: settlement
+  ID: 3101254
+  Text: the doors from the big bonfire to cliff underside
+- Area: settlement
+  ID: 3101302
+  Text: the big door to the giant's tower
+- Area: settlement
+  ID: 3101300
+  Text: the settlement tower elevator
+- Area: settlement
+  ID: 3101201
+  Text: the top lever of the settlement elevator
+- Area: settlement
+  ID: 3101202
+  Text: the middle lever of the settlement elevator
+- Area: settlement
+  ID: 3101203
+  Text: the bottom lever of the settlement elevator
+- Area: settlement
+  ID: o314027_0002
+  Text: the door to Road of Sacrifices
+
+# Starting elevator. The gate into archdragon. The lever to ring the big bell.
+- Area: archdragon
+  ID: 3201410
+  Text: the gate to Ancient Wyvern
+- Area: archdragon
+  ID: 3201411
+  Text: the lever for the gate to Ancient Wyvern
+- Area: archdragon
+  ID: o324010_1000
+  Text: the nonfunctional small bell
+- Area: archdragon
+  ID: 3201420
+  Text: the gate between Ancient Wyvern by chain axe serpent and Dragonkin Mausoleum, opens when Wyvern is defeated
+- Area: archdragon
+  ID: 3201400
+  Text: the elevator at the start of Archdragon
+- Area: archdragon
+  ID: 3201401
+  Text: the top lever of the start Archdragon elevator
+- Area: archdragon
+  ID: 3201402
+  Text: the bottom lever of the start Archdragon elevator
+- Area: archdragon
+  ID: 3201440
+  Text: the Nameless King bell
+- Area: archdragon
+  ID: 3201441
+  Text: the lever to summon Nameless King
+- Area: archdragon
+  ID: 3203800  # col
+  Text: The Nameless King floor collision
+- Area: archdragon
+  ID: 3201435
+  Text: the lower gate from Dragonkin Mausoleum to Nameless King
+- Area: archdragon
+  ID: 3201436
+  Text: the lower gate from bell area to Nameless King
+
+# The big keep doors. Shortcut door back to road. The elevator to Stray Demon. The statue at the end.
+- Area: farronkeep
+  ID: 3301412
+  Text: the Estus Shard flame
+- Area: farronkeep
+  ID: 3301414
+  Text: the Elder Ghru flame
+- Area: farronkeep
+  ID: 3301413
+  Text: the Keep ruins flame
+- Area: farronkeep
+  ID: 3301410
+  Text: the door after the flames
+- Area: farronkeep
+  ID: 3301405
+  Text: the elevator to Stray Demon
+- Area: farronkeep
+  ID: 3301406
+  Text: the top lever of the Stray Demon elevator
+- Area: farronkeep
+  ID: 3301407
+  Text: the bottom lever of the Stray Demon elevator
+- Area: farronkeep
+  ID: 3301432
+  Text: the shortcut gate from Farron Keep to Road of Sacrifices
+- Area: farronkeep
+  ID: 3301460
+  Text: the door to Abyss Watchers
+- Area: farronkeep
+  ID: 3301421
+  Text: the statue after Abyss Watchers
+
+# So many. The elevator at the start. The bookshelf lever, leading to the first shortcut elevator. The kickdown ladder. The other kickdown ladder. Three other bookshelf levers (two affect first floor, one near CS). Twin princes door?
+- Area: archives
+  ID: 3411400
+  Text: the Grand Archives door
+- Area: archives
+  ID: 3411474
+  Text: the dark room moving bookshelf
+- Area: archives
+  ID: 3411475
+  Text: the dark room moving bookshelf lever
+- Area: archives
+  ID: 3411435
+  Text: the first shortcut ladder
+- Area: archives
+  ID: 3411477
+  Text: the lever for the slab bookshelf
+- Area: archives
+  ID: 3411476
+  Text: the slab bookshelf
+- Area: archives
+  ID: 3411473
+  Text: the lever for the double bookshelf shortcut
+- Area: archives
+  ID: 3411472
+  Text: the first bookshelf of double bookshelf shortcut
+- Area: archives
+  ID: 3411478
+  Text: the second bookshelf of double bookshelf shortcut
+- Area: archives
+  ID: 3411460
+  Text: the first archives shortcut elevator
+- Area: archives
+  ID: 3411461
+  Text: the top lever of the first archives shortcut elevator
+- Area: archives
+  ID: 3411462
+  Text: the bottom lever of the first archives shortcut elevator
+- Area: archives
+  ID: 3411470
+  Text: the bookshelf shortcut to the start of archives
+- Area: archives
+  ID: o342420_7004
+  Text: the lever for the bookshelf shortcut
+- Area: archives
+  ID: 3411436
+  Text: the second Archives shortcut ladder
+- Area: archives
+  ID: 3411450
+  Text: the Twin Princes Archives shortcut
+- Area: archives
+  ID: 3411451
+  Text: the top lever of the Twin Princes Archives shortcut
+- Area: archives
+  ID: 3411452
+  Text: the bottom lever of the Twin Princes Archives shortcut
+- Area: archives
+  ID: o300330_1000
+  Text: the door to Twin Princes
+
+# The kickdown ladder. The giant doors (although one near giant doesn't go anywhere). The elevator to Patches door. The doors leading into Chapel and to Rosaria. The shortcut elevator leading from first Deacons room to Chapel. The Patches lever (hm... accessible from Rosaria?).
+- Area: cathedral
+  ID: 3501483
+  Text: the first door into the chapel
+- Area: cathedral
+  ID: 3501490
+  Text: the shortcut ladder
+- Area: cathedral
+  ID: 3501480
+  Text: the large door in the back of the cathedral
+- Area: cathedral
+  ID: 3501425
+  Text: the shortcut elevator to Chapel
+- Area: cathedral
+  ID: 3501426
+  Text: the top lever of the shortcut elevator to Chapel
+- Area: cathedral
+  ID: 3501427
+  Text: the bottom lever of the shortcut elevator to Chapel
+- Area: cathedral
+  ID: 3501462
+  Text: the first small gate shortcut to Chapel
+- Area: cathedral
+  ID: 3501488
+  Text: the first big door shortcut to Chapel
+- Area: cathedral
+  ID: 3501485
+  Text: the first back bottom door
+- Area: cathedral
+  ID: 3501486
+  Text: the second back bottom door
+- Area: cathedral
+  ID: 3501400
+  Text: the main cathedral's middle gate
+- Area: cathedral
+  ID: 3501410
+  Text: lever by the main cathedral's middle gate
+- Area: cathedral
+  ID: 3501402
+  Text: the main cathedral's left gate
+- Area: cathedral
+  ID: 3501412
+  Text: the lever by the cathedral's left gate
+- Area: cathedral
+  ID: 3501401
+  Text: the gate top to Rosaria's room
+- Area: cathedral
+  ID: 3501411
+  Text: the lever for the gate top to Rosaria's room
+- Area: cathedral
+  ID: 3501460
+  Text: the second small gate shortcut to Chapel
+- Area: cathedral
+  ID: 3501487
+  Text: the second big door shortcut to Chapel
+- Area: cathedral
+  ID: 3501484
+  Text: the door to the elevator to Rosaria
+- Area: cathedral
+  ID: 3501420
+  Text: the elevator to Rosaria
+- Area: cathedral
+  ID: 3501421
+  Text: the top lever for the elevator to Rosaria
+- Area: cathedral
+  ID: 3501422
+  Text: the bottom lever for the elevator to Rosaria
+- Area: cathedral
+  ID: 3501481
+  Text: the big shortcut door near Patches
+- Area: cathedral
+  ID: 3501430
+  Text: the elevator near Patches
+- Area: cathedral
+  ID: 3501431
+  Text: the top lever for the elevator near Patches
+- Area: cathedral
+  ID: 3501432
+  Text: the bottom lever for the elevator near Patches
+- Area: cathedral
+  ID: 3501482
+  Text: the door to Rosaria
+
+# Dorhys gate. Anor Londo Archers elevator and gate. Anor Londo big elevator. The gate and elevator through dog hell. The pontiff -> yorshka shortcut gate. Door to Anor Londo cathedral.
+- Area: irithyll
+  ID: 3701532
+  Text: the illusory railing to Dorhys
+- Area: irithyll
+  ID: 3701430
+  Text: Dorhys' shortcut gate
+- Area: irithyll
+  ID: 3701410
+  Text: the Irithyll shortcut elevator
+- Area: irithyll
+  ID: 3701411
+  Text: the top lever of the Irithyll shortcut elevator
+- Area: irithyll
+  ID: 3701412
+  Text: the bottom lever of the Irithyll shortcut elevator
+- Area: irithyll
+  ID: 3701440
+  Text: the gate for the Irithyll shortcut elevator
+- Area: irithyll
+  ID: 3701460
+  Text: the Pontiff shortcut gate
+- Area: irithyll
+  ID: 3701420
+  Text: the Pontiff Cathedral elevator
+- Area: irithyll
+  ID: 3701421
+  Text: top lever for the the Pontiff Cathedral elevator
+- Area: irithyll
+  ID: 3701422
+  Text: bottom lever for the the Pontiff Cathedral elevator
+- Area: irithyll
+  ID: 3701450
+  Text: the Anor Londo Archers shortcut gate
+- Area: irithyll
+  ID: 3701500
+  Text: the Anor Londo elevator
+- Area: irithyll
+  ID: 3701501
+  Text: the Anor Londo elevator bottom lever
+- Area: irithyll
+  ID: 3701502
+  Text: the Anor Londo elevator top lever
+- Area: irithyll
+  ID: 3701470
+  Text: the Anor Londo cathedral door
+- Area: irithyll
+  ID: 3701471
+  Text: the Anor Londo cathedral door lever
+- Area: irithyll
+  ID: 3701806
+  Text: the left elevator after Aldrich
+- Area: irithyll
+  ID: 3701805
+  Text: the right elevator after Aldrich
+
+# Wolnir shortcut gate. Wolnir doors. Wolnir goblet. The book treasure. (Bridge routing - can get back up from there?)
+- Area: catacombs
+  ID: 3801501
+  Text: the Wolnir shortcut gate
+- Area: catacombs
+  ID: 3801500
+  Text: the Wolnir shortcut gate lever
+- Area: catacombs
+  ID: 3801400
+  Text: the collapsing bridge to Wolnir
+- Area: catacombs
+  ID: 3801402
+  Text: the Wolnir bridge ladder
+- Area: catacombs
+  ID: 3801560
+  Text: the door to Wolnir
+- Area: catacombs
+  ID: 3801561
+  Text: the door after Wolnir
+- Area: catacombs
+  ID: 3801810
+  Text: the Wolnir warp altar
+- Area: catacombs
+  ID: 3801811
+  Text: the Wolnir warp goblet
+- Area: catacombs
+  ID: 3801572
+  Text: the tome corpse in Wolnir's room
+
+# Path of the Dragon elevator and door. Giant elevator and door. Shortcut gate at very start. Gates that can be used to open cells.
+- Area: dungeon
+  ID: 3901440
+  Text: one-way shortcut gate on the upper level of Irithyll Dungeon
+- Area: dungeon
+  ID: 3901405
+  Text: the shortcut elevator from the dungeon giant
+- Area: dungeon
+  ID: 3901406
+  Text: the top lever of the shortcut elevator from the dungeon giant
+- Area: dungeon
+  ID: 3901407
+  Text: the bottom lever of the shortcut elevator from the dungeon giant
+- Area: dungeon
+  ID: 3901420
+  Text: the shortcut gate down to the dungeon giant
+- Area: dungeon
+  ID: 3901530
+  Text: the gate next to the giant rats
+- Area: dungeon
+  ID: 3901400
+  Text: the Path of the Dragon elevator
+- Area: dungeon
+  ID: 3901401
+  Text: the Path of the Dragon elevator top lever
+- Area: dungeon
+  ID: 3901402
+  Text: the Path of the Dragon elevator bottom lever
+- Area: dungeon
+  ID: 3901430
+  Text: the path of the Dragon shortcut gate
+
+# The bell tower elevator? And two bell tower doors, at top and bottom. Gundyr doors. Firelink Shrine bonfire.
+- Area: firelink
+  ID: 4001260
+  Text: the door after Iudex Gundyr
+- Area: firelink
+  ID: 4001261
+  Text: the door after Champion Gundyr
+- Area: firelink
+  ID: 4001950
+  Text: Firelink Shrine bonfire
+- Area: firelink
+  ID: 4001426
+  Text: Firelink roof kickdown ladder
+- Area: firelink
+  ID: 4001251
+  Text: upper Bell Tower door
+- Area: firelink
+  ID: 4001400
+  Text: Bell Tower elevator
+- Area: firelink
+  ID: 4001401
+  Text: Bell Tower elevator top lever
+- Area: firelink
+  ID: 4001402
+  Text: Bell tower elevator bottom lever
+- Area: firelink
+  ID: 4001252
+  Text: lower Bell Tower door
+
+# Nothing probably - except warp bonfires
+- Area: kiln
+  ID: 4101101
+  Text: Flameless Shrine warp bonfire
+- Area: kiln
+  ID: 4101102
+  Text: Dreg Heap warp bonfire
+
+# The shortcut trees? The door after the bonfire. The shortcut gate. (But the bridge is already a connection... unless) the chapel door. The chapel shortcut - although this is part of routing. The lever, statue. And warp bonfire at the end.
+- Area: ariandel
+  ID: 4501500
+  Text: the bridge that collapses
+- Area: ariandel
+  ID: 4501630
+  Text: Ariandel Chapel door
+- Area: ariandel
+  ID: 4501631
+  Text: Chapel door lever
+- Area: ariandel
+  ID: 4501670
+  Text: the first ladder from painting depths
+- Area: ariandel
+  ID: 4501598
+  Text: the second ladder from painting depths
+- Area: ariandel
+  ID: 4501502
+  Text: Ariandel bridge ladder
+- Area: ariandel
+  ID: 4501600
+  Text: Corvian settlement sewer centipede gate
+- Area: ariandel
+  ID: 4501601
+  Text: Corvian settlement sewer centipede gate lever
+- Area: ariandel
+  ID: 4501570
+  Text: Corvian settlement shortcut gate
+- Area: ariandel
+  ID: 4501611
+  Text: Vilhelm's contraption slot
+- Area: ariandel
+  ID: 4501610
+  Text: Vilhelm's contraption slope
+- Area: ariandel
+  ID: 4501556
+  Text: the so-called shortcut gate at the start of Snowy Mountain Pass
+- Area: ariandel
+  ID: 4501540
+  Text: first shortcut tree
+- Area: ariandel
+  ID: 4503541
+  Text: first shortcut tree collision
+- Area: ariandel
+  ID: 4501510
+  Text: Snowy Mountain Pass shortcut elevator
+- Area: ariandel
+  ID: 4501511
+  Text: Snowy Mountain Pass shortcut elevator top lever
+- Area: ariandel
+  ID: 4501512
+  Text: Snowy Mountain Pass shortcut elevator bottom lever
+- Area: ariandel
+  ID: 4501542
+  Text: second shortcut tree
+- Area: ariandel
+  ID: 4503543
+  Text: second shortcut tree col
+- Area: ariandel
+  ID: 4501622
+  Text: Ariandel Chapel statue lever
+- Area: ariandel
+  ID: 4501572
+  Text: Ariandel Chapel shortcut door
+- Area: ariandel
+  ID: 4501620
+  Text: Ariandel Chapel statue
+- Area: ariandel
+  ID: 4501101
+  Text: Friede warp to Dreg Heap
+
+# Dreg heap: Not much to work with, no moving shortcuts, only two entrances.
+
+# There is the gate at first bonfire and second bonfire, the elevator at first bonfire, Filianore's door, Halflight's door, and also climbing out of Midir's gate is possible?
+- Area: ringedcity
+  ID: 5101612
+  Text: shortcut gate for Ringed City Streets bonfire
+- Area: ringedcity
+  ID: 5101520
+  Text: Show Your Humanity ladder
+- Area: ringedcity
+  ID: 5101515
+  Text: Ringed Inner Walls elevator
+- Area: ringedcity
+  ID: 5101516
+  Text: Ringed Inner Walls elevator top lever
+- Area: ringedcity
+  ID: 5101517
+  Text: Ringed Inner Walls elevator bottom lever
+- Area: ringedcity
+  ID: 5101610
+  Text: Rinnged Inner Walls shortcut gate
+- Area: ringedcity
+  ID: 5101600
+  Text: door to Halflight
+- Area: ringedcity
+  ID: 5101510
+  Text: elevator to Filianore
+- Area: ringedcity
+  ID: 5101511
+  Text: elevator to Filianore top lever
+- Area: ringedcity
+  ID: 5101512
+  Text: elevator to Filianore bottom lever
+- Area: ringedcity
+  ID: 5101602
+  Text: door to Filianore
+
+# filianore: Nothing here really
+
+DefaultCost:
+  firelink_cemetery: 0  # SL 10
+  firelink_iudexgundyr: 0  # SL 10
+  firelink_front: 0.05455254  # SL 13
+  firelink: 0.06768914  # SL 14
+  firelink_coiledsword: 0.06768914  # SL 14
+  highwall: 0.06768914  # SL 14
+  firelink_bellfront: 0.06768914  # SL 14
+  firelink_belltower: 0.06768914  # SL 14
+  firelink_roof: 0.06768914  # SL 14
+  highwall_darkwraith: 0.1029906  # SL 17
+  highwall_greirat: 0.1029906  # SL 17
+  highwall_vordt: 0.1029906  # SL 17
+  highwall_emma: 0.1029906  # SL 17
+  settlement: 0.134578  # SL 19
+  settlement_pit: 0.1638444  # SL 21
+  settlement_tower: 0.1638444  # SL 21
+  settlement_greatwood: 0.1638444  # SL 21
+  farronkeep_start: 0.1914538  # SL 23
+  farronkeep_road: 0.2003599  # SL 24
+  farronkeep: 0.2263323  # SL 25
+  farronkeep_crystalsage: 0.2263323  # SL 25
+  farronkeep_prewatchers: 0.2513448  # SL 27
+  cathedral_start: 0.2513448  # SL 27
+  farronkeep_abysswatchers: 0.259497  # SL 28
+  cathedral: 0.259497  # SL 28
+  farronkeep_postwatchers: 0.2834633  # SL 29
+  cathedral_deacons: 0.2834633  # SL 29
+  cathedral_rosaria: 0.2834633  # SL 29
+  catacombs: 0.2834633  # SL 29
+  catacombs_prelake: 0.3067715  # SL 31
+  catacombs_wolnirroom: 0.3067715  # SL 31
+  catacombs_wolnir: 0.3067715  # SL 31
+  catacombs_lake: 0.3144092  # SL 32
+  irithyll_start: 0.3295031  # SL 33
+  irithyll_bridge: 0.3295031  # SL 33
+  catacombs_olddemonking: 0.3369638  # SL 33
+  irithyll: 0.4088495  # SL 38
+  irithyll_manor: 0.4295833  # SL 40
+  irithyll_abovedorhys: 0.4295833  # SL 40
+  irithyll_pontiff: 0.4295833  # SL 40
+  irithyll_dorhys: 0.4295833  # SL 40
+  dungeon: 0.4364203  # SL 40
+  irithyll_postpontiff: 0.4499886  # SL 41
+  irithyll_anorlondo: 0.4499886  # SL 41
+  dungeon_profaned: 0.4567217  # SL 41
+  dungeon_jailbreak: 0.4567217  # SL 41
+  irithyll_yorshka: 0.4700899  # SL 42
+  irithyll_abovepontiff: 0.4700899  # SL 42
+  irithyll_aldrich: 0.4700899  # SL 42
+  highwall_dancer: 0.4700899  # SL 42
+  dungeon_jailerscell: 0.4767265  # SL 43
+  dungeon_oldcell: 0.4767265  # SL 43
+  dungeon_yhorm: 0.4767265  # SL 43
+  irithyll_aldrichright: 0.4899085  # SL 44
+  irithyll_aldrichleft: 0.4899085  # SL 44
+  highwall_postdancer: 0.4899085  # SL 44
+  irithyll_abovealdrich: 0.4899085  # SL 44
+  highwall_garden: 0.4899085  # SL 44
+  lothric: 0.4899085  # SL 44
+  ariandel: 0.4899085  # SL 44
+  highwall_oceiros: 0.5094634  # SL 45
+  archives_shortcutbottom: 0.5094634  # SL 45
+  highwall_abovedancer: 0.5094634  # SL 45
+  lothric_dragonslayerarmour: 0.5094634  # SL 45
+  ariandel_vilhelm: 0.5094634  # SL 45
+  ariandel_gravetender: 0.5094634  # SL 45
+  ariandel_friede: 0.5287712  # SL 47
+  highwall_postoceiros: 0.5287712  # SL 47
+  lothric_postarmour: 0.5287712  # SL 47
+  ariandel_dunnel: 0.5287712  # SL 47
+  untended: 0.5287712  # SL 47
+  archives_start: 0.5287712  # SL 47
+  untended_championgundyr: 0.5351548  # SL 47
+  untended_postgundyr: 0.5541559  # SL 48
+  untended_farron: 0.6817316  # SL 57
+  archdragon_start: 0.7905937  # SL 65
+  archdragon_prewyvern: 0.796181  # SL 65
+  archdragon_ancientwyvern: 0.796181  # SL 65
+  archdragon: 0.8128651  # SL 66
+  archdragon_wyverndoor: 0.8128651  # SL 66
+  archdragon_beforenameless: 0.8294359  # SL 68
+  archdragon_pathofthedragon: 0.8294359  # SL 68
+  archdragon_abovewyvern: 0.8294359  # SL 68
+  archdragon_namelessking: 0.8294359  # SL 68
+  archdragon_belownameless: 0.845897  # SL 69
+  lothric_gotthard: 0.873098  # SL 71
+  archives: 0.873098  # SL 71
+  archives_preprinces: 0.8892835  # SL 72
+  archives_shortcuttop: 0.8892835  # SL 72
+  archives_twinprinces: 0.8892835  # SL 72
+  kiln_start: 0.9053714  # SL 73
+  kiln: 0.9053714  # SL 73
+  dregheap_start: 0.9053714  # SL 73
+  kiln_soulofcinder: 0.9053714  # SL 73
+  dregheap: 0.9213646  # SL 74
+  dregheap_predemon: 0.9372657  # SL 75
+  dregheap_demonprince: 0.9372657  # SL 75
+  dregheap_postdemon: 0.9530774  # SL 76
+  ringedcity: 0.9530774  # SL 76
+  ringedcity_prehalflight: 0.9688022  # SL 77
+  ringedcity_premidir: 0.9688022  # SL 77
+  ringedcity_halflight: 0.9688022  # SL 77
+  ringedcity_midir: 0.9688022  # SL 77
+  ringedcity_posthalflight: 0.9844423  # SL 78
+  filianore: 0.9844423  # SL 78
+  filianore_gael: 0.9844423  # SL 78
+  filianore_shira: 1  # SL 80

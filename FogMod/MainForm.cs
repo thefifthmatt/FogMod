@@ -216,7 +216,7 @@ namespace FogMod
                 Console.SetOut(log);
                 try
                 {
-                    ItemReader.Result itemInfo = randomizer.Randomize(rand, game, gameDir);
+                    ItemReader.Result itemInfo = randomizer.Randomize(rand, game, gameDir, gameDir);
                     setStatus($"Done. Info in {runId}" + (itemInfo.Randomized ? $" | Key item hash: {itemInfo.ItemHash}" : ""));
                 }
                 catch (Exception ex)

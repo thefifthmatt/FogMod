@@ -23,7 +23,7 @@ namespace FogMod
         }
         public CheckRecord Check(RandomizerOptions opt, Graph g, string start)
         {
-            Dictionary<string, Node> graph = g.graph;
+            Dictionary<string, Node> graph = g.Nodes;
             foreach (Node node in graph.Values)
             {
                 foreach (Edge edge in node.To)
@@ -39,11 +39,17 @@ namespace FogMod
             HashSet<string> visited = new HashSet<string>();
             void visit(string area)
             {
+                if (!graph.ContainsKey(area)) throw new Exception($"Unknown area to visit {area}");
                 visited.Add(area);
                 config[area] = Expr.TRUE;
+                // Items can be in a weird chain depending on other items, so do this iterative approach in lieu of actual recursive dependencies
                 foreach (string item in graph[area].Items)
                 {
-                    config[item] = Expr.TRUE;
+                    List<string> reqAreas = g.ItemAreas[item];
+                    if (reqAreas.All(a => visited.Contains(a)))
+                    {
+                        config[item] = Expr.TRUE;
+                    }
                 }
             }
             HashSet<Edge> seenEdge = new HashSet<Edge>();
@@ -54,9 +60,29 @@ namespace FogMod
             Dictionary<Edge, float> duplicatePaths = new Dictionary<Edge, float>();
             Dictionary<string, int> areaCost = graph.Values.ToDictionary(n => n.Area, n => n.Cost);
             Dictionary<string, float> extraAreaCost = graph.Values.ToDictionary(n => n.Area, n => 0f);
+            List<string> getAreas(string dep)
+            {
+                return g.ItemAreas.TryGetValue(dep, out List<string> itemAreas) ? itemAreas : new List<string> { dep };
+            }
             bool getDepRecord(string dep, out NodeRecord nr)
             {
-                if (g.itemAreas.TryGetValue(dep, out string itemArea)) dep = itemArea;
+                nr = null;
+                if (g.ItemAreas.ContainsKey(dep))
+                {
+                    List<string> itemAreas = getAreas(dep);
+                    if (itemAreas.Count == 1) return recs.TryGetValue(itemAreas[0], out nr);
+                    // For items, make up a node record on the spot, since this method is only used for analyzing dependencies.
+                    // These could be areas in their own right, but, there is a lot of them, so maybe this will work. And most of them only depend on firelink, which should be pretty early.
+                    nr = new NodeRecord { Area = dep };
+                    foreach (string itemArea in itemAreas)
+                    {
+                        if (!recs.TryGetValue(itemArea, out NodeRecord subNr)) return false;
+                        nr.Dist = Math.Max(nr.Dist, subNr.Dist);
+                        nr.Visited.AddRange(subNr.Visited);
+                    }
+                    nr.Visited = nr.Visited.Distinct().ToList();  // ?
+                    return true;
+                }
                 return recs.TryGetValue(dep, out nr);
             }
             float addEdge(Edge e, string scalingBase)
@@ -76,11 +102,13 @@ namespace FogMod
                 {
                     HashSet<string> preVisit = new HashSet<string>(from.Visited);
                     List<string> depVisit = e.LinkedExpr.Cost(area => getDepRecord(area, out NodeRecord nr) ? nr.Dist : 10000000).Item1;
+                    // Is this correct? Otherwise only conds are looked at, not the from area
+                    depVisit.Add(from.Area);
                     foreach (string dep in depVisit)
                     {
                         if (!getDepRecord(dep, out NodeRecord nr)) throw new Exception($"Dependency in edge {e} not visited: {dep}");
-                        string depArea = g.itemAreas.TryGetValue(dep, out string itemArea) ? itemArea : dep;
-                        preVisit.Add(depArea);
+                        // Console.WriteLine($"for adding {e} dep {dep}, adding [{string.Join(",", getAreas(dep))}] and [{string.Join(",", nr.Visited)}]");
+                        preVisit.UnionWith(getAreas(dep));
                         preVisit.UnionWith(nr.Visited);
                     }
                     visitedCand = preVisit.ToList();
@@ -155,7 +183,7 @@ namespace FogMod
                     lastLoop = true;
                 }
             }
-            List<string> unvisited = graph.Keys.Except(visited).Except(g.areas.Values.Where(a => a.HasTag("optional")).Select(a => a.Name)).ToList();
+            List<string> unvisited = graph.Keys.Except(visited).Except(g.Areas.Values.Where(a => a.HasTag("optional")).Select(a => a.Name)).ToList();
 
             if (opt["explain"]) Console.WriteLine($"Not visited: [{string.Join(", ", unvisited)}]");
             if (opt["explain"]) Console.WriteLine();

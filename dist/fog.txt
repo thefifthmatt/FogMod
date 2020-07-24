@@ -415,7 +415,7 @@ Areas:
     Cond: AND lordvessel lord_soul_shard_seath lord_soul_shard_four_kings lord_soul_bed_of_chaos lord_soul_nito
 - Name: kiln_stairs
 - Name: kiln_gwyn
-  Tags: boss
+  Tags: boss end
 - Name: asylum # TODO: door to fight should always open? Or does that screw balcony logic. Probably shouldn't actually.
   To:
   - Area: asylum_outside

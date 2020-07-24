@@ -63,5 +63,25 @@ namespace FogMod
                 }
             }
         }
+        public static int SearchBytes(byte[] array, byte[] candidate)
+        {
+            // byte[] candidate = BitConverter.GetBytes(num);
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (IsMatch(array, i, candidate)) return i;
+            }
+            return -1;
+        }
+        private static bool IsMatch(byte[] array, int position, byte[] candidate)
+        {
+            if (candidate.Length > (array.Length - position))
+                return false;
+
+            for (int i = 0; i < candidate.Length; i++)
+                if (array[position + i] != candidate[i])
+                    return false;
+
+            return true;
+        }
     }
 }

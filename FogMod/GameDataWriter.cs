@@ -43,18 +43,18 @@ namespace FogMod
             11515600,
             11700800,
         }));
-        public void Write(RandomizerOptions opt, Annotations ann, Graph g, string gameDir, FromGame game)
+        public void Write(RandomizerOptions opt, AnnotationData ann, Graph g, string gameDir, FromGame game)
         {
             GameEditor editor = new GameEditor(game);
             bool remastered = game == FromGame.DS1R;
             string distBase = $@"dist\{game}";
             editor.Spec.GameDir = distBase;
-            Dictionary<string, MSB1> baseMaps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
+            Dictionary<string, MSB1> baseMaps = editor.Load(@"map\MapStudio", path => ann.Specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
             Dictionary<string, PARAM.Layout> layouts = editor.LoadLayouts();
             Dictionary<string, PARAM> baseParams = editor.LoadParams(layouts);
 
             editor.Spec.GameDir = gameDir;
-            Dictionary<string, MSB1> maps = editor.Load(@"map\MapStudio", path => specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
+            Dictionary<string, MSB1> maps = editor.Load(@"map\MapStudio", path => ann.Specs.ContainsKey(Path.GetFileNameWithoutExtension(path)) ? MSB1.Read(path) : null, "*.msb");
             Dictionary<string, PARAM> Params = editor.LoadParams(layouts);
             string dcxExt = remastered ? ".dcx" : "";
             string fmgEvent = remastered ? "Event_text_" : "イベントテキスト";
@@ -73,7 +73,7 @@ namespace FogMod
             Dictionary<string, int> players = new Dictionary<string, int>();
             foreach (KeyValuePair<string, MSB1> entry in maps)
             {
-                if (!specs.TryGetValue(entry.Key, out MapSpec spec)) continue;
+                if (!ann.Specs.TryGetValue(entry.Key, out MapSpec spec)) continue;
                 MSB1 msb = entry.Value;
                 string name = spec.Name;
                 msbs[name] = msb;
@@ -105,7 +105,7 @@ namespace FogMod
             {
                 Dictionary<string, string> models = editor.LoadNames("ModelName", n => n);
                 Dictionary<int, string> chrs = editor.LoadNames("CharaInitParam", n => int.Parse(n));
-                List<Enemies> cols = new List<Enemies>();
+                List<EnemyCol> cols = new List<EnemyCol>();
                 foreach (KeyValuePair<string, MSB1> entry in msbs)
                 {
                     string map = entry.Key;
@@ -124,7 +124,7 @@ namespace FogMod
                             string entityDesc = e.EntityID > 0 ? $" @{e.EntityID}" : "";
                             return $"{e.Name} ({(models.TryGetValue(e.ModelName, out string model) ? model : e.ModelName)}). NPC {e.NPCParamID}{npcDesc}{entityDesc}";
                         }).ToList();
-                        cols.Add(new Enemies
+                        cols.Add(new EnemyCol
                         {
                             Col = $"{map} {col.Key}",
                             Area = map,
@@ -138,12 +138,12 @@ namespace FogMod
 
             // Process and validate the cols part of the config
             Dictionary<string, string> rankDefaults = new Dictionary<string, string>();
-            Dictionary<(string, string), List<Enemies>> rankCols = new Dictionary<(string, string), List<Enemies>>();
-            foreach (Enemies enemy in ann.Enemies)
+            Dictionary<(string, string), List<EnemyCol>> rankCols = new Dictionary<(string, string), List<EnemyCol>>();
+            foreach (EnemyCol enemy in ann.Enemies)
             {
                 string[] parts = enemy.Col.Split(' ');
-                if (!nameSpecs.ContainsKey(parts[0])) throw new Exception($"Unknown map in {enemy.Col}");
-                if (!g.areas.ContainsKey(enemy.Area)) throw new Exception($"Unknown area {enemy.Area} in {enemy.Col}");
+                if (!ann.NameSpecs.ContainsKey(parts[0])) throw new Exception($"Unknown map in {enemy.Col}");
+                if (!g.Areas.ContainsKey(enemy.Area)) throw new Exception($"Unknown area {enemy.Area} in {enemy.Col}");
                 if (parts.Length == 1)
                 {
                     rankDefaults[parts[0]] = enemy.Area;
@@ -184,7 +184,7 @@ namespace FogMod
                             }
                         }
                         // Or if the enemy isn't randomized, we can try to use the value from the original map
-                        MSB1.Part.Enemy enemy = baseMaps[nameSpecs[map].Map].Parts.Enemies.Find(c => c.Name == e.Name);
+                        MSB1.Part.Enemy enemy = baseMaps[ann.NameSpecs[map].Map].Parts.Enemies.Find(c => c.Name == e.Name);
                         if (enemy != null && e.ModelName == enemy.ModelName)
                         {
                             e.NPCParamID = enemy.NPCParamID;
@@ -217,14 +217,14 @@ namespace FogMod
                 {
                     for (int i = 0; i <= range; i++)
                     {
-                        PARAM.Row rank = new PARAM.Row(7200 + i + range * d, null, layouts["SP_EFFECT_PARAM_ST"]);
+                        PARAM.Row rank = new PARAM.Row(7200 + i + range * d, null, Params["SpEffectParam"].AppliedParamdef); // SP_EFFECT_PARAM_ST
                         // float ratio = 0.3f + (3 - 0.3f) * i / range;  // arithmetic ranking
                         float ratio = (float)Math.Pow(4, 1.0 * (i - middle) / middle);  // logarithmic ranking
                         rankRatios.Add(ratio);
                         foreach (PARAM.Cell cell in rank.Cells)
                         {
-                            PARAM.Cell baseCell = baseRank[cell.Name];
-                            if (rankCells.Contains(cell.Name))
+                            PARAM.Cell baseCell = baseRank[cell.Def.InternalName];
+                            if (rankCells.Contains(cell.Def.InternalName))
                             {
                                 // if ratio is 1, value should be 1.
                                 // if ratio is 2.5, value should be the same as base row.
@@ -232,7 +232,7 @@ namespace FogMod
                                 float rankValue = ratio;
                                 if (rankValue >= 1) rankValue *= baseRatio;
                                 else rankValue /= baseRatio;
-                                if (dmgCells.Contains(cell.Name)) rankValue *= dmgMults[d];
+                                if (dmgCells.Contains(cell.Def.InternalName)) rankValue *= dmgMults[d];
                                 cell.Value = rankValue;
                             }
                             else
@@ -264,12 +264,12 @@ namespace FogMod
                     {
                         if (excludeScaling.Contains(e.ModelName) || e.CollisionName == null || e.NPCParamID <= 0) continue;
                         string area;
-                        if (rankCols.TryGetValue((map, e.CollisionName), out List<Enemies> enemies))
+                        if (rankCols.TryGetValue((map, e.CollisionName), out List<EnemyCol> enemies))
                         {
                             area = enemies[0].Area;
                             if (enemies.Count > 1)
                             {
-                                foreach (Enemies enemy in enemies)
+                                foreach (EnemyCol enemy in enemies)
                                 {
                                     if (enemy.Includes.Any(name => name.Split(' ')[0] == e.Name))
                                     {
@@ -309,7 +309,7 @@ namespace FogMod
                     foreach (KeyValuePair<string, List<MSB1.Part.Enemy>> npcArea in npcType.Value)
                     {
                         string area = npcArea.Key;
-                        (float ratio, float dmgRatio) = area != null && g.areaRatios.TryGetValue(area, out (float, float) val) ? val : (1, 1);
+                        (float ratio, float dmgRatio) = area != null && g.AreaRatios.TryGetValue(area, out (float, float) val) ? val : (1, 1);
                         if (Math.Abs(ratio - 1) < 0.01f) continue;
                         float initialRatio = 1;
                         int baseSp = -1;
@@ -365,10 +365,10 @@ namespace FogMod
                             // Make a new one otherwise
                             int newID = npcID;
                             while (newNpcs.ContainsKey(newID)) newID++;
-                            newNpc = new PARAM.Row(newID, null, layouts["NPC_PARAM_ST"]);
+                            newNpc = new PARAM.Row(newID, null, Params["NpcParam"].AppliedParamdef);  // NPC_PARAM_ST
                             foreach (PARAM.Cell cell in newNpc.Cells)
                             {
-                                cell.Value = baseNpc[cell.Name].Value;
+                                cell.Value = baseNpc[cell.Def.InternalName].Value;
                             }
                             newNpcs[newID] = newNpc;
                             // Use an unused field to refer to the original value
@@ -460,7 +460,7 @@ namespace FogMod
             int slot = 0;
             (byte, byte) GetDest(string map)
             {
-                MapSpec spec = nameSpecs[map];
+                MapSpec spec = ann.NameSpecs[map];
                 return (byte.Parse(spec.Map.Substring(1, 2)), byte.Parse(spec.Map.Substring(4, 2)));
             }
             List<List<object>> events = new List<List<object>>();
@@ -513,7 +513,7 @@ namespace FogMod
                         msb.Regions.Regions.Insert(0, tr);
                         AddMulti(bossTriggerAdd, side.BossTrigger, tr.EntityID);
                     }
-                    if (g.ignore.Contains((e.Name, side.Area))) continue;
+                    if (g.Ignore.Contains((e.Name, side.Area))) continue;
                     Vector3 fogPosition = fog.Position;
                     float warpDist = 1f;
                     // Action trigger
@@ -656,7 +656,7 @@ namespace FogMod
             }
             // Add warp point for softlock prevention
             int softWarp = mk++;
-            string[] respawnParts = g.start.Respawn.Split(' ');
+            string[] respawnParts = g.Start.Respawn.Split(' ');
             string startMap = respawnParts[0];
             int startRespawn = int.Parse(respawnParts[1]);
             {
@@ -666,9 +666,9 @@ namespace FogMod
                 p.ModelName = "c0000";
                 p.EntityID = softWarp;
                 MSB1.Event.SpawnPoint spawn = msb.Events.SpawnPoints.Find(e => e.EntityID == startRespawn);
-                if (spawn == null) throw new Exception($"Bad custom start {g.start.Respawn}, can't find spawn point {startRespawn}");
+                if (spawn == null) throw new Exception($"Bad custom start {g.Start.Respawn}, can't find spawn point {startRespawn}");
                 MSB1.Region region = msb.Regions.Regions.Find(e => e.Name == spawn.SpawnPointName);
-                if (region == null) throw new Exception($"Bad custom start {g.start.Respawn}, can't find region {spawn.SpawnPointName}");
+                if (region == null) throw new Exception($"Bad custom start {g.Start.Respawn}, can't find region {spawn.SpawnPointName}");
                 p.Position = region.Position;
                 p.Rotation = region.Rotation;
                 p.Scale = new Vector3(1, 1, 1);
@@ -747,7 +747,7 @@ namespace FogMod
                 {
                     MSB1.Part.Object obj = msb.Parts.Objects.Find(e => e.Name == "o0500_0006");
                     // If the area after the broken window is part of logic, use it, otherwise move it back
-                    if (g.entranceIds["o5869_0000"].IsFixed)
+                    if (g.EntranceIds["o5869_0000"].IsFixed)
                     {
                         // Default properties
                         obj.Position = new Vector3(448.490f, 144.110f, 269.420f);
@@ -766,7 +766,7 @@ namespace FogMod
                 else if (map == "depths")
                 {
                     MSB1.Event.ObjAct oa = msb.Events.ObjActs.Find(o => o.ObjActEntityID == 11000120);
-                    if (g.start.Area == "depths")
+                    if (g.Start.Area == "depths")
                     {
                         // No key required if starting at bonfire
                         oa.ObjActParamID = -1;
@@ -838,10 +838,10 @@ namespace FogMod
                 }
             }
 
-            int id = 10;
+            int connectColId = 10;
             int traverseFlag = 6920;
             HashSet<string> vanillaEntrances = new HashSet<string>();
-            foreach (Node node in g.graph.Values)
+            foreach (Node node in g.Nodes.Values)
             {
                 foreach (Edge exit in node.To)
                 {
@@ -857,12 +857,12 @@ namespace FogMod
                     }
                     if (exit.Name == entrance.Name && exit.IsFixed && !opt["alwaysshow"])
                     {
-                        Entrance e = g.entranceIds[exit.Name];
-                        if (vanillaEntrances.Contains(e.Name)) continue;
+                        Entrance e = g.EntranceIds[exit.Name];
+                        if (vanillaEntrances.Contains(e.FullName)) continue;
                         if (e.HasTag("pvp"))
                         {
                             AddWarpEvent(1, e.Area, new List<int> { e.ID, e.ID + 1 });
-                            vanillaEntrances.Add(e.Name);
+                            vanillaEntrances.Add(e.FullName);
                             continue;
                         }
                         else if (e.HasTag("world") && exit.Pair != null)
@@ -872,7 +872,7 @@ namespace FogMod
                             if (aPair == null || bPair == null) throw new Exception($"Missing warp info - {a == null} {b == null} for {exit.Pair} -> {entrance.Pair}");
                             AddWarpEvent(3, e.Area, new List<int> { e.ID, e.ID + 1, traverseFlag, a.Action, bPair.Action });
                             traverseFlag++;
-                            vanillaEntrances.Add(e.Name);
+                            vanillaEntrances.Add(e.FullName);
                             continue;
                         }
                     }
@@ -889,7 +889,7 @@ namespace FogMod
                         CopyAll<MSB1.Part>(baseCol, con);
                         con.Placeholder = null;
                         con.ModelName = baseCol.ModelName;
-                        con.Name = $"{baseCol.ModelName}_{id++:d4}";
+                        con.Name = $"{baseCol.ModelName}_{connectColId++:d4}";
                         con.CollisionName = col;
                         (byte area, byte block) = GetDest(b.Map);
                         con.MapID[0] = area;
@@ -1076,7 +1076,7 @@ namespace FogMod
 
             foreach (KeyValuePair<string, MSB1> entry in msbs)
             {
-                string map = nameSpecs[entry.Key].Map;
+                string map = ann.NameSpecs[entry.Key].Map;
                 string path = $@"{editor.Spec.GameDir}\map\MapStudio\{map}.msb";
                 Console.WriteLine("Writing " + path);
                 entry.Value.Write(path);
@@ -1090,10 +1090,10 @@ namespace FogMod
             }
             // Hardcode some messages
             Console.WriteLine($@"Writing messages to {editor.Spec.GameDir}\msg\{opt.Language}");
-            fmgs[fmgEvent][15000280] = $"Return to {g.start.Name}";
+            fmgs[fmgEvent][15000280] = $"Return to {g.Start.Name}";
             fmgs[fmgEvent][15000281] = "Sealed in New Londo Ruins";
             fmgs[fmgEvent][15000282] = "Fog Gate Randomizer breaks when online.\nChange Launch setting in Network settings and then reload.";
-            fmgs[fmgEvent][15000283] = g.entranceIds["1702901"].IsFixed ? "Go to jail" : "Go to jail (randomized warp)";
+            fmgs[fmgEvent][15000283] = g.EntranceIds["1702901"].IsFixed ? "Go to jail" : "Go to jail (randomized warp)";
             editor.OverrideBnd($@"{editor.Spec.GameDir}\msg\{opt.Language}\menu.msgbnd{dcxExt}", $@"msg\{opt.Language}", fmgs, fmg => fmg.Write());
         }
 

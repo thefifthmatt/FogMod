@@ -31,13 +31,28 @@ namespace FogMod
                         opt[arg] = true;
                     }
                 }
-                new Randomizer().Randomize(opt, args.Contains("ptde") ? FromGame.DS1 : FromGame.DS1R, null);
+                FromGame game = args.Contains("ptde") ? FromGame.DS1 : FromGame.DS1R;
+                game = FromGame.DS3;
+                opt.Game = game;
+                string gameDir = ForGame(game).GameDir;
+                if (game == FromGame.DS3)
+                {
+                    new Randomizer().Randomize(opt, game, opt["mergemods"] ? gameDir + @"\randomizer" : null, gameDir + @"\fog");
+                }
+                else
+                {
+                    new Randomizer().Randomize(opt, game, gameDir, gameDir);
+                }
             }
             else
             {
+#if DEBUG
+                AttachConsole(-1);
+#endif
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+                // Application.Run(new MainForm());
+                Application.Run(new MainForm3());
             }
         }
     }
