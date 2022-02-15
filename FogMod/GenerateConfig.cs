@@ -40,7 +40,7 @@ namespace FogMod
                         {
                             Area = spec.Name,
                             Name = e.Name,
-                            ID = e.EventEntityID,
+                            ID = e.EntityID,
                             Text = "Between",
                             Tags = "pvp boss",
                             ASide = new Side { Area = spec.Name },
@@ -159,11 +159,11 @@ namespace FogMod
                         }
                         AddMulti(description, shortName, modelDesc);
                     }
-                    AddMulti(description, shortName, $"{map} {e.GetType().Name.ToString().ToLowerInvariant()} {e.Name}");  // {(e.EventEntityID > 0 ? $" {e.EventEntityID}" : "")}
-                    if (e.EventEntityID > 10)
+                    AddMulti(description, shortName, $"{map} {e.GetType().Name.ToString().ToLowerInvariant()} {e.Name}");  // {(e.EntityID > 0 ? $" {e.EntityID}" : "")}
+                    if (e.EntityID > 10)
                     {
-                        highlightIds.Add(e.EventEntityID);
-                        string idStr = e.EventEntityID.ToString();
+                        highlightIds.Add(e.EntityID);
+                        string idStr = e.EntityID.ToString();
                         if (description.ContainsKey(idStr))
                         {
                             AddMulti(description, shortName, description[idStr]);
@@ -171,18 +171,18 @@ namespace FogMod
                         description[idStr] = description[shortName];
                         if (e is MSB3.Part.Player || e.ModelName == "o000100")
                         {
-                            selectIds.Add(e.EventEntityID);
+                            selectIds.Add(e.EntityID);
                         }
-                        if (selectIds.Contains(e.EventEntityID))
+                        if (selectIds.Contains(e.EntityID))
                         {
                             gameObjs.Add(shortName);
                         }
 
-                        foreach (int id in e.EventEntityGroups)
+                        foreach (int id in e.EntityGroups)
                         {
                             if (id > 0)
                             {
-                                AddMulti(groupIds, id, e.EventEntityID);
+                                AddMulti(groupIds, id, e.EntityID);
                                 highlightIds.Add(id);
                             }
                         }
@@ -190,22 +190,22 @@ namespace FogMod
                 }
                 foreach (MSB3.Region r in msb.Regions.GetEntries())
                 {
-                    if (r.EventEntityID < 1000000) continue;
-                    AddMulti(description, r.EventEntityID.ToString(), $"{map} {r.GetType().Name.ToLowerInvariant()} region {r.Name}");
-                    highlightIds.Add(r.EventEntityID);
+                    if (r.EntityID < 1000000) continue;
+                    AddMulti(description, r.EntityID.ToString(), $"{map} {r.GetType().Name.ToLowerInvariant()} region {r.Name}");
+                    highlightIds.Add(r.EntityID);
                 }
                 foreach (MSB3.Event e in msb.Events.GetEntries())
                 {
                     if (e is MSB3.Event.ObjAct oa)
                     {
                         // It can be null, basically for commented out objacts
-                        string part = oa.PartName ?? oa.PartName2;
+                        string part = oa.PartName ?? oa.ObjActPartName;
                         if (part == null) continue;
                         string desc = description.TryGetValue($"{map}_{part}", out List<string> p) ? string.Join(" - ", p) : throw new Exception($"{map} {oa.Name}");
                         objacts[(map, part)] = oa;
                         Dictionary<string, int> things = new Dictionary<string, int>
                         {
-                            { "ObjAct", oa.EventEntityID },
+                            { "ObjAct", oa.EntityID },
                             { "ObjAct param", oa.ObjActParamID },
                             { "ObjAct entity", oa.ObjActEntityID },
                             { "ObjAct event flag", oa.EventFlagID },
@@ -223,9 +223,9 @@ namespace FogMod
                                 }
                             }
                         }
-                        if (e.EventEntityID > 0)
+                        if (e.EntityID > 0)
                         {
-                            highlightIds.Add(e.EventEntityID);
+                            highlightIds.Add(e.EntityID);
                         }
                         if (oa.ObjActParamID > 0)
                         {
@@ -234,10 +234,10 @@ namespace FogMod
                     }
                     else
                     {
-                        if (e.EventEntityID > 0)
+                        if (e.EntityID > 0)
                         {
-                            AddMulti(description, e.EventEntityID.ToString(), $"{map} {e.Name}");
-                            highlightIds.Add(e.EventEntityID);
+                            AddMulti(description, e.EntityID.ToString(), $"{map} {e.Name}");
+                            highlightIds.Add(e.EntityID);
                         }
                     }
                 }

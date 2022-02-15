@@ -119,7 +119,7 @@ namespace FogMod
                 {
                     if (r.Name.StartsWith("Boss start for ") || r.Name.StartsWith("FR: ") || r.Name.StartsWith("BR: ") || r.Name.StartsWith("Region for "))
                     {
-                        if (opt["msbinfo"]) Console.WriteLine($"Removing region in {name}: {r.Name} #{r.EventEntityID}");
+                        if (opt["msbinfo"]) Console.WriteLine($"Removing region in {name}: {r.Name} #{r.EntityID}");
                         return true;
                     }
                     return false;
@@ -128,7 +128,7 @@ namespace FogMod
                 {
                     if (p.Name.StartsWith("c0000_") && int.TryParse(p.Name.Substring(6), out int res) && res >= 50)
                     {
-                        if (opt["msbinfo"]) Console.WriteLine($"Removing player in {name}: {p.Name} #{p.EventEntityID}");
+                        if (opt["msbinfo"]) Console.WriteLine($"Removing player in {name}: {p.Name} #{p.EntityID}");
                         return true;
                     }
                     return false;
@@ -214,19 +214,19 @@ namespace FogMod
                     fog.CollisionName = null;
 
                     // In Firelink Shrine, firelink is map layer 1 and untended is map layer 2
-                    if (fog.EventEntityID == 4001101 || fog.EventEntityID == 4001102)
+                    if (fog.EntityID == 4001101 || fog.EntityID == 4001102)
                     {
                         fog.MapStudioLayer = 1;
                     }
                     // Moving Midir fog gate. But it is a dropdown anyway, so just use CustomWarp in the config instead
-                    if (fog.EventEntityID == 5101850)
+                    if (fog.EntityID == 5101850)
                     {
                         // fog.Position = new Vector3(-481.853f, -83.045f, -396.253f - 1.5f);
                     }
                     // Make Ancient Wyvern -> Mausoleum fog gate visible from both sides, using the door which opens after the fight
-                    if (fog.EventEntityID == 3201801)
+                    if (fog.EntityID == 3201801)
                     {
-                        MSB3.Part.Object door = msbs["archdragon"].Parts.Objects.Find(o => o.EventEntityID == 3201420);
+                        MSB3.Part.Object door = msbs["archdragon"].Parts.Objects.Find(o => o.EntityID == 3201420);
                         if (door != null)
                         {
                             for (int j = 0; j < door.DrawGroups.Length; j++)
@@ -250,16 +250,16 @@ namespace FogMod
                     {
                         // Make an invisible fog gate in the other direction, to make opposite warp work
                         // But only if not fixed... otherwise, it will just be an invisible wall
-                        MSB3.Part.Object oppositeFog = new MSB3.Part.Object(fog);
+                        MSB3.Part.Object oppositeFog = (MSB3.Part.Object)fog.DeepCopy();
                         oppositeFog.Name = newEntityId(map, fog.ModelName);
                         oppositeFog.Rotation = opposite;
-                        oppositeFog.EventEntityID = mk++;
-                        actionID = oppositeFog.EventEntityID;
+                        oppositeFog.EntityID = mk++;
+                        actionID = oppositeFog.EntityID;
                         msb.Parts.Objects.Add(oppositeFog);
                     }
                     else
                     {
-                        actionID = fog.EventEntityID;
+                        actionID = fog.EntityID;
                     }
 
                     // Warp
@@ -295,10 +295,11 @@ namespace FogMod
                         }
 
                         playerArea = map;
-                        p = new MSB3.Part.Player(newEntityId(playerArea, "c0000"));
+                        p = new MSB3.Part.Player();
+                        p.Name = newEntityId(playerArea, "c0000");
                         p.MapStudioLayer = uint.MaxValue;
                         p.ModelName = "c0000";
-                        p.EventEntityID = warpID;
+                        p.EntityID = warpID;
                         p.Position = warpPosition;
                         p.Rotation = warpRotation;
                         p.Scale = new Vector3(1, 1, 1);
@@ -312,10 +313,11 @@ namespace FogMod
                         MSB3 customMsb = getMap(playerArea);
                         List<float> pos = parts.Skip(1).Select(c => float.Parse(c, CultureInfo.InvariantCulture)).ToList();
 
-                        p = new MSB3.Part.Player(newEntityId(playerArea, "c0000"));
+                        p = new MSB3.Part.Player();
+                        p.Name = newEntityId(playerArea, "c0000");
                         p.MapStudioLayer = uint.MaxValue;
                         p.ModelName = "c0000";
-                        p.EventEntityID = warpID;
+                        p.EntityID = warpID;
                         p.Position = new Vector3(pos[0], pos[1], pos[2]);
                         p.Rotation = new Vector3(0, pos[3], 0);
                         p.Scale = new Vector3(1, 1, 1);
@@ -325,19 +327,20 @@ namespace FogMod
                     if (side.BossTriggerName != null)
                     {
                         string triggerArea = side.BossTriggerName == "area" ? side.Area : side.BossTriggerName;
-                        MSB3.Region.Event r = new MSB3.Region.Event($"Region for {p.Name} {p.EventEntityID}");
-                        r.EventEntityID = mk++;
+                        MSB3.Region.Event r = new MSB3.Region.Event();
+                        r.Name = $"Region for {p.Name} {p.EntityID}";
+                        r.EntityID = mk++;
                         r.Position = new Vector3(p.Position.X, p.Position.Y - 1, p.Position.Z);
                         r.Rotation = p.Rotation;
                         r.MapStudioLayer = uint.MaxValue;
-                        r.Shape = new MSB3.Shape.Box
+                        r.Shape = new MSB.Shape.Box
                         {
                             Width = 1.5f,
                             Depth = 1.5f,
                             Height = 4f,
                         };
                         msbs[playerArea].Regions.Events.Add(r);
-                        AddMulti(bossTriggerRegions, triggerArea, (playerArea, r.EventEntityID));
+                        AddMulti(bossTriggerRegions, triggerArea, (playerArea, r.EntityID));
                     }
                 }
             }
@@ -384,16 +387,17 @@ namespace FogMod
             {
                 if (warp.Player != 0) return warp.Player;
                 MSB3 msb = msbs[warp.Map];
-                MSB3.Region region = msb.Regions.GetEntries().Where(r => r.EventEntityID == warp.Region).FirstOrDefault();
+                MSB3.Region region = msb.Regions.GetEntries().Where(r => r.EntityID == warp.Region).FirstOrDefault();
                 if (region == null) throw new Exception($"Cutscene warp destination {warp.Region} not found in {warp.Map}");
-                MSB3.Part.Player p = new MSB3.Part.Player(newEntityId(warp.Map, "c0000"));
+                MSB3.Part.Player p = new MSB3.Part.Player();
+                p.Name = newEntityId(warp.Map, "c0000");
                 p.ModelName = "c0000";
-                p.EventEntityID = mk++;
+                p.EntityID = mk++;
                 p.Position = region.Position;
                 p.Rotation = region.Rotation;
                 p.Scale = new Vector3(1, 1, 1);
                 msb.Parts.Players.Add(p);
-                warp.Player = p.EventEntityID;
+                warp.Player = p.EntityID;
                 return warp.Player;
             }
 
@@ -407,13 +411,14 @@ namespace FogMod
             };
             foreach (KeyValuePair<int, int> copy in createFirelinkPlayerRegions)
             {
-                MSB3.Part.Player p = msbs["firelink"].Parts.Players.Find(e => e.EventEntityID == copy.Key);
-                MSB3.Region.Event r = new MSB3.Region.Event($"Region for {p.Name} {p.EventEntityID}");
-                r.EventEntityID = copy.Value;
+                MSB3.Part.Player p = msbs["firelink"].Parts.Players.Find(e => e.EntityID == copy.Key);
+                MSB3.Region.Event r = new MSB3.Region.Event();
+                r.Name = $"Region for {p.Name} {p.EntityID}";
+                r.EntityID = copy.Value;
                 r.Position = p.Position;
                 r.Rotation = p.Rotation;
                 r.MapStudioLayer = uint.MaxValue;
-                r.Shape = new MSB3.Shape.Sphere(1f);
+                r.Shape = new MSB.Shape.Sphere(1f);
                 msbs["firelink"].Regions.Events.Add(r);
             }
 
@@ -520,9 +525,15 @@ namespace FogMod
                                 if (t.SetFlag != null)
                                 {
                                     if (t.SetFlagIf == null || t.SetFlagArea == null) throw new Exception($"{init.Callee} has missing values [{t.SetFlag}], [{t.SetFlagIf}], [{t.SetFlagArea}]");
-                                    fogEdit.SetFlag = getArg(t.SetFlag);
-                                    fogEdit.SetFlagIf = getArg(t.SetFlagIf);
-                                    fogEdit.SetFlagArea = getArg(t.SetFlagArea);
+                                    int setFlag = getArg(t.SetFlag);
+                                    FlagEdit flagEdit = fogEdit.FlagEdits.Find(f => f.SetFlag == setFlag);
+                                    if (flagEdit == null)
+                                    {
+                                        flagEdit = new FlagEdit { SetFlag = setFlag };
+                                        fogEdit.FlagEdits.Add(flagEdit);
+                                    }
+                                    flagEdit.SetFlagIf = getArg(t.SetFlagIf);
+                                    flagEdit.SetFlagArea = getArg(t.SetFlagArea);
                                 }
                                 if (t.Remove == "event")
                                 {
@@ -686,6 +697,9 @@ namespace FogMod
                     emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { custom.ID, colBase + index, flag }));
                 }
             }
+            // Making Gundyr arena stable in either ceremony is seriously messed up somehow. Just make it stable :/
+            MSB3.Part.Collision gundyrCol = msbs["firelink"].Parts.Collisions.Find(e => e.Name == "h002500");
+            gundyrCol.PlayRegionID = 400001;  // Previously 400000
 
             // Scaling
             // Create scaling speffects in all runs
@@ -794,11 +808,11 @@ namespace FogMod
                         {
                             if (e.CollisionName == null || !enemyAreas.TryGetValue((name, e.CollisionName), out area)) continue;
                         }
-                        int entityId = e.EventEntityID;
+                        int entityId = e.EntityID;
                         if (entityId <= 0)
                         {
                             // Hope this works
-                            entityId = e.EventEntityID = mk++;
+                            entityId = e.EntityID = mk++;
                         }
                         if (g.AreaRatios.TryGetValue(area, out (float, float) val))
                         {
@@ -1052,7 +1066,7 @@ namespace FogMod
                 // Copy behavior from item randomizer
                 coiledPlace["grayoutFlag"].Value = 14005108;
 
-                EMEVD.Event swordEvent = new EMEVD.Event(14005107, EMEVD.Event.RestBehaviorType.Default);
+                EMEVD.Event swordEvent = new EMEVD.Event(14005107, EMEVD.Event.RestBehaviorType.Restart);
                 swordEvent.Instructions.AddRange(new string[]
                 {
                     "Set Event Flag (14005108,1)",
@@ -1078,6 +1092,18 @@ namespace FogMod
             hollow["angleCheckType"].Value = (byte)0;
             hollow["AllowAngle"].Value = 180;
 
+            Dictionary<int, int> startFlagCeremonies = new Dictionary<int, int>();
+            foreach (Area area in g.Areas.Values)
+            {
+                if (area.BossTrigger > 0)
+                {
+                    string name = area.Name.Split('_')[0];
+                    if (ceremonyAlias.TryGetValue(name, out Ceremony ceremony))
+                    {
+                        startFlagCeremonies[area.BossTrigger] = ceremony.ID;
+                    }
+                }
+            }
             foreach (KeyValuePair<int, FogEdit> entry in fogEdits)
             {
                 int id = entry.Key;
@@ -1099,10 +1125,14 @@ namespace FogMod
                     emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { custom.ID, id, sfx }));
                     // Console.WriteLine($"{id} create SFX: {fogEdit.Sfx}");
                 }
-                if (fogEdit.SetFlag > 0)
+                if (fogEdit.FlagEdits.Count > 0)
                 {
                     NewEvent custom = customEvents["startboss"];
-                    emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { custom.ID, fogEdit.SetFlagIf, fogEdit.SetFlagArea, fogEdit.SetFlag }));
+                    foreach (FlagEdit flagEdit in fogEdit.FlagEdits)
+                    {
+                        int ceremony = startFlagCeremonies.TryGetValue(flagEdit.SetFlag, out int c) ? c : -1;
+                        emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { custom.ID, flagEdit.SetFlagIf, flagEdit.SetFlagArea, flagEdit.SetFlag, ceremony }));
+                    }
                     // Console.WriteLine($"{id} set flag: {fogEdit.SetFlag} if {fogEdit.SetFlagIf}");
                 }
             }
@@ -1116,7 +1146,8 @@ namespace FogMod
                 foreach ((string, int) region in entry.Value)
                 {
                     EMEVD emevd = emevds[mapFromName(region.Item1)];
-                    emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { custom.ID, defeatFlag, region.Item2, triggerFlag }));
+                    int ceremony = startFlagCeremonies.TryGetValue(triggerFlag, out int c) ? c : -1;
+                    emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { custom.ID, defeatFlag, region.Item2, triggerFlag, ceremony }));
                 }
             }
 
@@ -1167,27 +1198,23 @@ namespace FogMod
 
                     NewEvent custom = customEvents["fogwarp"];
                     (byte area, byte block) = getDest(toMap);
-                    int toCeremony = ceremonyAlias.TryGetValue(toMap, out Ceremony ceremony) ? ceremony.ID : -1;
+                    int fromCeremony = ceremonyAlias.TryGetValue(fromMap, out Ceremony ceremony) ? ceremony.ID : -1;
+                    int toCeremony = ceremonyAlias.TryGetValue(toMap, out ceremony) ? ceremony.ID : -1;
                     List<object> args;
                     if (repeatWarp == null)
                     {
                         float height = exit.Side.AdjustHeight + g.EntranceIds[exit.Name].AdjustHeight;
                         int actionParam = exit.Name == "archdragon_3201850" ? 3201850 : getActionForHeight(height);
                         // Console.WriteLine($"for {exit} -> {entrance}: height {height}, id {actionParam}");
-                        args = new List<object> { custom.ID, a.Action, actionParam, player, area, block, toCeremony, exitFlag, trapFlag };
+                        args = new List<object> { custom.ID, a.Action, actionParam, player, area, block, toCeremony, exitFlag, trapFlag, fromCeremony };
                     }
                     else
                     {
-                        args = new List<object> { custom.ID, repeatWarp.RepeatWarpObject, 9340, player, area, block, toCeremony, repeatWarp.RepeatWarpFlag, 0 };
+                        args = new List<object> { custom.ID, repeatWarp.RepeatWarpObject, 9340, player, area, block, toCeremony, repeatWarp.RepeatWarpFlag, 0, fromCeremony };
                     }
-                    if (ceremonyAlias.TryGetValue(fromMap, out ceremony))
-                    {
-                        emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, (uint)ceremony.EventLayer, args));
-                    }
-                    else
-                    {
-                        emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, args));
-                    }
+                    // We used to use ceremony.EventLayer to initialize this in a ceremony, but with Oceiros->Untended
+                    // transition this could result in the wrong event running on initialization.
+                    emevd.Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, args));
                 }
             }
             // Enable Archdragon cols which are normally only for Nameless King
@@ -1202,73 +1229,47 @@ namespace FogMod
                 }
             }
 
-            MSB3.Part.Enemy lesserWyvern = msbs["archdragon"].Parts.Enemies.Find(e => e.EventEntityID == 3200300);
+            MSB3.Part.Enemy lesserWyvern = msbs["archdragon"].Parts.Enemies.Find(e => e.EntityID == 3200300);
             // Copy from the bois below
             lesserWyvern.MapStudioLayer = 4294967295;
 
             // Give an entity id to the bell for warping
             MSB3.Part.Object dummyBell = msbs["archdragon"].Parts.Objects.Find(e => e.Name == "o324010_1000");
-            dummyBell.EventEntityID = 3201458;
+            dummyBell.EntityID = 3201458;
 
             MSB3.Part.MapPiece dummyThrone = msbs["firelink"].Parts.MapPieces.Find(e => e.Name == "m000400_1000");
-            dummyThrone.EventEntityID = 4001405;
+            dummyThrone.EntityID = 4001405;
 
             // Make enemy activation area a bit higher, since it's used for Ancient Wyvern
-            MSB3.Region.ActivationArea ladderArea = msbs["archdragon"].Regions.ActivationAreas.Find(e => e.EventEntityID == 3202270);
-            ((MSB3.Shape.Box)ladderArea.Shape).Height = 4 + 4;
+            MSB3.Region.ActivationArea ladderArea = msbs["archdragon"].Regions.ActivationAreas.Find(e => e.EntityID == 3202270);
+            ((MSB.Shape.Box)ladderArea.Shape).Height = 4 + 4;
 
             // Move starting point to be less annoying
-            MSB3.Part.Player coffin = msbs["firelink"].Parts.Players.Find(e => e.EventEntityID == 4000110);
+            MSB3.Part.Player coffin = msbs["firelink"].Parts.Players.Find(e => e.EntityID == 4000110);
             coffin.Position = new Vector3(112.369f, -49.240f, 498.478f);
             coffin.Rotation = new Vector3(0, 180 + 20.280f, 0);
 
             // Make existing Dancer region a bit larger (10 longer, 5 shifted)
-            MSB3.Region.Event triggerRegion = msbs["highwall"].Regions.Events.Find(e => e.EventEntityID == 3002896);
-            ((MSB3.Shape.Box)triggerRegion.Shape).Depth = 26.400f + 10;
+            MSB3.Region.Event triggerRegion = msbs["highwall"].Regions.Events.Find(e => e.EntityID == 3002896);
+            ((MSB.Shape.Box)triggerRegion.Shape).Depth = 26.400f + 10;
             triggerRegion.Position = new Vector3(27.580f, -9.920f, 143.990f + 5);
 
             // Make Crystal Sage a bit smaller, to avoid clipping into path to Cathedral
-            triggerRegion = msbs["farronkeep"].Regions.Events.Find(e => e.EventEntityID == 3302850);
-            ((MSB3.Shape.Box)triggerRegion.Shape).Depth = 36.100f - 10;
+            triggerRegion = msbs["farronkeep"].Regions.Events.Find(e => e.EntityID == 3302850);
+            ((MSB.Shape.Box)triggerRegion.Shape).Depth = 36.100f - 10;
             triggerRegion.Position = new Vector3(-178.135f, -248.860f, -423.790f);
 
-            // Add firebomb award... this was actual torture to make work :|
-            PARAM.Row firebombAward = new PARAM.Row(3800055, null, Params["ItemLotParam"].AppliedParamdef);
-            Params["ItemLotParam"].Rows.Add(firebombAward);
-            firebombAward["ItemLotId1"].Value = 292;
-            firebombAward["LotItemCategory01"].Value = (uint)0x40000000;
-            firebombAward["LotItemBasePoint01"].Value = (short)1000;
-            firebombAward["getItemFlagId"].Value = -1;  // 53800055;
-            firebombAward["LotItemNum1"].Value = (byte)3;
-            firebombAward["ClearCount"].Value = (sbyte)-1;
-            MSB3.Part.Object firebombObj = new MSB3.Part.Object("o000250_0150")
-            {
-                CollisionName = "h014000",
-                ModelName = "o000250",
-                Position = new Vector3(362.045f, -300.618f, -642.429f),
-                Rotation = new Vector3(-3, -75, 0),
-                MapStudioLayer = uint.MaxValue,
-                EventEntityID = 3801575,
-            };
-            firebombObj.AnimIDs[0] = 60;
-            msbs["catacombs"].Parts.Objects.Add(firebombObj);
-            msbs["catacombs"].Events.Treasures.Add(new MSB3.Event.Treasure("Firebomb treasure")
-            {
-                PartName = "h014000",
-                PartName2 = firebombObj.Name,
-                ItemLot1 = (int)firebombAward.ID,
-                PickupAnimID = 60070,
-            });
-            emevds[mapFromName("catacombs")].Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { customEvents["firebomb"].ID }));
+            // Make catacombs ladder fall from below. Previously firebomb
+            emevds[mapFromName("catacombs")].Events[0].Instructions.Add(new EMEVD.Instruction(2000, 6, new List<object> { customEvents["ladderfall"].ID, 3802352, 3801403 }));
 
             // Emma teleport is not part of logic, but make it more consistent within that, always to the same position
-            MSB3.Region.Event outsideEmma = msbs["highwall"].Regions.Events.Find(e => e.EventEntityID == 3002890);
-            MSB3.Region.Event dancerMpWarp = msbs["highwall"].Regions.Events.Find(e => e.EventEntityID == 3002893);
+            MSB3.Region.Event outsideEmma = msbs["highwall"].Regions.Events.Find(e => e.EntityID == 3002890);
+            MSB3.Region.Event dancerMpWarp = msbs["highwall"].Regions.Events.Find(e => e.EntityID == 3002893);
             outsideEmma.Position = dancerMpWarp.Position;
             outsideEmma.Rotation = dancerMpWarp.Rotation;
 
             // Move object which overlaps with region
-            MSB3.Part.Object spearObj = msbs["archdragon"].Parts.Objects.Find(e => e.EventEntityID == 3201480);
+            MSB3.Part.Object spearObj = msbs["archdragon"].Parts.Objects.Find(e => e.EntityID == 3201480);
             spearObj.Position = new Vector3(-15.413f, 69.113f, 197.680f);
 
             if (opt["cheat"])
@@ -1391,13 +1392,21 @@ namespace FogMod
 
         public class FogEdit
         {
+            // Recreating sfx, if the original event doing it is removed.
             public bool CreateSfx = true;
             public int Sfx { get; set; }
+            // Boss flag triggers to preserve. There are two of these for the same gate for firelink/untended.
+            public List<FlagEdit> FlagEdits = new List<FlagEdit>();
+            // Object id to repeat a one-time warp.
+            public int RepeatWarpObject { get; set; }
+            // Required flag for completing warp
+            public int RepeatWarpFlag { get; set; }
+        }
+        public class FlagEdit
+        {
             public int SetFlag { get; set; }
             public int SetFlagIf { get; set; }
             public int SetFlagArea { get; set; }
-            public int RepeatWarpObject { get; set; }
-            public int RepeatWarpFlag { get; set; }
         }
 
         // Lifted directly from DS3/Sekiro Item Randomizer

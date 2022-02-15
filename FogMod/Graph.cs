@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using static SoulsIds.GameSpec;
 using static FogMod.Util;
 using static FogMod.AnnotationData;
 
@@ -197,11 +198,10 @@ namespace FogMod
                     side.Expr = getExpr(side.Cond);
                 }
             }
-            // Collect named entrances           
             EntranceIds = new Dictionary<string, Entrance>();
             foreach (Entrance e in ann.Entrances.Concat(ann.Warps))
             {
-                string id = e.FullName;
+                string id =  e.FullName;
                 if (EntranceIds.ContainsKey(id)) throw new Exception($"Duplicate id {id}");
                 EntranceIds[id] = e;
                 if (!e.HasTag("unused") && e.Sides().Count < 2) throw new Exception($"{e.FullName} has insufficient sides");
@@ -216,7 +216,7 @@ namespace FogMod
             foreach (Entrance e in ann.Entrances)
             {
                 if (e.HasTag("unused")) continue;
-                if (opt.Game == SoulsIds.GameSpec.FromGame.DS3)
+                if (opt.Game == FromGame.DS3)
                 {
                     if (e.HasTag("norandom"))
                     {
@@ -227,6 +227,14 @@ namespace FogMod
                         e.IsFixed = true;
                     }
                     else if (opt["lords"] && e.HasTag("kiln"))
+                    {
+                        e.IsFixed = true;
+                    }
+                    else if (!opt["dlc1"] && e.HasTag("dlc1"))
+                    {
+                        e.IsFixed = true;
+                    }
+                    else if (!opt["dlc2"] && e.HasTag("dlc2"))
                     {
                         e.IsFixed = true;
                     }
@@ -304,6 +312,14 @@ namespace FogMod
                     if (opt["dumptext"]) AddMulti(allText, "warp", e.Text);
                 }
                 if (opt["lords"] && e.HasTag("kiln"))
+                {
+                    e.IsFixed = true;
+                }
+                else if (!opt["dlc1"] && e.HasTag("dlc1"))
+                {
+                    e.IsFixed = true;
+                }
+                else if (!opt["dlc2"] && e.HasTag("dlc2"))
                 {
                     e.IsFixed = true;
                 }

@@ -4,7 +4,9 @@ Changes how areas link together by randomizing where fog gates lead to, in the s
 
 Fog gates are now permanent, and traversing them warps you to the other side of a different fog gate. These warps are always fixed for a given seed.
 
-Currently both DLCs (Ashes of Ariandel and The Ringed City) are required to use this mod. It might be possible to make them optional in the future. This mod is possible because of engine similarities between DS1 and DS3 which are unfortunately not shared with DS2.
+This mod is possible because of engine similarities between DS1 and DS3 which are unfortunately not shared with DS2. Randomization of DLCs can be enabled or disabled.
+
+If you have issues installing the mod or would like to provide feedback or playtest, you can join the discord server at https://discord.gg/QArcYud (also for DS3 Static Randomizer, Sekiro Randomizer, and hopefully Elden Ring Randomizer)
 
 ## Gameplay changes
 
@@ -27,12 +29,12 @@ Some misc things to know about mechanics:
 - The warp to Flameless Shrine can also be randomized in some options. If you miss it, you can do it again by interacting with Prince Lothric's Throne.
 - The warp from the Hollow Manservant (or his replacement) in Undead Settlement can be randomized, and is always available.
 - The warp after defeating Aldrich and Yhorm is preserved, but not part of logic currently
-- You can ascend out of Smouldering Lake back to the Catacombs by using a projectile such as a firebomb to break the bridge
+- You can ascend out of Smouldering Lake back to the Catacombs, as the ladder bridge breaks automatically in the hallway beneath it. To restore the bridge, save+quit at the top.
 
 Also, some things which are in the base game you may need to know about:
 
 - Using the Small Envoy Banner also requires defeating Demon Prince
-- There is a door in Dragonkin Mausoleum which opens after Ancient Wyvern has been defeated
+- There is a door in Dragonkin Mausoleum which opens only after Ancient Wyvern has been defeated
 - You can drop down into Irithyll from Yorshka's Prison Tower
 
 ### How to win
@@ -43,54 +45,80 @@ Taking notes can be helpful to remember how to get to different important places
 
 ### Scaling
 
-This is an optional feature of the mod to scale up and down enemy health and damage based on distance from the start. This is done statically when the randomizer is run, not during the playthrough. The goal is to make it more enjoyable to actually fight enemies, rather than only run past them.
+This is an optional feature of the mod to scale up and down enemy health and damage based on distance from the start. This is done statically when the randomizer is run, not during the playthrough. If you find enemies becoming too powerful, you may have missed other easier paths which branched off earlier on. The goal is to make it more enjoyable to actually fight enemies, rather than only run past them.
 
 The randomizer checks what is the shortest path for you to access Firelink Shrine, and ensures that bosses on that path are scaled within reason for a +0 weapon. On the other hand, areas which appear earlier in the base game are never scaled down. Soul of Cinder is never scaled down.
 
+If the enemy scaling option is used in DS3 Static Enemy Randomizer, the both scalings will be applied. The final scaling may be rough, but it should be in the right range.
+
 ## Installation
 
-This randomizer can be used as a standalone mod with DS3 Mod Engine. It can also be used with other randomizers, with an installation process described below. It probably can't be used with other large overhaul mods, because it's a pile of hundreds of manually specified edits with associated logic, and doesn't magically account for changes it doesn't know about.
+This randomizer can be used as a standalone mod with DS3 Mod Engine. It can also be used with other randomizers. It probably can't be used with other large overhaul mods, because it's a pile of hundreds of manually specified edits with associated logic, and doesn't magically account for changes it doesn't know about.
 
-Scroll down to see instructions for using this mod with other randomizers. To use this mod by itself:
+The overall installation approach is as follows. There are further details down below of how to configure other randomizers. The required order is Enemy/Item -> Fog Gate -> Irregulator.
 
-1. Unzip DS3FogMod.zip into your Dark Souls 3 installation, so that there is a directory called `fog` which contains FogMod.exe.
+1. Unzip DS3FogMod.zip into your Dark Souls 3 installation, so that there is a directory called `fog` which contains `FogMod.exe` and subdirectory `fogdist`.
 
-2. [DS3 Mod Engine](https://www.nexusmods.com/darksouls3/mods/332) must be installed (both modengine.ini and dinput8.dll in your game directory), with modOverrideDirectory set to the mod directory, "\fog" by default. Note that Enemy Randomizer should be using a different version of Mod Engine, but if you're using the mod with Enemy Randomizer or any other randomizer, you should be looking at the directions below anyway!
+2. [DS3 Mod Engine](https://www.nexusmods.com/darksouls3/mods/332) must be installed (both modengine.ini and dinput8.dll in your game directory), with modOverrideDirectory set to the mod directory, "\fog" by default. Note that Enemy Randomizers must use a different version of Mod Engine, so check their installation instructions for information on that.
 
-3. Open the randomizer exe, select your options, click "Randomize", and then start your game! (restart DS3 if it's currently running) You can tell it's intalled if your first bonfire has a "Travel" option.
+3. This is where you install item randomizers, enemy randomizers, and non-randomizer mods. These must happen outside of the `fog` directory, because FogMod will use those files as a base for its own randomization. **See below for specific instructions.**
 
-### Using with other randomizers
+4. Finally open FogMod.exe, select your options, click "Randomize", and then start your game! (restart DS3 if it's currently running) You can tell it's intalled if your first bonfire has a "Travel" option.
 
-I apologize in advance for how convoluted these installation instructions are, but please bear with it, since it is by far the simplest to maintain. In the maximum case, it involves 3 separate subdirectories of your main Dark Souls 3 installation location. The required order to do things in is Enemy -> Item -> Fog Gate -> Irregulator. You can skip any of these steps, but anyway, here are the most general instructions possible.
+5. Check the spoiler_logs directory if you get stuck!
 
-1. To use DS3 Enemy Randomizer: install and run Enemy Randomizer in the `mod` directory, following the instructions in its README.
+### Using with other mods
 
-You can use [GodFilm233's randomizer](https://www.nexusmods.com/darksouls3/mods/484) or anything else which randomizes enemies in-place. I would recommend checking both boxes in its installer for the best balance.
+I apologize in advance for how convoluted these installation instructions are, but please bear with it, since it is by far the simplest to maintain. In the maximum case, it involves 3 separate subdirectories of your main Dark Souls 3 installation location.
 
-To emphasize, as part of this, you need to replace dinput8.dll with the version from Enemy Randomizer, or else the game will crash. Do not use any other version of dinput8.dll; do not use the official version from the DS3 Mod Engine mod page.
+1. The `mod` directory is the base directory for manually installed mods. This includes cosmetic mods like skins or Poorly Translated Mod, and also [GodFilm233's enemy randomizer](https://www.nexusmods.com/darksouls3/mods/484) if you're not using my DS3 Static Enemy Randomizer.
+2. The `randomizer` directory is used by [DS3 Static Item/Enemy Randomizer](https://www.nexusmods.com/darksouls3/mods/361). It can optionally merge itself with the files in `mod`.
+3. The `fog` directory is for DS3 Fog Gate Randomizer, and it can merge itself with either of the above.
 
-2. To use [DS3 Static Item Randomizer](https://www.nexusmods.com/darksouls3/mods/361) (randomize key items): install and run Item Randomizer (version at least v0.2) in the `randomizer` directory, following the instructions in its README. Make sure to check "Merge mods".
+modengine.ini contains a modOverrideDirectory field which tells the game to load mods from the specified subdirectories. It should point at "\fog" at the end of all of the installation steps.
 
-If you want to use the Item Randomizer options which seem to result in the most interesting Fog Gate runs, then inside of the item randomizer UI, you can click the button which says "Set options from string" and paste this in:
-dlc1 dlc2 dlc2fromdlc1 earlydlc earlylothric mergemods raceloc_ashes raceloc_chest raceloc_miniboss racemode startingtwohand v2 10 0
+To reiterate, if you're using an enemy randomizer, you need to replace dinput8.dll with the version packaged with the enemy randomizer, or else the game will crash. Do not use any other version of dinput8.dll; do not use the official version from the DS3 Mod Engine mod page.
 
-And then adjust the "Key item placement" settings based on how much exploration you want to do, enable Tree Skip if you want, and adding NG+ rings if you want. Of course, feel free to experiment with any other options as well.
+### Using DS3 Static Randomizer
+[DS3 Static Item and Enemy Randomizer](https://www.nexusmods.com/darksouls3/mods/361) is a combined item/enemy randomizer compatible with Fog Gate Randomizer. Make sure to use the latest version.
+
+If you have mods installed in the `mod` folder, make sure to check the "Merge mods" option in DS3 Static Randomizer. If this is successful, it means that the `randomizer` directory will contain both mods merged together, which can then be used as a base for Fog Gate Randomizer.
+
+If you want to use the randomizer options which seem to result in the most interesting Fog Gate runs, then inside of the item randomizer UI, you can click the button which says "Set options from string" and paste this in:
+
+dlc1 dlc2 dlc2fromdlc1 earlydlc earlylothric earlyreq edittext enemy item lizards mimics raceloc_ashes raceloc_chest raceloc_miniboss racemode racemode_health scale v4 yhormruler 10 0
+
+(Then, optionally disable either item or enemy randomizer if you're only using one type of randomization.)
+
+For item randomizer, adjust the "Key item placement" settings based on how much exploration you want to do, enable Tree Skip if you want, and of course any other options.
+
+For enemy randomizer, you can select a preset for a more chaotic run and otherwise select your preferred options. As mentioned above, Enemy Randomizer scaling and Fog Gate Randomizer scaling work together well enough.
 
 If you see a warning inside item randomizer UI about modOverrideDirectory being incorrect, you can ignore this, because it won't be the final directory anyway.
 
-Note that if you are using the [Auto-Equip Item Randomizer](https://www.nexusmods.com/darksouls3/mods/241) instead, you can ignore this step, but make sure to disable key item randomization and set `chainDInput8DLLPath` appropriately in that case.
+### Using Auto-Equip Item Randomizer
 
-3. Finally, add Fog Gate Randomizer into the `fog` directory and open it up. Using "Select other mod to merge", select Data0.bdt from the `randomizer` directory, *not* from the DS3 game directory. By default, this path should be `C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game\randomizer\Data0.bdt` (note the "randomizer" part)
+[Auto-Equip Item Randomizer](https://www.nexusmods.com/darksouls3/mods/241) isn't installed in a game subdirectory. Instead, edit modengine.ini to set `chainDInput8DLLPath` appropriately. You can do this in addition to installing either enemy randomizer.
 
-If you enabled Tree Skip for Item Randomizer, also do it here. Be careful about using scaling if you're using Enemy Randomizer, since it won't do much to hard enemies placed in early locations, and may create some way-too-buffed enemies later on. Select any options you like, then click "Randomize!".
+### Running Fog Gate Randomizer
+
+Finally, click on FogMod.exe in the `fog` directory. Using "Select other mod to merge", select Data0.bdt from the `randomizer` directory. By default, this path should be `C:\Program Files (x86)\Steam\steamapps\common\DARK SOULS III\Game\randomizer\Data0.bdt` (note the "randomizer" part) This can also be the `mod` directory if you have mods installed there and you didn't use DS3 Static Randomizer.
+
+If you enabled Tree Skip for DS3 Static Item Randomizer, also do it here. Select any options you like, then click "Randomize!".
 
 The status bar at the bottom will show a 5-digit "key item hash" which changes depending on key item routing. If you intended to use key item randomization but this isn't showing up, you are probably merging from the wrong place.
 
-4. Change the override directory in Mod Engine to "\fog".
+Change the override directory in modengine.ini to "\fog".
 
-5. Finally, you can run [Irregulator](https://www.nexusmods.com/darksouls3/mods/298) at the very end. You can unzip it anywhere; it doesn't need to be in your DS3 installation. When picking the directory to randomize, select the `fog` directory (you must change the "Game Directory" to the mod directory, not your action game directory). From this point onwards, you can re-run Irregulator at any time.
+### Irregulator
 
-This process does mean that rerolling Enemy Randomizer is annoying. This is unavoidable because literally all of the randomizers touch the exact same game files. You can still do it at any point, but then you must go through the entire installation sequence again, making sure to run Item and Fog Gate Randomizers with the same seeds and options you used previously. By default, they remember your last used seed, so it can be done relatively quickly.
+Finally, if you are using [Irregulator](https://www.nexusmods.com/darksouls3/mods/298), install it at the very end. This adds a lot of chaos so use it with caution. You can unzip it anywhere; it doesn't need to be in your DS3 game directory. When picking the directory to randomize, select the `fog` directory (you must change the "Game Directory" to the mod directory, not your actual game directory). From this point onwards, you can re-run Irregulator at any time.
+
+### Reinstalling other mods in the middle of a run
+
+The most common use case for changing other mods is rerolling Enemy Randomizer. The rerolling process basically requires going through the entire installation sequence again. This is unavoidable because all of the randomizers touch the exact same game files.
+
+Make sure to run Item and Fog Gate Randomizers with the same seeds and options you used previously. By default, they remember your last used seed, so it can be done relatively quickly.
 
 ## Credits
 

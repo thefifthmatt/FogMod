@@ -16,6 +16,7 @@ namespace FogMod
         [STAThread]
         static void Main(string[] args)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             if (args.Length > 0 && !args.Contains("/gui"))
             {
                 AttachConsole(-1);

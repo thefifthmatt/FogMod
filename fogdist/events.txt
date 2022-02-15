@@ -20,15 +20,24 @@ NewEvents:
   - Create Object-following SFX (X0_4,101,X4_4)
 - ID: 20005806
   Name: startboss
-  Comment: Sets event flag to start a boss fight in the given region, if the given boss flag is undefeated. The one frame wait is for Judicator Argo, hopefully. X0 = boss defeat flag, X4 = trigger region, X8 = start flag
+  Comment: >
+    Sets event flag to start a boss fight in the given region, if the given boss flag is undefeated.
+    The one frame wait is for Judicator Argo, hopefully. X0 = boss defeat flag, X4 = trigger region, X8 = start flag, X12 = ceremony
   Commands:
   - END IF Event Flag (0,1,0,X0_4)
-  - IF In/Outside Area (0,1,10000,X4_4,1)
+  - SKIP IF Comparison (1,0,X12_4,-1)
+  - IF Map Ceremony State (5,1,40,0,X12_4)
+  - IF In/Outside Area (5,1,10000,X4_4,1)
+  - IF Condition Group (0,1,5)
   - WAIT Fixed Time (Frames) (1)
   - Set Event Flag (X8_4,1)
 - ID: 20005807
   Name: fogwarp
-  Comment: Takes an action prompt at a fog gate and warps to a target player, in the given map. X0 = fog gate, X4 = button param, X8 = warp target, X12 = warp area and block, X16 = ceremony to set (-1 if nothing), X20 = boss defeat flag (0 if not restricted), X24 = boss trap flag (0 if no defeat flag or no early escape)
+  Comment: >
+    Takes an action prompt at a fog gate and warps to a target player, in the given map. X0 = fog gate, X4 = button param,
+    X8 = warp target, X12 = warp area and block, X16 = ceremony to set (-1 if nothing),
+    X20 = boss defeat flag (0 if not restricted), X24 = boss trap flag (0 if no defeat flag or no early escape),
+    X28 = ceremony to require (-1 if nothing)
   Commands:
   # Boss check
   - GOTO IF Comparison (0,0,X20_4,0)
@@ -43,6 +52,8 @@ NewEvents:
   - IF Event Flag (-1,1,0,X24_4)
   # Actual passage
   - Label 1 ()
+  - SKIP IF Comparison (1,0,X28_4,-1)
+  - IF Map Ceremony State (5,1,40,0,X28_4)
   - IF Action Button in Area (5,X4_4,X0_4)
   - IF Condition Group (-1,1,5)
   - IF Condition Group (0,1,-1)
@@ -73,26 +84,17 @@ NewEvents:
   Commands:
   - Set Event Flag (X0_4,1)
   - END IF Event Flag (0,1,0,X4_4)
-  - WAIT Fixed Time (Frames) (5)
+  - WAIT Fixed Time (Frames) (10)
   - Set Event Flag (X0_4,0)
   - IF Event Flag (0,1,0,X4_4)
   - END Unconditionally (1)
 - ID: 20005809
-  Name: firebomb
-  Comment: Show a treasure if the player doesn't have firebombs. X0 = the treasure object, X4 = the item lot to award
-  # Based on: Initialize Common Event (20005525, X0_4 = 53200300, X4_4 = 3200300, X8_4 = 3201480, X12_4 = 62)
+  Name: ladderfall
+  Comment: Makes a ladder fall entering an area. X0 = trigger area, X4 = ladder destroy object
   Commands:
-  - (De)activate Object (3801575,0)
-  - Set Object Treasure State (3801575,0)
-  #- Award Item Lot (60310)
-  #- Set Event Flag (53800055,1)
-  - IF Player Has/Doesn't Have Item (-1,3,292,1)
-  - IF Player Has/Doesn't Have Item (-1,3,299,1)
-  - END IF Condition Group State (Uncompiled) (0,1,-1)
-  #- Set Event Flag (53800055,0)
-  #- WAIT Fixed Time (Frames) (5)
-  - (De)activate Object (3801575,1)
-  - Set Object Treasure State (3801575,1)
+  - IF In/Outside Area (0,1,10000,X0_4,1)
+  - WAIT Fixed Time (Frames) (1)
+  - Request Object Destruction (X4_4,1)
 
 - ID: 233
   Comment: Set Firelink ceremony on death, even if it's an ugly transition at the end. Flag 239 is used for the correct ceremony to set. (if off, set ceremony 0. if on, set ceremony 10.)
@@ -155,13 +157,14 @@ NewEvents:
   #- Award Item Lot (60310)
   #- IF Entity In/Outside Radius Of Entity (10,1,10000,4002950,2,1)
   #- SKIP IF Condition Group State (Uncompiled) (2,0,10)
-  - SKIP IF Player In/Outside Area (2,0,10000,4000960)
+  - SKIP IF Player In/Outside Area (2,0,10000,4000960,1)
   - Set Player Respawn Point (4002950)
   - Set Event Flag (239,0)
-  - SKIP IF Player In/Outside Area (2,0,10000,4000961)
+  - SKIP IF Player In/Outside Area (2,0,10000,4000961,1)
   - Set Player Respawn Point (4002951)
   - Set Event Flag (239,0)
-  - SKIP IF Player In/Outside Area (2,0,10000,4000962)
+  - SKIP IF Player In/Outside Area (3,0,10000,4000962,1)
+  - SKIP IF Event Flag (1,0,0,14000800)
   - Set Player Respawn Point (4002952)
   - Set Event Flag (239,0)
   # End Firelink
@@ -171,10 +174,11 @@ NewEvents:
   # Untended ceremony. End if 239 already on
   - Label 0 ()
   - END IF Event Flag (0,1,0,239)
-  - SKIP IF Player In/Outside Area (2,0,10000,4000963)
+  - SKIP IF Player In/Outside Area (2,0,10000,4000963,1)
   - Set Player Respawn Point (4002953)
   - Set Event Flag (239,1)
-  - SKIP IF Player In/Outside Area (2,0,10000,4000964)
+  - SKIP IF Player In/Outside Area (3,0,10000,4000964,1)
+  - SKIP IF Event Flag (1,0,0,14000830)
   - Set Player Respawn Point (4002954)
   - Set Event Flag (239,1)
   #- SKIP IF Event Flag (1,0,0,239)
@@ -192,7 +196,7 @@ NewEvents:
 
 Events:
 - ID: 231
-  Comment: Setting Firelink ceremony to Untended graves outside of it. Modify this for setting on death. (Note: this creates a bug where the wrong firelink events get initialized. Maybe make these independent of event layer.)
+  Comment: Setting Firelink ceremony to Untended graves outside of it. Modify this for setting on death. (Note, this creates a bug where the wrong firelink events get initialized. Maybe make these independent of event layer.)
   Template:
   - Add:
     - Before: start
@@ -1053,6 +1057,8 @@ Events:
   - + Set ObjAct State (Entity ID = X24_4*, Object Parameter ID = -1, State = 0)
   - END Unconditionally (Execution End Type = 1)
 - ID: 13015810
+  Template:
+  - Remove: 3012830
   Comment: Initialization for Dragonslayer Armour, upon using fog gate (13015805) and entering the first quarter of his arena (region 3012830)
   DebugInfo:
   - 3010800 - Dragonslayer Armour - lothric enemy c3160_0000
@@ -1724,6 +1730,12 @@ Events:
   DebugCommands:
   - + Initialize Common Event (Event ID = 20005621, Parameters = 13200400, 13200405, 3201400*, 3201401*, 3204401*, 3201402*, 3204402*, 3202401*, 3202402*, 13201400, 13204400, 13200401)
 - ID: 13205410
+  Template:
+  - Add:
+    - Cmd: Set Event Flag (13200410,1)
+      After: IF ObjAct Event Flag
+    #- Cmd: Save Request (0)
+    #  After: IF ObjAct Event Flag
   Comment: Operation of Ancient Wyvern gate, and permanently opening it
   DebugInfo:
   - 3201411 - archdragon object o324051_1000 - the lever for the gate to Ancient Wyvern
@@ -1835,7 +1847,7 @@ Events:
   - IF Condition Group (Result Condition Group = 0, Desired Condition Group State = 0, Target Condition Group = -2)
   - END Unconditionally (Execution End Type = 1)
 - ID: 13205810
-  Comment: Start Ancient Wyvern fight. This waits for fog gate flag 13205805 and region 3202801 which is used by the fog gate, and sets 13200801 for subsequent encounters and fog gate appearing. Also allow above the bride to spawn the Wyvern (3204364 on bridge, 3202270 near ladder).
+  Comment: Start Ancient Wyvern fight. This waits for fog gate flag 13205805 and region 3202801 which is used by the fog gate, and sets 13200801 for subsequent encounters and fog gate appearing. Also allow above the brigde to spawn the Wyvern (3204364 on bridge, 3202270 near ladder).
   Template:
   - Replace: IF In/Outside Area (1->-1,1,10000,3202801,1)
     Add:
@@ -2201,6 +2213,8 @@ Events:
   - + Initialize Common Event (Event ID = 20005810, Parameters = 13300800, 3301800*, 3302800*, 10000)
 - ID: 13305860
   Comment: Start Crystal Sage, based on event flag and region
+  Template:
+  - Remove: 3302850
   DebugInfo:
   - 3305850 group [3300850 - Crystal Sage in Farron - farronkeep enemy c1320_0000, 3300851 - Crystal Sage in Farron - farronkeep enemy c1320_0001, 3300852 - Crystal Sage in Farron - farronkeep enemy c1320_0002, 3300853 - Crystal Sage in Farron - farronkeep enemy c1320_0003, 3300854 - Crystal Sage in Farron - farronkeep dummyenemy c1320_0004]
   - 3305851 group [3300851 - Crystal Sage in Farron - farronkeep enemy c1320_0001, 3300852 - Crystal Sage in Farron - farronkeep enemy c1320_0002, 3300853 - Crystal Sage in Farron - farronkeep enemy c1320_0003, 3300854 - Crystal Sage in Farron - farronkeep dummyenemy c1320_0004]
@@ -3966,19 +3980,10 @@ Events:
   - + (De)activate Object (Target Object Entity ID = X0_4*, State = 1)
   - + Set Object Treasure State (Target Object Entity ID = X0_4*, State = 1)
 - ID: 13805809
-  Comment: Wolnir start, upon examining the altar. Split this into initializing the boss fight (jump to fight initialization when in region), and using goblet (always do this, ignoring boss flag, and cut off after warp).
+  Comment: Wolnir start, upon examining the altar. Split this into using goblet (always do this, ignoring boss flag, and cut off after warp) and initializing the boss fight (jump to fight initialization when in region).
   Template:
   - Warp: catacombs_3802802
     CopyTo: 13805822
-    Remove: Play Cutscene and Warp Player (38000000,10,3802802,38,0,10000); Play Cutscene and Warp Player (38000000,2,3802803,38,0,10000)
-    Add:
-    - After: Label 0 ()
-      Cmd: IF In/Outside Area (0,1,10000,3802806,1)
-    - After: Label 0 ()
-      Cmd: GOTO Unconditionally (4)
-    - Before: END IF Event Flag (0,0,0,13800801)
-      Cmd: Label 4 ()
-  - Warp: catacombs_3802802
     WarpReplace: Play Cutscene and Warp Player (38000000,8,3802802,38,0,10000)
     Remove: SKIP IF Multiplayer State (2,2); 13800800; 3800800; 3805800; Play Cutscene and Warp Player (38000000,10,3802802,38,0,10000); Play Cutscene and Warp Player (38000000,2,3802803,38,0,10000); IF Player Is Not In Own World (Excludes Arena) (1,0)
     Add:
@@ -3990,6 +3995,15 @@ Events:
       Cmd: SKIP IF Event Flag (1,1,0,13800800)
     #- After: IF Condition Group (0,1,1)
     #  Cmd: Award Item Lot (60310)
+  - Warp: catacombs_3802802
+    Remove: Play Cutscene and Warp Player (38000000,10,3802802,38,0,10000); Play Cutscene and Warp Player (38000000,2,3802803,38,0,10000)
+    Add:
+    - Before: IF Character Type
+      Cmd: IF In/Outside Area (0,1,10000,3802806,1)
+    - Before: IF Character Type
+      Cmd: GOTO Unconditionally (4)
+    - Before: END IF Event Flag (0,0,0,13800801)
+      Cmd: Label 4 ()
   DebugInfo:
   - 3800800 - High Lord Wolnir - catacombs enemy c5160_0000
   - 3805800 group [3800810 - Skeleton - catacombs enemy c1070_0090, 3800811 - Skeleton - catacombs enemy c1070_0091, 3800812 - Skeleton - catacombs enemy c1070_0092, 3800813 - Skeleton - catacombs enemy c1070_0093, 3800814 - Skeleton - catacombs enemy c1070_0094, 3800823 - Carthus Curved Sword Skeleton - catacombs enemy c1170_0014, 3800824 - Carthus Curved Sword Skeleton - catacombs enemy c1170_0015, 3800825 - Carthus Shotel Skeleton - catacombs enemy c1180_0010, 3800820 - Bonewheel Skeleton - catacombs enemy c1470_0013, 3800821 - Bonewheel Skeleton - catacombs enemy c1470_0014, 3800822 - Bonewheel Skeleton - catacombs enemy c1470_0015, 3800815 - Skeleton - catacombs dummyenemy c1070_0095]

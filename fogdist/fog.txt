@@ -13,6 +13,7 @@ Areas:
   Tags: boss
   DefeatFlag: 14000800
   TrapFlag: 14000801
+  BossTrigger: 14005805  # For ceremony detection
   To:
   - Area: firelink_front
     Text: opening the door
@@ -308,6 +309,7 @@ Areas:
   Text: Lothric Castle
 - Name: lothric_dragonslayerarmour
   Text: Dragonslayer Armour
+  ScalingBase: untended_championgundyr
   Tags: boss
   BossTrigger: 13015805
   DefeatFlag: 13010800
@@ -380,6 +382,7 @@ Areas:
   Text: Champion Gundyr
   Tags: boss
   DefeatFlag: 14000830
+  BossTrigger: 14005835  # For ceremony detection
   To:
   - Area: untended_postgundyr
     Text: opening the door
@@ -468,6 +471,7 @@ Areas:
     Cond: contraptionkey
 - Name: ariandel_gravetender
   Text: Champion's Gravetender
+  ScalingBase: untended_championgundyr
   Tags: dlc1 boss
   DefeatFlag: 14500860
 - Name: ariandel_vilhelm
@@ -481,6 +485,7 @@ Areas:
   Text: Ariandel dropping down to Dunnel
   Tags: dlc1 trivial
 - Name: ariandel_friede
+  ScalingBase: archives
   Text: Sister Friede
   Tags: dlc1 boss
   DefeatFlag: 14500800
@@ -758,7 +763,7 @@ Warps:
 - ID: 5002110
   Area: kiln
   Text: from Kiln to Dreg Heap
-  Tags: unique
+  Tags: unique dlc2
   ASide:
     Area: kiln
   BSide:
@@ -779,7 +784,7 @@ Warps:
 - ID: 5102110
   Area: dregheap
   Text: transport after Demon Prince
-  Tags: unique
+  Tags: unique dlc2
   ASide:
     Area: dregheap_postdemon
     Cond: AND smallenvoybanner dregheap_demonprince
@@ -790,7 +795,7 @@ Warps:
 - ID: 5112110
   Area: ringedcity
   Text: waking up Filianore
-  Tags: unique
+  Tags: unique dlc2
   ASide:
     Area: ringedcity_posthalflight
     Cutscene: 51010000
@@ -973,9 +978,6 @@ Entrances:
   Text: between below Nameless King and below the bell
   ASide:
     Area: archdragon_belownameless
-    Cond: AND archdragon archdragon_namelessking
-    BossDefeatName: archdragon_namelessking
-    # The ideal behavior would be allowing you come out the way you came in. But do this later... it requires switching flags back and forth and perhaps a custom trap flag.
   BSide:
     Area: archdragon
   Tags: pvp unique
@@ -998,8 +1000,6 @@ Entrances:
   Tags: unique
   ASide:
     Area: archdragon_belownameless
-    Cond: AND archdragon archdragon_namelessking
-    BossDefeatName: archdragon_namelessking
   BSide:
     Area: archdragon
   Tags: pvp unique
@@ -1449,7 +1449,7 @@ Entrances:
     Area: ariandel_vilhelm
   BSide:
     Area: ariandel_dunnel
-  Tags: pvp
+  Tags: pvp dlc1
 - Name: o000401_8000
   ID: 4501800
   Area: ariandel
@@ -1461,7 +1461,7 @@ Entrances:
   BSide:
     Area: ariandel
     Cond: ariandel_vilhelm
-  Tags: boss
+  Tags: boss dlc1
 - Name: o459051_9500
   ID: 4501801
   Area: ariandel
@@ -1473,7 +1473,7 @@ Entrances:
     Area: ariandel
     Cond: ariandel_vilhelm
     ExcludeIfRandomized: ariandel_4501800
-  Tags: boss
+  Tags: boss dlc1
 - Name: o000402_9500
   ID: 4501860
   Area: ariandel
@@ -1484,7 +1484,7 @@ Entrances:
     BossDefeatName: area
   BSide:
     Area: ariandel
-  Tags: boss
+  Tags: boss dlc1
 - Name: o000400_9000
   ID: 5001801
   Area: dregheap
@@ -1494,7 +1494,7 @@ Entrances:
   BSide:
     Area: dregheap_demonprince
     BossDefeatName: area
-  Tags: boss
+  Tags: boss dlc2
 - Name: o000402_9000
   ID: 5001800
   Area: dregheap
@@ -1504,7 +1504,7 @@ Entrances:
     # Be merciful and don't trap player
   BSide:
     Area: dregheap
-  Tags: boss
+  Tags: boss dlc2
 - Name: o000400_9500
   ID: 5101801
   Area: ringedcity
@@ -1515,7 +1515,7 @@ Entrances:
     Area: ringedcity_halflight
     BossDefeatName: area
     BossTriggerName: area
-  Tags: boss unique
+  Tags: boss unique dlc2
 - Name: o000400_9501
   ID: 5101802
   Area: ringedcity
@@ -1526,7 +1526,7 @@ Entrances:
     Area: ringedcity_halflight
     BossDefeatName: area
     BossTriggerName: area
-  Tags: boss unique
+  Tags: boss unique dlc2
 # TODO: Can this be operated? Until Midir is defeated on the bridge? Probably remove that restriction.
 - Name: o000401_9502
   ID: 5101850
@@ -1537,7 +1537,7 @@ Entrances:
     CustomWarp: ringedcity -481.970 -272.150 -393.640 180
   BSide:
     Area: ringedcity
-  Tags: boss
+  Tags: boss dlc2
 - Name: o000402_9500
   ID: 5101800
   Area: ringedcity
@@ -1547,7 +1547,7 @@ Entrances:
     BossDefeatName: area
   BSide:
     Area: ringedcity_prehalflight
-  Tags: boss
+  Tags: boss dlc2
 - Name: o000400_1000
   ID: 5111800
   Area: filianore
@@ -1558,7 +1558,7 @@ Entrances:
     BossTrapName: area
   BSide:
     Area: filianore
-  Tags: boss
+  Tags: boss dlc2
 - Name: o000400_1001
   ID: 5111850
   Area: filianore
@@ -1570,7 +1570,7 @@ Entrances:
     BossDefeatName: area
     BossTrapName: area
     BossTriggerName: area
-  Tags: boss
+  Tags: boss dlc2
 
 Objects:
 # For elevator, also include levers...
@@ -2204,110 +2204,110 @@ Objects:
 # filianore: Nothing here really
 
 DefaultCost:
-  firelink_cemetery: 0  # SL 10
-  firelink_iudexgundyr: 0  # SL 10
-  firelink_front: 0.05455254  # SL 13
-  firelink: 0.06768914  # SL 14
-  firelink_coiledsword: 0.06768914  # SL 14
-  highwall: 0.06768914  # SL 14
-  firelink_bellfront: 0.06768914  # SL 14
-  firelink_belltower: 0.06768914  # SL 14
-  firelink_roof: 0.06768914  # SL 14
-  highwall_darkwraith: 0.1029906  # SL 17
-  highwall_greirat: 0.1029906  # SL 17
-  highwall_vordt: 0.1029906  # SL 17
-  highwall_emma: 0.1029906  # SL 17
-  settlement: 0.134578  # SL 19
-  settlement_pit: 0.1638444  # SL 21
-  settlement_tower: 0.1638444  # SL 21
-  settlement_greatwood: 0.1638444  # SL 21
-  farronkeep_start: 0.1914538  # SL 23
-  farronkeep_road: 0.2003599  # SL 24
-  farronkeep: 0.2263323  # SL 25
-  farronkeep_crystalsage: 0.2263323  # SL 25
-  farronkeep_prewatchers: 0.2513448  # SL 27
-  cathedral_start: 0.2513448  # SL 27
-  farronkeep_abysswatchers: 0.259497  # SL 28
-  cathedral: 0.259497  # SL 28
-  farronkeep_postwatchers: 0.2834633  # SL 29
-  cathedral_deacons: 0.2834633  # SL 29
-  cathedral_rosaria: 0.2834633  # SL 29
-  catacombs: 0.2834633  # SL 29
-  catacombs_prelake: 0.3067715  # SL 31
-  catacombs_wolnirroom: 0.3067715  # SL 31
-  catacombs_wolnir: 0.3067715  # SL 31
-  catacombs_lake: 0.3144092  # SL 32
-  irithyll_start: 0.3295031  # SL 33
-  irithyll_bridge: 0.3295031  # SL 33
-  catacombs_olddemonking: 0.3369638  # SL 33
-  irithyll: 0.4088495  # SL 38
-  irithyll_manor: 0.4295833  # SL 40
-  irithyll_abovedorhys: 0.4295833  # SL 40
-  irithyll_pontiff: 0.4295833  # SL 40
-  irithyll_dorhys: 0.4295833  # SL 40
-  dungeon: 0.4364203  # SL 40
-  irithyll_postpontiff: 0.4499886  # SL 41
-  irithyll_anorlondo: 0.4499886  # SL 41
-  dungeon_profaned: 0.4567217  # SL 41
-  dungeon_jailbreak: 0.4567217  # SL 41
-  irithyll_yorshka: 0.4700899  # SL 42
-  irithyll_abovepontiff: 0.4700899  # SL 42
-  irithyll_aldrich: 0.4700899  # SL 42
-  highwall_dancer: 0.4700899  # SL 42
-  dungeon_jailerscell: 0.4767265  # SL 43
-  dungeon_oldcell: 0.4767265  # SL 43
-  dungeon_yhorm: 0.4767265  # SL 43
-  irithyll_aldrichright: 0.4899085  # SL 44
-  irithyll_aldrichleft: 0.4899085  # SL 44
-  highwall_postdancer: 0.4899085  # SL 44
-  irithyll_abovealdrich: 0.4899085  # SL 44
-  highwall_garden: 0.4899085  # SL 44
-  lothric: 0.4899085  # SL 44
-  ariandel: 0.4899085  # SL 44
-  highwall_oceiros: 0.5094634  # SL 45
-  archives_shortcutbottom: 0.5094634  # SL 45
-  highwall_abovedancer: 0.5094634  # SL 45
-  lothric_dragonslayerarmour: 0.5094634  # SL 45
-  ariandel_vilhelm: 0.5094634  # SL 45
-  ariandel_gravetender: 0.5094634  # SL 45
-  ariandel_friede: 0.5287712  # SL 47
-  highwall_postoceiros: 0.5287712  # SL 47
-  lothric_postarmour: 0.5287712  # SL 47
-  ariandel_dunnel: 0.5287712  # SL 47
-  untended: 0.5287712  # SL 47
-  archives_start: 0.5287712  # SL 47
-  untended_championgundyr: 0.5351548  # SL 47
-  untended_postgundyr: 0.5541559  # SL 48
-  untended_farron: 0.6817316  # SL 57
-  archdragon_start: 0.7905937  # SL 65
-  archdragon_prewyvern: 0.796181  # SL 65
-  archdragon_ancientwyvern: 0.796181  # SL 65
-  archdragon: 0.8128651  # SL 66
-  archdragon_wyverndoor: 0.8128651  # SL 66
-  archdragon_beforenameless: 0.8294359  # SL 68
-  archdragon_pathofthedragon: 0.8294359  # SL 68
-  archdragon_abovewyvern: 0.8294359  # SL 68
-  archdragon_namelessking: 0.8294359  # SL 68
-  archdragon_belownameless: 0.845897  # SL 69
-  lothric_gotthard: 0.873098  # SL 71
-  archives: 0.873098  # SL 71
-  archives_preprinces: 0.8892835  # SL 72
-  archives_shortcuttop: 0.8892835  # SL 72
-  archives_twinprinces: 0.8892835  # SL 72
-  kiln_start: 0.9053714  # SL 73
-  kiln: 0.9053714  # SL 73
-  dregheap_start: 0.9053714  # SL 73
-  kiln_soulofcinder: 0.9053714  # SL 73
-  dregheap: 0.9213646  # SL 74
-  dregheap_predemon: 0.9372657  # SL 75
-  dregheap_demonprince: 0.9372657  # SL 75
-  dregheap_postdemon: 0.9530774  # SL 76
-  ringedcity: 0.9530774  # SL 76
-  ringedcity_prehalflight: 0.9688022  # SL 77
-  ringedcity_premidir: 0.9688022  # SL 77
-  ringedcity_halflight: 0.9688022  # SL 77
-  ringedcity_midir: 0.9688022  # SL 77
-  ringedcity_posthalflight: 0.9844423  # SL 78
-  filianore: 0.9844423  # SL 78
-  filianore_gael: 0.9844423  # SL 78
-  filianore_shira: 1  # SL 80
+    firelink_cemetery: 0  # SL 10
+    firelink_iudexgundyr: 0.006666667  # SL 10
+    firelink_front: 0.02666667  # SL 11
+    firelink: 0.03333334  # SL 12
+    firelink_coiledsword: 0.03333334  # SL 12
+    highwall: 0.03333334  # SL 12
+    firelink_bellfront: 0.03333334  # SL 12
+    firelink_belltower: 0.03333334  # SL 12
+    firelink_roof: 0.03333334  # SL 12
+    highwall_darkwraith: 0.05333333  # SL 13
+    highwall_greirat: 0.05333333  # SL 13
+    highwall_vordt: 0.05333333  # SL 13
+    highwall_emma: 0.05333333  # SL 13
+    settlement: 0.07333333  # SL 15
+    settlement_pit: 0.09333333  # SL 16
+    settlement_tower: 0.09333333  # SL 16
+    settlement_greatwood: 0.09333333  # SL 16
+    farronkeep_start: 0.1133333  # SL 17
+    farronkeep_road: 0.12  # SL 18
+    farronkeep: 0.14  # SL 19
+    farronkeep_crystalsage: 0.14  # SL 19
+    farronkeep_prewatchers: 0.16  # SL 21
+    cathedral_start: 0.16  # SL 21
+    farronkeep_abysswatchers: 0.1666667  # SL 21
+    cathedral: 0.1666667  # SL 21
+    farronkeep_postwatchers: 0.1866667  # SL 23
+    cathedral_deacons: 0.1866667  # SL 23
+    cathedral_rosaria: 0.1866667  # SL 23
+    catacombs: 0.1866667  # SL 23
+    catacombs_prelake: 0.2066667  # SL 24
+    catacombs_wolnirroom: 0.2066667  # SL 24
+    catacombs_wolnir: 0.2066667  # SL 24
+    catacombs_lake: 0.2133333  # SL 24
+    irithyll_start: 0.2266667  # SL 25
+    irithyll_bridge: 0.2266667  # SL 25
+    catacombs_olddemonking: 0.2333333  # SL 26
+    irithyll: 0.3  # SL 31
+    irithyll_manor: 0.32  # SL 32
+    irithyll_abovedorhys: 0.32  # SL 32
+    irithyll_pontiff: 0.32  # SL 32
+    irithyll_dorhys: 0.32  # SL 32
+    dungeon: 0.3266667  # SL 32
+    irithyll_postpontiff: 0.34  # SL 33
+    irithyll_anorlondo: 0.34  # SL 33
+    dungeon_profaned: 0.3466667  # SL 34
+    dungeon_jailbreak: 0.3466667  # SL 34
+    irithyll_yorshka: 0.36  # SL 35
+    irithyll_abovepontiff: 0.36  # SL 35
+    irithyll_aldrich: 0.36  # SL 35
+    highwall_dancer: 0.36  # SL 35
+    dungeon_jailerscell: 0.3666667  # SL 35
+    dungeon_oldcell: 0.3666667  # SL 35
+    dungeon_yhorm: 0.3666667  # SL 35
+    irithyll_aldrichright: 0.38  # SL 36
+    irithyll_aldrichleft: 0.38  # SL 36
+    highwall_postdancer: 0.38  # SL 36
+    irithyll_abovealdrich: 0.38  # SL 36
+    highwall_garden: 0.38  # SL 36
+    lothric: 0.38  # SL 36
+    ariandel: 0.38  # SL 36
+    highwall_oceiros: 0.4  # SL 38
+    archives_shortcutbottom: 0.4  # SL 38
+    highwall_abovedancer: 0.4  # SL 38
+    ariandel_vilhelm: 0.4  # SL 38
+    highwall_postoceiros: 0.42  # SL 39
+    ariandel_dunnel: 0.42  # SL 39
+    untended: 0.42  # SL 39
+    untended_championgundyr: 0.4266667  # SL 39
+    lothric_dragonslayerarmour: 0.4266667  # SL 39
+    ariandel_gravetender: 0.4266667  # SL 39
+    untended_postgundyr: 0.4466667  # SL 41
+    lothric_postarmour: 0.4466667  # SL 41
+    archives_start: 0.4466667  # SL 41
+    untended_farron: 0.5866666  # SL 51
+    archdragon_start: 0.7133333  # SL 59
+    archdragon_prewyvern: 0.72  # SL 60
+    archdragon_ancientwyvern: 0.72  # SL 60
+    archdragon: 0.74  # SL 61
+    archdragon_wyverndoor: 0.74  # SL 61
+    archdragon_beforenameless: 0.76  # SL 63
+    archdragon_pathofthedragon: 0.76  # SL 63
+    archdragon_abovewyvern: 0.76  # SL 63
+    archdragon_belownameless: 0.76  # SL 63
+    archdragon_namelessking: 0.76  # SL 63
+    lothric_gotthard: 0.84  # SL 68
+    archives: 0.84  # SL 68
+    ariandel_friede: 0.84  # SL 68
+    archives_preprinces: 0.86  # SL 70
+    archives_shortcuttop: 0.86  # SL 70
+    archives_twinprinces: 0.86  # SL 70
+    kiln_start: 0.88  # SL 71
+    kiln: 0.88  # SL 71
+    dregheap_start: 0.88  # SL 71
+    kiln_soulofcinder: 0.88  # SL 71
+    dregheap: 0.9  # SL 73
+    dregheap_predemon: 0.92  # SL 74
+    dregheap_demonprince: 0.92  # SL 74
+    dregheap_postdemon: 0.94  # SL 75
+    ringedcity: 0.94  # SL 75
+    ringedcity_prehalflight: 0.96  # SL 77
+    ringedcity_premidir: 0.96  # SL 77
+    ringedcity_halflight: 0.96  # SL 77
+    ringedcity_midir: 0.96  # SL 77
+    ringedcity_posthalflight: 0.98  # SL 78
+    filianore: 0.98  # SL 78
+    filianore_gael: 0.98  # SL 78
+    filianore_shira: 1  # SL 80

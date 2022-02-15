@@ -505,7 +505,7 @@ namespace FogMod
                         List<float> loc = getPos(side.BossTriggerArea);
                         tr.Position = new Vector3(loc[0], loc[1], loc[2]);
                         tr.Rotation = new Vector3(0, loc[3], 0);
-                        MSB1.Shape.Box tbox = new MSB1.Shape.Box();
+                        MSB.Shape.Box tbox = new MSB.Shape.Box();
                         tbox.Width = loc[4];
                         tbox.Height = loc[5];
                         tbox.Depth = loc[6];
@@ -518,7 +518,7 @@ namespace FogMod
                     float warpDist = 1f;
                     // Action trigger
                     MSB1.Region r = new MSB1.Region();
-                    MSB1.Shape.Box box = new MSB1.Shape.Box();
+                    MSB.Shape.Box box = new MSB.Shape.Box();
                     int actionID;
 
                     // Find opposite direction
@@ -645,7 +645,7 @@ namespace FogMod
                 tr.EntityID = mk++;
                 tr.Position = p.Position;
                 tr.Rotation = p.Rotation;
-                MSB1.Shape.Box tbox = new MSB1.Shape.Box();
+                MSB.Shape.Box tbox = new MSB.Shape.Box();
                 tbox.Width = 0.1f;
                 tbox.Height = 1;
                 tbox.Depth = 0.1f;
@@ -729,7 +729,7 @@ namespace FogMod
                     // Nudge the outside fog gate region to be inside & detect boss battle mode
                     MSB1.Region r = msb.Regions.Regions.Find(c => c.EntityID == 1312998);
                     r.Position = new Vector3(-118.186f, -250.591f, -31.893f);
-                    if (!(r.Shape is MSB1.Shape.Box box)) throw new Exception("Unexpected region");
+                    if (!(r.Shape is MSB.Shape.Box box)) throw new Exception("Unexpected region");
                     box.Width = 10;
                     box.Height = 5;
                 }
@@ -753,14 +753,14 @@ namespace FogMod
                         obj.Position = new Vector3(448.490f, 144.110f, 269.420f);
                         obj.Rotation = new Vector3(11, 83, -4);
                         obj.CollisionName = "h0111B1_0000";
-                        obj.UnkT0C = 33; // initial animation
+                        obj.InitAnimID = 33; // initial animation
                     }
                     else
                     {
                         obj.Position = new Vector3(444.106f, 160.258f, 255.887f);
                         obj.Rotation = new Vector3(-3, -90, 0);
                         obj.CollisionName = "h0025B1_0000";
-                        obj.UnkT0C = 50; // initial animation
+                        obj.InitAnimID = 50; // initial animation
                     }
                 }
                 else if (map == "depths")
@@ -802,7 +802,7 @@ namespace FogMod
                         CopyAll(trBase, es);
                         es.Name = "o0500_0050";
                         es.ModelName = "o0500";
-                        es.UnkT0C = 50; // initial animation
+                        es.InitAnimID = 50; // initial animation
                         es.Position = new Vector3(13.279f, 202.015f, 20.8f);
                         es.Rotation = new Vector3(0, 0, 0);
                         es.EntityID = -1;
@@ -887,7 +887,7 @@ namespace FogMod
                         MSB1.Part.Collision baseCol = colMsb.Parts.Collisions.Find(c => c.Name == col);
                         MSB1.Part.ConnectCollision con = new MSB1.Part.ConnectCollision();
                         CopyAll<MSB1.Part>(baseCol, con);
-                        con.Placeholder = null;
+                        // con.Placeholder = null;  No longer valid after SoulsFormat update
                         con.ModelName = baseCol.ModelName;
                         con.Name = $"{baseCol.ModelName}_{connectColId++:d4}";
                         con.CollisionName = col;

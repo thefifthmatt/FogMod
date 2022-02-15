@@ -128,7 +128,9 @@ namespace FogMod
             [YamlIgnore]
             public bool IsFixed { get; set; }
             [YamlIgnore]
-            public string FullName => Area + "_" + ID.ToString();  // Name == null ? ID.ToString() : Area + "_" + Name;
+            // TODO: Merge these, first is DS3, second is ...??
+            public string FullName => Area + "_" + ID.ToString();
+            // public string FullName => Name == null ? ID.ToString() : Area + "_" + Name;
             public List<Side> Sides()
             {
                 List<Side> sides = new List<Side>();
